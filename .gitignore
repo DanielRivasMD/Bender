@@ -1,0 +1,11 @@
+# data folders
+data/
+arch/assets/
+arch/plots/
+arch/prints/
+
+# deprecated scripts
+src/deprecated/
+
+# Go Executables
+src/GoWorkshop/Excalibur/
