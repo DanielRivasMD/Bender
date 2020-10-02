@@ -33,7 +33,7 @@ var GenomeBlastCmd = &cobra.Command{
 	Short: "Blast an assembly with customized sequence library",
 	Long: `GenomeBlast performs several operations:
 - inputs a customized sequence
-- creates a database
+- creates a database from an assembly
 - searches possible homology in an assembly
 - formats output the values
 `,
@@ -41,6 +41,10 @@ var GenomeBlastCmd = &cobra.Command{
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	Run: func(cmd *cobra.Command, args []string) {
+
+		genome, _ := cmd.Flags().GetString("genome")
+		library, _ := cmd.Flags().GetString("library")
+		outDir, _ := cmd.Flags().GetString("outdir")
 
 		// lineBreaks
 		aux.LineBreaks()
@@ -51,13 +55,8 @@ var GenomeBlastCmd = &cobra.Command{
 
 		// shell call
 		commd := "/home/drivas/bin/goTools/sh/GenomeBlast.sh"
-		// arg1 := ""
-		// arg2 := ""
-		// arg3 := ""
-		// arg4 := ""
-		// arg5 := ""
 
-		shCmd := exec.Command(commd)
+		shCmd := exec.Command(commd, genome, library, outDir)
 
 		// run
 		shCmd.Stdout = &stdout
