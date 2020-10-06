@@ -35,9 +35,6 @@ Bender automates Genomic jobs in Slurm systems.
 
 Bender creates a convinient command line interphase
 with built-in and accessible documentation`,
-	// Uncomment the following line if your bare application
-	// has an action associated with it:
-	//	Run: func(cmd *cobra.Command, args []string) { },
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -54,19 +51,12 @@ func init() {
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	// Here you will define your flags and configuration settings.
-	// Cobra supports persistent flags, which, if defined here,
-	// will be global for your application.
 	// Flags
 	rootCmd.PersistentFlags().StringP("outDir", "o", "", "Output directory. creates if not exitst")
 	viper.BindPFlag("outDir", rootCmd.PersistentFlags().Lookup("outDir"))
 
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.Bender.yaml)")
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	// Cobra also supports local flags, which will only run
-	// when this action is called directly.
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
