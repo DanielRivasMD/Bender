@@ -54,10 +54,13 @@ func Execute() {
 
 func init() {
 	cobra.OnInitialize(initConfig)
+	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// Here you will define your flags and configuration settings.
 	// Cobra supports persistent flags, which, if defined here,
 	// will be global for your application.
+	// Flags
+	rootCmd.PersistentFlags().StringP("outDir", "o", "", "Output directory. creates if not exitst")
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.Bender.yaml)")
 
@@ -83,25 +86,15 @@ func initConfig() {
 		viper.AddConfigPath(home)
 		viper.SetConfigName(".Bender")
 	}
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-	/////////////////////////////////////////   flags   ////////////////////////////////////////////////
-	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	viper.AutomaticEnv() // read in environment variables that match
 	// GenomeBlast
-	GenomeBlastCmd.Flags().StringP("genome", "g", "", "Genome to BLAST in suffix form. fasta format")
-	GenomeBlastCmd.MarkFlagRequired("genome")
 
 	// If a config file is found, read it in.
 	if err := viper.ReadInConfig(); err == nil {
 		fmt.Println("Using config file:", viper.ConfigFileUsed())
 	}
-	GenomeBlastCmd.Flags().StringP("library", "l", "", "Library to BLAST against in suffix form. fasta format")
-	GenomeBlastCmd.MarkFlagRequired("library")
 
-	GenomeBlastCmd.Flags().StringP("outdir", "o", "", "Output directory. creates if not exitst")
-	GenomeBlastCmd.MarkFlagRequired("outdir")
 
-	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }

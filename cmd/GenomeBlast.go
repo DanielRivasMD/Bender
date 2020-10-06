@@ -87,13 +87,15 @@ var GenomeBlastCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(GenomeBlastCmd)
 
-	// Here you will define your flags and configuration settings.
+	////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// GenomeBlastCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// Flags
+	GenomeBlastCmd.Flags().StringP("genome", "g", "", "Genome to BLAST")
+	GenomeBlastCmd.MarkFlagRequired("genome")
 
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// GenomeBlastCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	GenomeBlastCmd.Flags().StringP("library", "l", "", "Library to BLAST against")
+	GenomeBlastCmd.MarkFlagRequired("library")
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+
 }
