@@ -59,8 +59,10 @@ func init() {
 	// will be global for your application.
 	// Flags
 	rootCmd.PersistentFlags().StringP("outDir", "o", "", "Output directory. creates if not exitst")
+	viper.BindPFlag("outDir", rootCmd.PersistentFlags().Lookup("outDir"))
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.Bender.yaml)")
+	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
