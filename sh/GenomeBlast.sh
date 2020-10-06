@@ -2,39 +2,42 @@
 
 ################################################################################
 
-# load modules
-module load bioinfo-tools
-module load blast
+# # load modules
+# module load bioinfo-tools
+# module load blast
 
 ################################################################################
 
 # arguments
-genomeSuffix=$1
-genomeBlast=${genomeSuffix}.out
-queryInput=$2
-outDir=$3
+genome=$1
+preffixGenome=${genome/.fasta/}
+genomeDir=$2
+library=$3
+libraryDir=$4
+outDir=$5
+dbDir=${outDir}db/
 
 ################################################################################
 
 # set output directory
-if [[ ! -d ${outDir} ]]
+if [[ ! -d ${dbDir} ]]
 then
-  mkdir -vp ${outDir}
+  mkdir -vp ${dbDir}
 fi
 
 ################################################################################
 
 # make database from nucleotide sequence
-if [[ ! -f ${genomeSuffix} ]]
+if [[ ! -f ${dbDir}${preffixGenome} ]]
 then
-  echo "Build BLAST database => ${genomeSuffix}"
-  makeblastdb -in ${genomeSuffix}.fasta -dbtype nucl -out ${genomeSuffix}
+  echo "Build BLAST database => ${genome}"
+  makeblastdb -in ${genomeDir}${genome} -dbtype nucl -out ${dbDir}${preffixGenome}
 fi
 
 ################################################################################
 
 # use protein sequence as query to blast six reading frames
 echo "Blasting database..."
-tblastn -query ${queryInput}.fa -db ${genomeSuffix} -out ${genomeBlast}
+tblastn -query ${libraryDir}${library} -db ${dbDir}${preffixGenome} -out ${outDir}${preffixGenome}.out
 
 ################################################################################
