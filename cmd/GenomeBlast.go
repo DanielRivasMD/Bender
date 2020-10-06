@@ -18,7 +18,9 @@ package cmd
 
 import (
 	"bytes"
+	"fmt"
 	"log"
+	"os"
 
 	"os/exec"
 
@@ -26,6 +28,7 @@ import (
 	"github.com/atrox/homedir"
 	"github.com/labstack/gommon/color"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 // GenomeBlastCmd represents the GenomeBlast command
@@ -50,9 +53,21 @@ var GenomeBlastCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
+		// read config
+		var config Config
+		errConf := viper.Unmarshal(&config)
+		if errConf != nil {
+			log.Fatalf("could not decode config into struct: %v", errConf)
+		}
+
+		// Flags
+		outDir := config.OutDir
+
 		genome, _ := cmd.Flags().GetString("genome")
+		genomeDir := config.AssemblyDir
+
 		library, _ := cmd.Flags().GetString("library")
-		outDir, _ := cmd.Flags().GetString("outdir")
+		libraryDir := config.LibraryDir
 
 		// lineBreaks
 		aux.LineBreaks()
@@ -62,17 +77,16 @@ var GenomeBlastCmd = &cobra.Command{
 		var stderr bytes.Buffer
 
 		// shell call
-
-		shCmd := exec.Command(commd, genome, library, outDir)
 		commd := home + "/bin/goTools/sh/GenomeBlast.sh"
+		shCmd := exec.Command(commd, genome, genomeDir, library, libraryDir, outDir)
 
 		// run
 		shCmd.Stdout = &stdout
 		shCmd.Stderr = &stderr
-		err := shCmd.Run()
+		errShCmd := shCmd.Run()
 
-		if err != nil {
-			log.Printf("error: %v\n", err)
+		if errShCmd != nil {
+			log.Printf("error: %v\n", errShCmd)
 		}
 
 		// stdout
