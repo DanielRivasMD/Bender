@@ -23,6 +23,7 @@ import (
 	"os/exec"
 
 	"github.com/DanielRivasMD/Bender/aux"
+	"github.com/atrox/homedir"
 	"github.com/labstack/gommon/color"
 	"github.com/spf13/cobra"
 )
@@ -32,15 +33,22 @@ var GenomeBlastCmd = &cobra.Command{
 	Use:   "GenomeBlast",
 	Short: "Blast an assembly with customized sequence library",
 	Long: `GenomeBlast performs several operations:
-- inputs a customized sequence
-- creates a database from an assembly
-- searches possible homology in an assembly
-- formats output the values
+- Inputs a customized sequence
+- Creates a database from an assembly
+- Searches possible homology in an assembly
+- Formats output the values
 `,
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	Run: func(cmd *cobra.Command, args []string) {
+
+		// Find home directory.
+		home, errHomedir := homedir.Dir()
+		if errHomedir != nil {
+			fmt.Println(errHomedir)
+			os.Exit(1)
+		}
 
 		genome, _ := cmd.Flags().GetString("genome")
 		library, _ := cmd.Flags().GetString("library")
@@ -54,9 +62,9 @@ var GenomeBlastCmd = &cobra.Command{
 		var stderr bytes.Buffer
 
 		// shell call
-		commd := "/home/drivas/bin/goTools/sh/GenomeBlast.sh"
 
 		shCmd := exec.Command(commd, genome, library, outDir)
+		commd := home + "/bin/goTools/sh/GenomeBlast.sh"
 
 		// run
 		shCmd.Stdout = &stdout
