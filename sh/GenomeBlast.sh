@@ -33,3 +33,12 @@ echo "Blasting database..."
 tblastn -query ${libraryDir}${library} -db ${dbDir}${preffixGenome} -out ${outDir}${preffixGenome}.out
 
 ################################################################################
+
+# purge filtered file
+if [[ -f ${outDir}${preffixGenome}.filtered.out ]]
+then
+  echo "Cleaning filtered..."
+  ${outDir}${preffixGenome}.filtered.out
+fi
+
+################################################################################
