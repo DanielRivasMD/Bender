@@ -21,8 +21,8 @@ import (
 	"fmt"
 	"log"
 	"os"
-
 	"os/exec"
+	"strings"
 
 	"github.com/DanielRivasMD/Bender/aux"
 	"github.com/atrox/homedir"
@@ -64,6 +64,7 @@ var GenomeBlastCmd = &cobra.Command{
 		outDir := config.OutDir
 
 		genome, _ := cmd.Flags().GetString("genome")
+		genome = strings.TrimSuffix(genome, ".fasta")
 		genomeDir := config.AssemblyDir
 
 		library, _ := cmd.Flags().GetString("library")

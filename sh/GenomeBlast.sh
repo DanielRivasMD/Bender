@@ -2,15 +2,7 @@
 
 ################################################################################
 
-# # load modules
-# module load bioinfo-tools
-# module load blast
-
-################################################################################
-
-# arguments
-genome=$1
-preffixGenome=${genome/.fasta/}
+preffixGenome=$1
 genomeDir=$2
 library=$3
 libraryDir=$4
@@ -30,8 +22,8 @@ fi
 # make database from nucleotide sequence
 if [[ ! -f ${dbDir}${preffixGenome} ]]
 then
-  echo "Build BLAST database => ${genome}"
-  makeblastdb -in ${genomeDir}${genome} -dbtype nucl -out ${dbDir}${preffixGenome}
+  echo "Build BLAST database => ${preffixGenome}"
+  makeblastdb -in ${genomeDir}${preffixGenome}.fasta -dbtype nucl -out ${dbDir}${preffixGenome}
 fi
 
 ################################################################################
