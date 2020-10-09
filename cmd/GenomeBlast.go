@@ -98,6 +98,8 @@ var GenomeBlastCmd = &cobra.Command{
 			color.Println(color.Red(stderr.String(), color.B))
 		}
 
+		aux.FileReader(outDir + genome)
+
 		// lineBreaks
 		aux.LineBreaks()
 
