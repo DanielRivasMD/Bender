@@ -18,12 +18,17 @@ package cmd
 
 import (
 	"bytes"
+	"fmt"
 	"log"
+	"os"
 	"os/exec"
+	"strings"
 
 	"github.com/DanielRivasMD/Bender/aux"
+	"github.com/atrox/homedir"
 	"github.com/labstack/gommon/color"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 // BamFastqExtractCmd represents the BamFastqExtract command
@@ -36,6 +41,30 @@ var BamFastqExtractCmd = &cobra.Command{
 
 	Run: func(cmd *cobra.Command, args []string) {
 
+		// Find home directory.
+		home, errHomedir := homedir.Dir()
+		if errHomedir != nil {
+			fmt.Println(errHomedir)
+			os.Exit(1)
+		}
+
+		// read config
+		var config Config
+		errConf := viper.Unmarshal(&config)
+		if errConf != nil {
+			log.Fatalf("could not decode config into struct: %v", errConf)
+		}
+
+		// Flags
+		storageDir := config.StorageDir
+
+		file, _ := cmd.Flags().GetString("file")
+		file = strings.TrimSuffix(file, ".bam")
+
+		directory, _ := cmd.Flags().GetString("directory")
+
+		verbose, _ := cmd.Flags().GetString("verbose")
+
 		// lineBreaks
 		aux.LineBreaks()
 
@@ -44,14 +73,8 @@ var BamFastqExtractCmd = &cobra.Command{
 		var stderr bytes.Buffer
 
 		// shell call
-		commd := "/home/drivas/bin/goTools/sh/BamFastqExtract.sh"
-		// arg1 := ""
-		// arg2 := ""
-		// arg3 := ""
-		// arg4 := ""
-		// arg5 := ""
-
-		shCmd := exec.Command(commd)
+		commd := home + "/bin/goTools/sh/BamFastqExtract.sh"
+		shCmd := exec.Command(commd, file, directory, verbose, storageDir)
 
 		// run
 		shCmd.Stdout = &stdout
@@ -82,13 +105,17 @@ var BamFastqExtractCmd = &cobra.Command{
 func init() {
 	rootCmd.AddCommand(BamFastqExtractCmd)
 
-	// Here you will define your flags and configuration settings.
+	////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// BamFastqExtractCmd.PersistentFlags().String("foo", "", "A help for foo")
+	// Flags
+	BamFastqExtractCmd.Flags().StringP("file", "f", "", "BAM file")
+	BamFastqExtractCmd.MarkFlagRequired("file")
 
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// BamFastqExtractCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	BamFastqExtractCmd.Flags().StringP("directory", "d", "", "directory")
+	BamFastqExtractCmd.MarkFlagRequired("directory")
+
+	BamFastqExtractCmd.Flags().StringP("verbose", "v", "false", "verbosity")
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+
 }

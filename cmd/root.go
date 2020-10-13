@@ -83,6 +83,7 @@ type Config struct {
 	OutDir      string
 	AssemblyDir string
 	LibraryDir  string
+	StorageDir  string
 }
 
 func initConfig() {
