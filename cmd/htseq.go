@@ -59,8 +59,6 @@ processing high-throughput sequencing data`,
 		// Flags
 		file, _ := cmd.Flags().GetString("file")
 
-		directory, _ := cmd.Flags().GetString("directory")
-
 		verbose, _ := cmd.Flags().GetString("verbose")
 
 		// lineBreaks
@@ -72,7 +70,7 @@ processing high-throughput sequencing data`,
 
 		// shell call
 		commd := home + "/bin/goTools/sh/HTSeq.sh"
-		shCmd := exec.Command(commd, file, directory, verbose)
+		shCmd := exec.Command(commd, file, verbose)
 
 		// run
 		shCmd.Stdout = &stdout
@@ -106,9 +104,6 @@ func init() {
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// Flags
-	HTSeqCmd.Flags().StringP("directory", "d", "", "directory")
-	HTSeqCmd.MarkFlagRequired("directory")
-
 	HTSeqCmd.Flags().StringP("file", "f", "", "file")
 	HTSeqCmd.MarkFlagRequired("file")
 

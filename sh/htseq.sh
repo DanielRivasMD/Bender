@@ -3,8 +3,7 @@
 ################################################################################
 
 file=$1
-projDir=$2
-verbose=$3
+verbose=$2
 
 ################################################################################
 
@@ -15,16 +14,10 @@ module load htseq/0.12.4
 
 ################################################################################
 
-# declare variables
+# declare directory structure variables
 align="alignments/"
 measure="measurements/"
 annot="Annotation/"
-# projDir="/crex/proj/snic2020-15-35/private/RNAExpressionProfile/"
-
-################################################################################
-
-# project directory
-cd ${projDir}
 
 ################################################################################
 
@@ -48,12 +41,11 @@ do
   [[ $verbose == "true" ]] && echo "Counting ${f} file..." || echo -n ""
   htseq-count \
     -n 16 \
+    -a 20 \
     ${csct}${align}${f}.bam \
     ${annot}gencode.v35.annotation.gff3.gz \
     > ${csct}${measure}${f}.out \
     2> log/${f}.err &
 done
-
-cd - > /dev/null
 
 ################################################################################
