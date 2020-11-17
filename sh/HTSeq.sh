@@ -22,7 +22,7 @@ annot="Annotation/"
 ################################################################################
 
 # create alignment indexes
-for alignmentFile in $(ls ${csct}${align}*bam)
+for alignmentFile in $(ls ${file}${align}*bam)
 do
   fl=${alignmentFile/*\//}
   f=${fl/.bam/}
@@ -34,7 +34,7 @@ wait
 ################################################################################
 
 # count reads
-for alignmentFile in $(ls ${csct}${align}*bam)
+for alignmentFile in $(ls ${file}${align}*bam)
 do
   fl=${alignmentFile/*\//}
   f=${fl/.bam/}
@@ -42,10 +42,11 @@ do
   htseq-count \
     -n 16 \
     -a 20 \
-    ${csct}${align}${f}.bam \
+    ${file}${align}${f}.bam \
     ${annot}gencode.v35.annotation.gff3.gz \
-    > ${csct}${measure}${f}.out \
+    > ${file}${measure}${f}.out \
     2> log/${f}.err &
 done
+wait
 
 ################################################################################
