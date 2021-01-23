@@ -111,7 +111,7 @@ func init() {
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// Flags
-	RepeatModelerCmd.Flags().StringP("reference", "f", "", "reference file. `fasta` format")
+	RepeatModelerCmd.Flags().StringP("reference", "f", "", "reference file. fasta format")
 	RepeatModelerCmd.MarkFlagRequired("reference")
 
 	RepeatModelerCmd.Flags().StringP("directory", "d", "", "directory")

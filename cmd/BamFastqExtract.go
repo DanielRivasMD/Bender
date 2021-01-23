@@ -108,7 +108,7 @@ func init() {
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// Flags
-	BamFastqExtractCmd.Flags().StringP("file", "f", "", "alignment file. `bam` format")
+	BamFastqExtractCmd.Flags().StringP("file", "f", "", "alignment file. bam format")
 	BamFastqExtractCmd.MarkFlagRequired("file")
 
 	BamFastqExtractCmd.Flags().StringP("directory", "d", "", "directory")
