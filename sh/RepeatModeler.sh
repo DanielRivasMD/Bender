@@ -47,8 +47,7 @@ fi
 ################################################################################
 
 # retrieving to storage
-# TODO: which files to retrieve
-mv ${tmpDir}/ --- ${storageDir}
+mv ${tmpDir}/* ${storageDir}
 [[ $verbose == "true" ]] && echo "moved" || echo -n ""
 
 ################################################################################
