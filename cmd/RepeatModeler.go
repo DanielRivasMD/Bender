@@ -22,6 +22,7 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"strings"
 
 	"github.com/DanielRivasMD/Bender/aux"
 	"github.com/atrox/homedir"
@@ -60,8 +61,8 @@ Next, RepeatModeler creates a libray`,
 		// Flags
 		storageDir := config.StorageDir
 
-		file, _ := cmd.Flags().GetString("file")
-		// file = strings.TrimSuffix(file, ".bam")
+		file, _ := cmd.Flags().GetString("reference")
+		file = strings.TrimSuffix(file, ".fa")
 
 		directory, _ := cmd.Flags().GetString("directory")
 
@@ -110,8 +111,8 @@ func init() {
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// Flags
-	RepeatModelerCmd.Flags().StringP("file", "f", "", "reference file")
-	RepeatModelerCmd.MarkFlagRequired("file")
+	RepeatModelerCmd.Flags().StringP("reference", "f", "", "reference file. `fasta` format")
+	RepeatModelerCmd.MarkFlagRequired("reference")
 
 	RepeatModelerCmd.Flags().StringP("directory", "d", "", "directory")
 	RepeatModelerCmd.MarkFlagRequired("directory")
