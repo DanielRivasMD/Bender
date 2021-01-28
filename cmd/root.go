@@ -25,28 +25,37 @@ import (
 	"github.com/spf13/viper"
 )
 
-// rootCmd represents the base command when called without any subcommands
 var cfgFile string
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 var rootCmd = &cobra.Command{
 	Use:   "Bender",
 	Short: "A robot to handle Slurm Genomic jobs",
-	Long: `"Good news everyone!"
-Bender automates Genomic jobs in Slurm systems.
+	Long: `Daniel Rivas <danielrivasmd@gmail.com>
+
+"Good news everyone!"
+Bender is a robot for automation on
+Genomic jobs in Slurm systems.
 "It's highly addictive!"
 
 Bender creates a convinient command line interphase
 with built-in and accessible documentation`,
+	Version: "v0.1",
+	Example: `
+Bender help`,
 }
 
-// Execute adds all child commands to the root command and sets flags appropriately.
-// This is called by main.main(). It only needs to happen once to the rootCmd.
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 func Execute() {
 	if err := rootCmd.Execute(); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 func init() {
 	cobra.OnInitialize(initConfig)
@@ -74,6 +83,7 @@ func init() {
 
 func initConfig() {
 
+	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	if cfgFile != "" {
 		// use config file from the flag.
