@@ -70,43 +70,9 @@ func init() {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// initialize configuration
-var (
-	defaults = map[string]interface{}{
-		"outDir":      "data/output/",
-		"assemblyDir": "data/DNAzoo/",
-		"libraryDir":  "data/syncytinDB/",
-	}
-
-	// extension is autodetected
-	configName = "bender"
-
-	// search only at local directory
-	configPaths = []string{
-		".",
-	}
-)
-
-// load config on struct
-type Config struct {
-	OutDir      string
-	AssemblyDir string
-	LibraryDir  string
-	StorageDir  string
-}
-
 func initConfig() {
 
-	// set defaults
-	for k, v := range defaults {
-		viper.SetDefault(k, v)
-	}
 
-	// set config name
-	viper.SetConfigName(configName)
-	for _, p := range configPaths {
-		viper.AddConfigPath(p)
-	}
 
 	// error handler
 	err := viper.ReadInConfig()
