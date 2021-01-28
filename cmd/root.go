@@ -51,9 +51,18 @@ func init() {
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	// Flags
-	rootCmd.PersistentFlags().StringP("outDir", "o", "", "Output directory. creates if not exitst")
+	// persistent flags
+	rootCmd.PersistentFlags().StringVarP(&cfgFile, "config", "c", "", "Config file")
+
+	rootCmd.PersistentFlags().StringP("inDir", "i", "", "Directory where input files are located")
+	rootCmd.MarkFlagRequired("inDir")
+	viper.BindPFlag("inDir", rootCmd.PersistentFlags().Lookup("inDir"))
+
+	rootCmd.PersistentFlags().StringP("outDir", "o", "", "Output directory. Creates if not exitst")
+	rootCmd.MarkFlagRequired("outDir")
 	viper.BindPFlag("outDir", rootCmd.PersistentFlags().Lookup("outDir"))
+
+	rootCmd.PersistentFlags().StringP("verbose", "v", "false", "Verbosity switch")
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
