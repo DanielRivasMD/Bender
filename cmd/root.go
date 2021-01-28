@@ -26,6 +26,8 @@ import (
 )
 
 // rootCmd represents the base command when called without any subcommands
+var cfgFile string
+
 var rootCmd = &cobra.Command{
 	Use:   "Bender",
 	Short: "A robot to handle Slurm Genomic jobs",
@@ -73,13 +75,17 @@ func init() {
 func initConfig() {
 
 
+	if cfgFile != "" {
+		// use config file from the flag.
+		viper.SetConfigFile(cfgFile)
 
-	// error handler
-	err := viper.ReadInConfig()
-	if err != nil {
-		log.Fatalf("could not read config file: %v", err)
+		// error handler
+		err := viper.ReadInConfig()
+		if err != nil {
+			log.Fatalf("could not read config file: %v", err)
+		}
 	}
 
-}
+	////////////////////////////////////////////////////////////////////////////////////////////////////
 
-////////////////////////////////////////////////////////////////////////////////////////////////////
+}
