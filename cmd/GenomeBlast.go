@@ -42,6 +42,8 @@ GenomeBlast performs several operations:
 - Creates a database from an assembly
 - Searches possible homology in an assembly
 - Formats output the values`,
+	Example: `
+Bender GenomeBlast -l toQuery.fa -L findQuery/ -g toSearch.fa -G findSearch/`,
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 

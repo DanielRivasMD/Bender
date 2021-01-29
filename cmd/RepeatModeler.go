@@ -28,6 +28,7 @@ import (
 	"github.com/atrox/homedir"
 	"github.com/labstack/gommon/color"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 // RepeatModelerCmd represents the RepeatModeler command
@@ -40,6 +41,8 @@ RepeatModeler creates Repeat Library from assembly using RepeatModeler v2.0.1.
 
 First, RepeatModeler builds a database.
 Next, RepeatModeler creates a libray`,
+	Example: `
+Bender RepeatModeler -r phillipFry.fa`,
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -105,8 +108,9 @@ func init() {
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// flags
-	RepeatModelerCmd.Flags().StringP("reference", "f", "", "Reference file. fasta format")
+	RepeatModelerCmd.Flags().StringP("reference", "r", "", "Reference file. fasta format")
 	RepeatModelerCmd.MarkFlagRequired("reference")
+	viper.BindPFlag("reference", RepeatModelerCmd.Flags().Lookup("reference"))
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 

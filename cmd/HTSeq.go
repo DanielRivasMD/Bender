@@ -27,6 +27,7 @@ import (
 	"github.com/atrox/homedir"
 	"github.com/labstack/gommon/color"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 // HTSeqCmd represents the HTSeq command
@@ -38,6 +39,8 @@ var HTSeqCmd = &cobra.Command{
 HTSeq wraps the namesake python package,
 which is a command line tool application for
 processing high-throughput sequencing data`,
+	Example: `
+Bender HTSeq -f forDESeq`,
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -100,6 +103,7 @@ func init() {
 	// flags
 	HTSeqCmd.Flags().StringP("file", "f", "", "File")
 	HTSeqCmd.MarkFlagRequired("file")
+	viper.BindPFlag("file", HTSeqCmd.Flags().Lookup("file"))
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 

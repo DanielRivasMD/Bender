@@ -41,7 +41,7 @@ Genomic jobs in Slurm systems.
 
 Bender creates a convinient command line interphase
 with built-in and accessible documentation`,
-	Version: "v0.1",
+	Version: "v0.2",
 	Example: `
 Bender help`,
 }

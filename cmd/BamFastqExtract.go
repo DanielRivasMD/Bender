@@ -28,6 +28,7 @@ import (
 	"github.com/atrox/homedir"
 	"github.com/labstack/gommon/color"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 // BamFastqExtractCmd represents the BamFastqExtract command
@@ -37,6 +38,8 @@ var BamFastqExtractCmd = &cobra.Command{
 	Long: `Daniel Rivas <danielrivasmd@gmail.com>
 
 BamFastqExtract dissects BAM files and retrieves FASTQ files`,
+	Example: `
+Bender BamFastqExtract -f aCloneOfMyOwn.bam`,
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -104,6 +107,7 @@ func init() {
 	// flags
 	BamFastqExtractCmd.Flags().StringP("file", "f", "", "Alignment file. bam format")
 	BamFastqExtractCmd.MarkFlagRequired("file")
+	viper.BindPFlag("file", BamFastqExtractCmd.Flags().Lookup("file"))
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 

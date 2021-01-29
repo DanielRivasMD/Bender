@@ -28,6 +28,7 @@ import (
 	"github.com/atrox/homedir"
 	"github.com/labstack/gommon/color"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 )
 
 // BWACmd represents the BWA command
@@ -39,6 +40,8 @@ var BWACmd = &cobra.Command{
 BWA aligns fasta files to a reference genome.
 Additionally, BWA can perform quality control
 prealignment through FastX`,
+	Example: `
+Bender BWA -f lastOneAlive.fa -r cyclops.fa`,
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -106,6 +109,11 @@ func init() {
 	// flags
 	BWACmd.Flags().StringP("file", "f", "", "File to align. fasta format")
 	BWACmd.MarkFlagRequired("file")
+	viper.BindPFlag("file", BWACmd.Flags().Lookup("file"))
+
+	BWACmd.Flags().StringP("reference", "r", "", "Reference file. fasta format")
+	BWACmd.MarkFlagRequired("reference")
+	viper.BindPFlag("reference", BWACmd.Flags().Lookup("reference"))
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
