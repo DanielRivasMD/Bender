@@ -27,14 +27,15 @@ import (
 	"github.com/atrox/homedir"
 	"github.com/labstack/gommon/color"
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 )
 
 // HTSeqCmd represents the HTSeq command
 var HTSeqCmd = &cobra.Command{
 	Use:   "HTSeq",
 	Short: "Wrapper for HTSeq",
-	Long: `HTSeq wraps the namesake python package,
+	Long: `Daniel Rivas <danielrivasmd@gmail.com>
+
+HTSeq wraps the namesake python package,
 which is a command line tool application for
 processing high-throughput sequencing data`,
 
@@ -42,21 +43,14 @@ processing high-throughput sequencing data`,
 
 	Run: func(cmd *cobra.Command, args []string) {
 
-		// Find home directory.
+		// find home directory.
 		home, errHomedir := homedir.Dir()
 		if errHomedir != nil {
 			fmt.Println(errHomedir)
 			os.Exit(1)
 		}
 
-		// read config
-		var config Config
-		errConf := viper.Unmarshal(&config)
-		if errConf != nil {
-			log.Fatalf("could not decode config into struct: %v", errConf)
-		}
-
-		// Flags
+		// flags
 		file, _ := cmd.Flags().GetString("file")
 
 		verbose, _ := cmd.Flags().GetString("verbose")
@@ -103,11 +97,9 @@ func init() {
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	// Flags
-	HTSeqCmd.Flags().StringP("file", "f", "", "file")
+	// flags
+	HTSeqCmd.Flags().StringP("file", "f", "", "File")
 	HTSeqCmd.MarkFlagRequired("file")
-
-	HTSeqCmd.Flags().StringP("verbose", "v", "false", "verbosity")
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
