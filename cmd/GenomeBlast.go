@@ -35,12 +35,13 @@ import (
 var GenomeBlastCmd = &cobra.Command{
 	Use:   "GenomeBlast",
 	Short: "Blast an assembly with customized sequence library",
-	Long: `GenomeBlast performs several operations:
+	Long: `Daniel Rivas <danielrivasmd@gmail.com>
+
+GenomeBlast performs several operations:
 - Inputs a customized sequence
 - Creates a database from an assembly
 - Searches possible homology in an assembly
-- Formats output the values
-`,
+- Formats output the values`,
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -53,22 +54,17 @@ var GenomeBlastCmd = &cobra.Command{
 			os.Exit(1)
 		}
 
-		// read config
-		var config Config
-		errConf := viper.Unmarshal(&config)
-		if errConf != nil {
-			log.Fatalf("could not decode config into struct: %v", errConf)
-		}
-
-		// Flags
-		outDir := config.OutDir
+		// flags
+		storageDir, _ := cmd.Flags().GetString("outDir")
 
 		genome, _ := cmd.Flags().GetString("genome")
 		genome = strings.TrimSuffix(genome, ".fasta")
-		genomeDir := config.AssemblyDir
+
+		genomeDir, _ := cmd.Flags().GetString("genomeDir")
 
 		library, _ := cmd.Flags().GetString("library")
-		libraryDir := config.LibraryDir
+
+		libraryDir, _ := cmd.Flags().GetString("libraryDir")
 
 		// lineBreaks
 		aux.LineBreaks()
@@ -79,7 +75,7 @@ var GenomeBlastCmd = &cobra.Command{
 
 		// shell call
 		commd := home + "/bin/goTools/sh/GenomeBlast.sh"
-		shCmd := exec.Command(commd, genome, genomeDir, library, libraryDir, outDir)
+		shCmd := exec.Command(commd, genome, genomeDir, library, libraryDir, storageDir)
 
 		// run
 		shCmd.Stdout = &stdout
@@ -98,7 +94,7 @@ var GenomeBlastCmd = &cobra.Command{
 			color.Println(color.Red(stderr.String(), color.B))
 		}
 
-		aux.FileReader(outDir + genome)
+		aux.FileReader(storageDir + genome)
 
 		// lineBreaks
 		aux.LineBreaks()
@@ -114,12 +110,22 @@ func init() {
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	// Flags
+	// flags
 	GenomeBlastCmd.Flags().StringP("genome", "g", "", "Genome to BLAST")
 	GenomeBlastCmd.MarkFlagRequired("genome")
+	viper.BindPFlag("genome", GenomeBlastCmd.Flags().Lookup("genome"))
+
+	GenomeBlastCmd.Flags().StringP("genomeDir", "G", "", "Genome directory")
+	GenomeBlastCmd.MarkFlagRequired("genomeDir")
+	viper.BindPFlag("genomeDir", GenomeBlastCmd.Flags().Lookup("genomeDir"))
 
 	GenomeBlastCmd.Flags().StringP("library", "l", "", "Library to BLAST against")
 	GenomeBlastCmd.MarkFlagRequired("library")
+	viper.BindPFlag("library", GenomeBlastCmd.Flags().Lookup("library"))
+
+	GenomeBlastCmd.Flags().StringP("libraryDir", "L", "", "Library directory")
+	GenomeBlastCmd.MarkFlagRequired("libraryDir")
+	viper.BindPFlag("libraryDir", GenomeBlastCmd.Flags().Lookup("libraryDir"))
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
