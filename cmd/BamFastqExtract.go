@@ -28,40 +28,34 @@ import (
 	"github.com/atrox/homedir"
 	"github.com/labstack/gommon/color"
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 )
 
 // BamFastqExtractCmd represents the BamFastqExtract command
 var BamFastqExtractCmd = &cobra.Command{
 	Use:   "BamFastqExtract",
 	Short: "Extract FASTQ from BAM files",
-	Long:  `BamFastqExtract dissects BAM files and retrieves FASTQ files`,
+	Long: `Daniel Rivas <danielrivasmd@gmail.com>
+
+BamFastqExtract dissects BAM files and retrieves FASTQ files`,
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	Run: func(cmd *cobra.Command, args []string) {
 
-		// Find home directory.
+		// find home directory.
 		home, errHomedir := homedir.Dir()
 		if errHomedir != nil {
 			fmt.Println(errHomedir)
 			os.Exit(1)
 		}
 
-		// read config
-		var config Config
-		errConf := viper.Unmarshal(&config)
-		if errConf != nil {
-			log.Fatalf("could not decode config into struct: %v", errConf)
-		}
-
-		// Flags
-		storageDir := config.StorageDir
+		// flags
+		storageDir, _ := cmd.Flags().GetString("outDir")
 
 		file, _ := cmd.Flags().GetString("file")
 		file = strings.TrimSuffix(file, ".bam")
 
-		directory, _ := cmd.Flags().GetString("directory")
+		directory, _ := cmd.Flags().GetString("inDir")
 
 		verbose, _ := cmd.Flags().GetString("verbose")
 
@@ -107,14 +101,9 @@ func init() {
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	// Flags
-	BamFastqExtractCmd.Flags().StringP("file", "f", "", "alignment file. bam format")
+	// flags
+	BamFastqExtractCmd.Flags().StringP("file", "f", "", "Alignment file. bam format")
 	BamFastqExtractCmd.MarkFlagRequired("file")
-
-	BamFastqExtractCmd.Flags().StringP("directory", "d", "", "directory")
-	BamFastqExtractCmd.MarkFlagRequired("directory")
-
-	BamFastqExtractCmd.Flags().StringP("verbose", "v", "false", "verbosity")
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
