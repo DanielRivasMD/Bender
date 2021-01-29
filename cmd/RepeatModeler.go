@@ -28,14 +28,15 @@ import (
 	"github.com/atrox/homedir"
 	"github.com/labstack/gommon/color"
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 )
 
 // RepeatModelerCmd represents the RepeatModeler command
 var RepeatModelerCmd = &cobra.Command{
 	Use:   "RepeatModeler",
 	Short: "Creates Repeat Library from assembly",
-	Long: `RepeatModeler creates Repeat Library from assembly using RepeatModeler v2.0.1.
+	Long: `Daniel Rivas <danielrivasmd@gmail.com>
+
+RepeatModeler creates Repeat Library from assembly using RepeatModeler v2.0.1.
 
 First, RepeatModeler builds a database.
 Next, RepeatModeler creates a libray`,
@@ -44,27 +45,20 @@ Next, RepeatModeler creates a libray`,
 
 	Run: func(cmd *cobra.Command, args []string) {
 
-		// Find home directory.
+		// find home directory.
 		home, errHomedir := homedir.Dir()
 		if errHomedir != nil {
 			fmt.Println(errHomedir)
 			os.Exit(1)
 		}
 
-		// read config
-		var config Config
-		errConf := viper.Unmarshal(&config)
-		if errConf != nil {
-			log.Fatalf("could not decode config into struct: %v", errConf)
-		}
-
-		// Flags
-		storageDir := config.StorageDir
+		// flags
+		storageDir, _ := cmd.Flags().GetString("outDir")
 
 		file, _ := cmd.Flags().GetString("reference")
 		file = strings.TrimSuffix(file, ".fa")
 
-		directory, _ := cmd.Flags().GetString("directory")
+		directory, _ := cmd.Flags().GetString("inDir")
 
 		verbose, _ := cmd.Flags().GetString("verbose")
 
@@ -110,14 +104,9 @@ func init() {
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	// Flags
-	RepeatModelerCmd.Flags().StringP("reference", "f", "", "reference file. fasta format")
+	// flags
+	RepeatModelerCmd.Flags().StringP("reference", "f", "", "Reference file. fasta format")
 	RepeatModelerCmd.MarkFlagRequired("reference")
-
-	RepeatModelerCmd.Flags().StringP("directory", "d", "", "directory")
-	RepeatModelerCmd.MarkFlagRequired("directory")
-
-	RepeatModelerCmd.Flags().StringP("verbose", "v", "false", "verbosity")
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
