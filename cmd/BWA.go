@@ -28,45 +28,36 @@ import (
 	"github.com/atrox/homedir"
 	"github.com/labstack/gommon/color"
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 )
 
 // BWACmd represents the BWA command
 var BWACmd = &cobra.Command{
 	Use:   "BWA",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "Align fasta using BWA",
+	Long: `Daniel Rivas <danielrivasmd@gmail.com>
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+BWA aligns fasta files to a reference genome.
+Additionally, BWA can perform quality control
+prealignment through FastX`,
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	Run: func(cmd *cobra.Command, args []string) {
 
-		// Find home directory.
+		// find home directory.
 		home, errHomedir := homedir.Dir()
 		if errHomedir != nil {
 			fmt.Println(errHomedir)
 			os.Exit(1)
 		}
 
-		// read config
-		var config Config
-		errConf := viper.Unmarshal(&config)
-		if errConf != nil {
-			log.Fatalf("could not decode config into struct: %v", errConf)
-		}
-
-		// Flags
-		storageDir := config.StorageDir
+		// flags
+		storageDir, _ := cmd.Flags().GetString("outDir")
 
 		file, _ := cmd.Flags().GetString("file")
 		file = strings.TrimSuffix(file, ".fa")
 
-		directory, _ := cmd.Flags().GetString("directory")
+		directory, _ := cmd.Flags().GetString("inDir")
 
 		verbose, _ := cmd.Flags().GetString("verbose")
 
@@ -112,14 +103,9 @@ func init() {
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	// Flags
-	BWACmd.Flags().StringP("file", "f", "", "file to align. fasta format")
+	// flags
+	BWACmd.Flags().StringP("file", "f", "", "File to align. fasta format")
 	BWACmd.MarkFlagRequired("file")
-
-	BWACmd.Flags().StringP("directory", "d", "", "directory")
-	BWACmd.MarkFlagRequired("directory")
-
-	BWACmd.Flags().StringP("verbose", "v", "false", "verbosity")
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
