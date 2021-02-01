@@ -31,13 +31,13 @@ var completionCmd = &cobra.Command{
 
 Bash:
 
-$ source <(Bender completion bash)
+$ source <(bender completion bash)
 
 # To load completions for each session, execute once:
 Linux:
-  $ Bender completion bash > /etc/bash_completion.d/Bender
+  $ bender completion bash > /etc/bash_completion.d/bender
 MacOS:
-  $ Bender completion bash > /usr/local/etc/bash_completion.d/Bender
+  $ bender completion bash > /usr/local/etc/bash_completion.d/bender
 
 Zsh:
 
@@ -47,23 +47,23 @@ Zsh:
 $ echo "autoload -U compinit; compinit" >> ~/.zshrc
 
 # To load completions for each session, execute once:
-$ Bender completion zsh > "${fpath[1]}/_Bender"
+$ bender completion zsh > "${fpath[1]}/_bender"
 
 # You will need to start a new shell for this setup to take effect.
 
 Fish:
 
-$ Bender completion fish | source
+$ bender completion fish | source
 
 # To load completions for each session, execute once:
-$ Bender completion fish > ~/.config/fish/completions/Bender.fish
+$ bender completion fish > ~/.config/fish/completions/bender.fish
 
 Powershell:
 
-PS> Bender completion powershell | Out-String | Invoke-Expression
+PS> bender completion powershell | Out-String | Invoke-Expression
 
 # To load completions for every new session, run:
-PS> Bender completion powershell > Bender.ps1
+PS> bender completion powershell > bender.ps1
 # and source this file from your powershell profile.
 `,
 	DisableFlagsInUseLine: true,

@@ -30,7 +30,7 @@ var cfgFile string
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 var rootCmd = &cobra.Command{
-	Use:   "Bender",
+	Use:   "bender",
 	Short: "A robot to handle Slurm Genomic jobs",
 	Long: `Daniel Rivas <danielrivasmd@gmail.com>
 
