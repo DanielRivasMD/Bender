@@ -11,7 +11,7 @@ storageDir=$4
 
 # load modules
 module load bioinfo-tools
-module load RepeatModeler
+module load RepeatModeler/2.0.1
 
 ################################################################################
 
