@@ -19,7 +19,6 @@ package cmd
 import (
 	"bytes"
 	"fmt"
-	"log"
 	"os"
 	"os/exec"
 
@@ -72,11 +71,7 @@ Bender HTSeq -f forDESeq`,
 		// run
 		shCmd.Stdout = &stdout
 		shCmd.Stderr = &stderr
-		err := shCmd.Run()
-
-		if err != nil {
-			log.Printf("error: %v\n", err)
-		}
+		_ = shCmd.Run()
 
 		// stdout
 		color.Println(color.Cyan(stdout.String(), color.B))

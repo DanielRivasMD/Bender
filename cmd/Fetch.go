@@ -19,7 +19,6 @@ package cmd
 import (
 	"bytes"
 	"fmt"
-	"log"
 	"os"
 	"os/exec"
 	"strings"
@@ -78,11 +77,7 @@ Bender SRA Fetch --inDir projPath/ --outDir logPath --file coolFileList.txt --it
 		// run
 		shCmd.Stdout = &stdout
 		shCmd.Stderr = &stderr
-		err := shCmd.Run()
-
-		if err != nil {
-			log.Printf("error: %v\n", err)
-		}
+		_ = shCmd.Run()
 
 		// stdout
 		color.Println(color.Cyan(stdout.String(), color.B))
