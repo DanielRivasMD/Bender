@@ -19,7 +19,6 @@ package cmd
 import (
 	"bytes"
 	"fmt"
-	"log"
 	"os"
 	"os/exec"
 	"strings"
@@ -55,14 +54,15 @@ TODO: fill up
 		// flags
 		storageDir, _ := cmd.Flags().GetString("outDir")
 
-		genome, _ := cmd.Flags().GetString("genome")
+		// bound flags
+		genome := viper.GetString("genome")
 		genome = strings.TrimSuffix(genome, ".fasta")
 
-		genomeDir, _ := cmd.Flags().GetString("genomeDir")
+		genomeDir := viper.GetString("genomeDir")
 
-		library, _ := cmd.Flags().GetString("library")
+		library := viper.GetString("library")
 
-		libraryDir, _ := cmd.Flags().GetString("libraryDir")
+		libraryDir := viper.GetString("libraryDir")
 
 		// lineBreaks
 		aux.LineBreaks()
@@ -78,11 +78,7 @@ TODO: fill up
 		// run
 		shCmd.Stdout = &stdout
 		shCmd.Stderr = &stderr
-		errShCmd := shCmd.Run()
-
-		if errShCmd != nil {
-			log.Printf("error: %v\n", errShCmd)
-		}
+		_ = shCmd.Run()
 
 		// stdout
 		color.Println(color.Cyan(stdout.String(), color.B))
@@ -109,20 +105,16 @@ func init() {
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// flags
-	GenomeLastCmd.Flags().StringP("genome", "g", "", "Genome to BLAST")
-	GenomeLastCmd.MarkFlagRequired("genome")
+	GenomeLastCmd.Flags().StringP("genome", "g", "", "Genome to LAST")
 	viper.BindPFlag("genome", GenomeLastCmd.Flags().Lookup("genome"))
 
 	GenomeLastCmd.Flags().StringP("genomeDir", "G", "", "Genome directory")
-	GenomeLastCmd.MarkFlagRequired("genomeDir")
 	viper.BindPFlag("genomeDir", GenomeLastCmd.Flags().Lookup("genomeDir"))
 
-	GenomeLastCmd.Flags().StringP("library", "l", "", "Library to BLAST against")
-	GenomeLastCmd.MarkFlagRequired("library")
+	GenomeLastCmd.Flags().StringP("library", "l", "", "Library to LAST against")
 	viper.BindPFlag("library", GenomeLastCmd.Flags().Lookup("library"))
 
 	GenomeLastCmd.Flags().StringP("libraryDir", "L", "", "Library directory")
-	GenomeLastCmd.MarkFlagRequired("libraryDir")
 	viper.BindPFlag("libraryDir", GenomeLastCmd.Flags().Lookup("libraryDir"))
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
