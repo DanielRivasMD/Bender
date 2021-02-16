@@ -57,12 +57,13 @@ Bender RepeatModeler -r phillipFry.fa`,
 		// flags
 		storageDir, _ := cmd.Flags().GetString("outDir")
 
-		file, _ := cmd.Flags().GetString("reference")
-		file = strings.TrimSuffix(file, ".fa")
-
 		directory, _ := cmd.Flags().GetString("inDir")
 
 		verbose, _ := cmd.Flags().GetString("verbose")
+
+		// bound flags
+		reference := viper.GetString("reference")
+		reference = strings.TrimSuffix(reference, ".fa")
 
 		// lineBreaks
 		aux.LineBreaks()
@@ -73,7 +74,7 @@ Bender RepeatModeler -r phillipFry.fa`,
 
 		// shell call
 		commd := home + "/bin/goTools/sh/RepeatModeler.sh"
-		shCmd := exec.Command(commd, file, directory, verbose, storageDir)
+		shCmd := exec.Command(commd, reference, directory, verbose, storageDir)
 
 		// run
 		shCmd.Stdout = &stdout
@@ -104,7 +105,6 @@ func init() {
 
 	// flags
 	RepeatModelerCmd.Flags().StringP("reference", "r", "", "Reference file. fasta format")
-	RepeatModelerCmd.MarkFlagRequired("reference")
 	viper.BindPFlag("reference", RepeatModelerCmd.Flags().Lookup("reference"))
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
