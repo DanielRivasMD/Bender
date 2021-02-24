@@ -24,7 +24,7 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/DanielRivasMD/Bender/aux"
+	"github.com/DanielRivasMD/Bender/auxiliary"
 	"github.com/atrox/homedir"
 	"github.com/labstack/gommon/color"
 	"github.com/spf13/cobra"
@@ -69,7 +69,7 @@ Bender GenomeBlast -l toQuery.fa -L findQuery/ -g toSearch.fa -G findSearch/`,
 		libraryDir, _ := cmd.Flags().GetString("libraryDir")
 
 		// lineBreaks
-		aux.LineBreaks()
+		auxiliary.LineBreaks()
 
 		// buffers
 		var stdout bytes.Buffer
@@ -96,10 +96,10 @@ Bender GenomeBlast -l toQuery.fa -L findQuery/ -g toSearch.fa -G findSearch/`,
 			color.Println(color.Red(stderr.String(), color.B))
 		}
 
-		aux.FileReader(storageDir + genome)
+		auxiliary.FileReader(storageDir + genome)
 
 		// lineBreaks
-		aux.LineBreaks()
+		auxiliary.LineBreaks()
 
 	},
 

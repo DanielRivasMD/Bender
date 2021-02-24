@@ -23,7 +23,7 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/DanielRivasMD/Bender/aux"
+	"github.com/DanielRivasMD/Bender/auxiliary"
 	"github.com/atrox/homedir"
 	"github.com/labstack/gommon/color"
 	"github.com/spf13/cobra"
@@ -61,7 +61,7 @@ Bender SRA Reconstruct --inDir projPath/ --outDir ReconstructPath --file coolBin
 		splitFiles, _ := cmd.Flags().GetString("split-files")
 
 		// lineBreaks
-		aux.LineBreaks()
+		auxiliary.LineBreaks()
 
 		// buffers
 		var stdout bytes.Buffer
@@ -89,7 +89,7 @@ Bender SRA Reconstruct --inDir projPath/ --outDir ReconstructPath --file coolBin
 			}
 
 		// lineBreaks
-		aux.LineBreaks()
+		auxiliary.LineBreaks()
 
 	},
 

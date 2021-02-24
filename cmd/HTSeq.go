@@ -22,7 +22,7 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/DanielRivasMD/Bender/aux"
+	"github.com/DanielRivasMD/Bender/auxiliary"
 	"github.com/atrox/homedir"
 	"github.com/labstack/gommon/color"
 	"github.com/spf13/cobra"
@@ -58,7 +58,7 @@ Bender HTSeq -f forDESeq`,
 		verbose, _ := cmd.Flags().GetString("verbose")
 
 		// lineBreaks
-		aux.LineBreaks()
+		auxiliary.LineBreaks()
 
 		// buffers
 		var stdout bytes.Buffer
@@ -82,7 +82,7 @@ Bender HTSeq -f forDESeq`,
 		}
 
 		// lineBreaks
-		aux.LineBreaks()
+		auxiliary.LineBreaks()
 
 	},
 

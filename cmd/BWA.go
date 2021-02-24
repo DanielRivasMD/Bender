@@ -23,7 +23,7 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/DanielRivasMD/Bender/aux"
+	"github.com/DanielRivasMD/Bender/auxiliary"
 	"github.com/atrox/homedir"
 	"github.com/labstack/gommon/color"
 	"github.com/spf13/cobra"
@@ -64,7 +64,7 @@ Bender BWA -f lastOneAlive.fa -r cyclops.fa`,
 		verbose, _ := cmd.Flags().GetString("verbose")
 
 		// lineBreaks
-		aux.LineBreaks()
+		auxiliary.LineBreaks()
 
 		// buffers
 		var stdout bytes.Buffer
@@ -88,7 +88,7 @@ Bender BWA -f lastOneAlive.fa -r cyclops.fa`,
 		}
 
 		// lineBreaks
-		aux.LineBreaks()
+		auxiliary.LineBreaks()
 
 	},
 

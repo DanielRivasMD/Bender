@@ -23,7 +23,7 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/DanielRivasMD/Bender/aux"
+	"github.com/DanielRivasMD/Bender/auxiliary"
 	"github.com/atrox/homedir"
 	"github.com/labstack/gommon/color"
 	"github.com/spf13/cobra"
@@ -66,7 +66,7 @@ Bender RepeatModeler -r phillipFry.fa`,
 		reference = strings.TrimSuffix(reference, ".fa")
 
 		// lineBreaks
-		aux.LineBreaks()
+		auxiliary.LineBreaks()
 
 		// buffers
 		var stdout bytes.Buffer
@@ -90,7 +90,7 @@ Bender RepeatModeler -r phillipFry.fa`,
 		}
 
 		// lineBreaks
-		aux.LineBreaks()
+		auxiliary.LineBreaks()
 
 	},
 
