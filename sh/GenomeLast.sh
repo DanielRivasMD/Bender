@@ -2,12 +2,12 @@
 
 ################################################################################
 
-preffixGenome=$1
+genome=$1
 genomeDir=$2
 library=$3
 libraryDir=$4
 outDir=$5
-dbDir=${outDir}db/
+dbDir=${outDir}/${genome}
 
 ################################################################################
 
@@ -33,30 +33,28 @@ fi
 
 ################################################################################
 
-# make database from nucleotide sequence
-if [[ ! -f ${dbDir}/${preffixGenome} ]]
-then
-  echo "Build LAST database => ${preffixGenome}"
-  # makeblastdb -in ${genomeDir}${preffixGenome}.fasta -dbtype nucl -out ${dbDir}${preffixGenome}
-  lastdb -q -c -R01 ${dbDir}/${preffixGenome} ${genomeDir}/${preffixGenome}
-fi
-
-################################################################################
-
-# use protein sequence as query to blast six reading frames
-echo "Blasting database..."
-# tblastn -query ${libraryDir}${library} -db ${dbDir}${preffixGenome} -out ${outDir}${preffixGenome}.out
-last-train --codon -X1 ${dbDir}/${preffixGenome} ${libraryDir}${library} > ${outDir}/train.out
-lastal -p ${outDir}/train.out -D1e9 -m100 -K1 ${dbDir}/${preffixGenome} ${libraryDir}/${library} > ${outDir}/out
-
-################################################################################
-
-# # purge filtered file
-# if [[ -f ${outDir}/${preffixGenome}.filtered.out ]]
+# TODO: add comments
+# if [[ ! -f ${dbDir}/${genome} ]]
 # then
-  # echo "Cleaning filtered..."
-  # ${outDir}/${preffixGenome}.filtered.out
+  echo "Build LAST database => ${genome}"
+  lastdb -q -c -R01 ${dbDir}/${genome} ${genomeDir}/${genome}.fasta
 # fi
 
 ################################################################################
 
+echo "Training database..."
+last-train --codon -X1 ${dbDir}/${genome} ${libraryDir}/${library} > ${dbDir}/${genome}.train.out
+
+echo "Lasting database..."
+lastal -p ${dbDir}/${genome}.train.out -D1e9 -m100 -K1 ${dbDir}/${genome} ${libraryDir}/${library} > ${dbDir}/${genome}.out
+
+################################################################################
+
+# # purge train file
+# if [[ -f ${dbDir}/${genome}.filtered.out ]]
+# then
+#   echo "Cleaning filtered..."
+#   ${dbDir}/${genome}.filtered.out
+# fi
+
+################################################################################
