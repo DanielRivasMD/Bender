@@ -43,7 +43,7 @@ GenomeBlast performs several operations:
 - Searches possible homology in an assembly
 - Formats output the values`,
 	Example: `
-Bender GenomeBlast -l toQuery.fa -L findQuery/ -g toSearch.fa -G findSearch/`,
+bender GenomeBlast -l toQuery.fa -L findQuery/ -g toSearch.fa -G findSearch/`,
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -56,17 +56,21 @@ Bender GenomeBlast -l toQuery.fa -L findQuery/ -g toSearch.fa -G findSearch/`,
 			os.Exit(1)
 		}
 
-		// flags
-		storageDir, _ := cmd.Flags().GetString("outDir")
+		// bound flags
+		outDir := viper.GetString("outDir")
 
-		genome, _ := cmd.Flags().GetString("genome")
+		// TODO: write function to select flag or config. patch on cobra / viper
+		genome := viper.GetString("genome")
+		if genome == "" {
+			genome, _ = cmd.Flags().GetString("genome")
+		}
 		genome = strings.TrimSuffix(genome, ".fasta")
 
-		genomeDir, _ := cmd.Flags().GetString("genomeDir")
+		genomeDir := viper.GetString("genomeDir")
 
-		library, _ := cmd.Flags().GetString("library")
+		library := viper.GetString("library")
 
-		libraryDir, _ := cmd.Flags().GetString("libraryDir")
+		libraryDir := viper.GetString("libraryDir")
 
 		// lineBreaks
 		auxiliary.LineBreaks()
@@ -77,7 +81,7 @@ Bender GenomeBlast -l toQuery.fa -L findQuery/ -g toSearch.fa -G findSearch/`,
 
 		// shell call
 		commd := home + "/bin/goTools/sh/GenomeBlast.sh"
-		shCmd := exec.Command(commd, genome, genomeDir, library, libraryDir, storageDir)
+		shCmd := exec.Command(commd, genome, genomeDir, library, libraryDir, outDir)
 
 		// run
 		shCmd.Stdout = &stdout
@@ -96,7 +100,7 @@ Bender GenomeBlast -l toQuery.fa -L findQuery/ -g toSearch.fa -G findSearch/`,
 			color.Println(color.Red(stderr.String(), color.B))
 		}
 
-		auxiliary.FileReader(storageDir + genome)
+		auxiliary.FileReader(outDir + genome)
 
 		// lineBreaks
 		auxiliary.LineBreaks()
@@ -114,19 +118,15 @@ func init() {
 
 	// flags
 	GenomeBlastCmd.Flags().StringP("genome", "g", "", "Genome to BLAST")
-	GenomeBlastCmd.MarkFlagRequired("genome")
 	viper.BindPFlag("genome", GenomeBlastCmd.Flags().Lookup("genome"))
 
 	GenomeBlastCmd.Flags().StringP("genomeDir", "G", "", "Genome directory")
-	GenomeBlastCmd.MarkFlagRequired("genomeDir")
 	viper.BindPFlag("genomeDir", GenomeBlastCmd.Flags().Lookup("genomeDir"))
 
 	GenomeBlastCmd.Flags().StringP("library", "l", "", "Library to BLAST against")
-	GenomeBlastCmd.MarkFlagRequired("library")
 	viper.BindPFlag("library", GenomeBlastCmd.Flags().Lookup("library"))
 
 	GenomeBlastCmd.Flags().StringP("libraryDir", "L", "", "Library directory")
-	GenomeBlastCmd.MarkFlagRequired("libraryDir")
 	viper.BindPFlag("libraryDir", GenomeBlastCmd.Flags().Lookup("libraryDir"))
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
