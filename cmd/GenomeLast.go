@@ -51,11 +51,13 @@ TODO: fill up
 			os.Exit(1)
 		}
 
-		// flags
-		storageDir, _ := cmd.Flags().GetString("outDir")
-
 		// bound flags
+		outDir := viper.GetString("outDir")
+
 		genome := viper.GetString("genome")
+		if genome == "" {
+			genome, _ = cmd.Flags().GetString("genome")
+		}
 		genome = strings.TrimSuffix(genome, ".fasta")
 
 		genomeDir := viper.GetString("genomeDir")
@@ -73,7 +75,7 @@ TODO: fill up
 
 		// shell call
 		commd := home + "/bin/goTools/sh/GenomeLast.sh"
-		shCmd := exec.Command(commd, genome, genomeDir, library, libraryDir, storageDir)
+		shCmd := exec.Command(commd, genome, genomeDir, library, libraryDir, outDir)
 
 		// run
 		shCmd.Stdout = &stdout
@@ -88,7 +90,7 @@ TODO: fill up
 			color.Println(color.Red(stderr.String(), color.B))
 		}
 
-		auxiliary.FileReader(storageDir + genome)
+		// auxiliary.FileReader(outDir + genome)
 
 		// lineBreaks
 		auxiliary.LineBreaks()
