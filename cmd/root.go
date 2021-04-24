@@ -18,14 +18,21 @@ package cmd
 
 import (
 	"fmt"
-	"log"
 	"os"
+	"strings"
 
 	"github.com/spf13/cobra"
+	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
 )
 
-var cfgFile string
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+var (
+	cfgPath     string
+	cfgFile     string
+	verboseBool string
+)
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -44,6 +51,17 @@ with built-in and accessible documentation`,
 	Version: "v0.2",
 	Example: `
 Bender help`,
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	PersistentPreRun: func(cmd *cobra.Command, arg []string) {
+
+		initializeConfig(cmd, cfgPath, strings.TrimSuffix(cfgFile, ".toml"))
+
+	},
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -58,20 +76,22 @@ func Execute() {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 func init() {
-	cobra.OnInitialize(initConfig)
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
+	// TODO: standarize flag order on call
 	// persistent flags
-	rootCmd.PersistentFlags().StringVarP(&cfgFile, "config", "c", "", "Config file")
+	rootCmd.PersistentFlags().StringVarP(&cfgPath, "configPath", "p", ".", "Path to config file")
 
-	rootCmd.PersistentFlags().StringP("inDir", "i", "", "Directory where input files are located")
-	viper.BindPFlag("inDir", rootCmd.PersistentFlags().Lookup("inDir"))
+	rootCmd.PersistentFlags().StringVarP(&cfgFile, "configFile", "c", "", "Config file")
 
-	rootCmd.PersistentFlags().StringP("outDir", "o", "", "Output directory. Creates if not exitst")
-	viper.BindPFlag("outDir", rootCmd.PersistentFlags().Lookup("outDir"))
+	// rootCmd.PersistentFlags().StringP("inDir", "i", "", "Directory where input files are located")
+	// viper.BindPFlag("inDir", rootCmd.PersistentFlags().Lookup("inDir"))
 
-	rootCmd.PersistentFlags().StringP("verbose", "v", "false", "Verbosity switch")
+	// rootCmd.PersistentFlags().StringP("outDir", "o", "", "Output directory. Creates if not exitst")
+	// viper.BindPFlag("outDir", rootCmd.PersistentFlags().Lookup("outDir"))
+
+	rootCmd.PersistentFlags().StringVarP(&verboseBool, "verbose", "v", "false", "Verbosity switch")
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -79,21 +99,43 @@ func init() {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-func initConfig() {
+func initializeConfig(cmd *cobra.Command, configPath string, configName string) error {
 
-	////////////////////////////////////////////////////////////////////////////////////////////////////
+	// initialize viper
+	v := viper.New()
 
-	if cfgFile != "" {
-		// use config file from the flag.
-		viper.SetConfigFile(cfgFile)
+	// collect config path & file from persistent flags
+	v.AddConfigPath(configPath)
+	v.SetConfigName(configName)
 
-		// error handler
-		err := viper.ReadInConfig()
-		if err != nil {
-			log.Fatalf("could not read config file: %v", err)
+	// read the config file
+	if err := v.ReadInConfig(); err != nil {
+		// okay if there isn't a config file
+		if _, ok := err.(viper.ConfigFileNotFoundError); !ok {
+			// return an error if we cannot parse the config file
+			return err
 		}
 	}
 
-	////////////////////////////////////////////////////////////////////////////////////////////////////
+	// bind flags to viper
+	bindFlags(cmd, v)
 
+	return nil
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// bind each cobra flag to its associated viper configuration
+func bindFlags(cmd *cobra.Command, v *viper.Viper) {
+
+	cmd.Flags().VisitAll(func(f *pflag.Flag) {
+
+		// apply the viper config value to the flag when the flag is not set and viper has a value
+		if !f.Changed && v.IsSet(f.Name) {
+			val := v.Get(f.Name)
+			cmd.Flags().Set(f.Name, fmt.Sprintf("%v", val))
+		}
+	})
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
