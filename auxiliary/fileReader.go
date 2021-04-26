@@ -58,7 +58,8 @@ func FileReader(preffixFile string) {
 				blast.gaps.numerator, _ = strconv.ParseFloat(strings.Split(records[11], "/")[0], 64)
 				blast.gaps.denominator, _ = strconv.ParseFloat(strings.Split(records[11], "/")[1], 64)
 
-				if blast.identities.denominator > 400 && (blast.identities.numerator/blast.identities.denominator) > 0.8 {
+				// if blast.identities.denominator > 400 && (blast.identities.numerator/blast.identities.denominator) > 0.8 {
+				if blast.identities.denominator > 400 && (blast.positives.numerator/blast.positives.denominator) > 0.8 {
 
 					fmt.Println(blast)
 					text := fmt.Sprintf("%g | %g\n", blast.identities.numerator, blast.identities.denominator)
