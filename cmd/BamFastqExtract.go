@@ -23,7 +23,6 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/DanielRivasMD/Bender/auxiliary"
 	"github.com/atrox/homedir"
 	"github.com/labstack/gommon/color"
 	"github.com/spf13/cobra"
@@ -62,7 +61,7 @@ Bender BamFastqExtract -f aCloneOfMyOwn.bam`,
 		verbose, _ := cmd.Flags().GetString("verbose")
 
 		// lineBreaks
-		auxiliary.LineBreaks()
+		lineBreaks()
 
 		// buffers
 		var stdout bytes.Buffer
@@ -86,7 +85,7 @@ Bender BamFastqExtract -f aCloneOfMyOwn.bam`,
 		}
 
 		// lineBreaks
-		auxiliary.LineBreaks()
+		lineBreaks()
 
 	},
 

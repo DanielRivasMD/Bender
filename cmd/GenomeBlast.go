@@ -24,7 +24,6 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/DanielRivasMD/Bender/auxiliary"
 	"github.com/atrox/homedir"
 	"github.com/labstack/gommon/color"
 	"github.com/spf13/cobra"
@@ -73,7 +72,7 @@ bender GenomeBlast -l toQuery.fa -L findQuery/ -g toSearch.fa -G findSearch/`,
 		libraryDir := viper.GetString("libraryDir")
 
 		// lineBreaks
-		auxiliary.LineBreaks()
+		lineBreaks()
 
 		// buffers
 		var stdout bytes.Buffer
@@ -103,7 +102,7 @@ bender GenomeBlast -l toQuery.fa -L findQuery/ -g toSearch.fa -G findSearch/`,
 		blastFilter(outDir + speciesBlast)
 
 		// lineBreaks
-		auxiliary.LineBreaks()
+		lineBreaks()
 
 	},
 

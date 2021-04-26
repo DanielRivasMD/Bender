@@ -23,7 +23,6 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/DanielRivasMD/Bender/auxiliary"
 	"github.com/atrox/homedir"
 	"github.com/labstack/gommon/color"
 	"github.com/spf13/cobra"
@@ -64,7 +63,7 @@ Bender SRA Fetch --inDir projPath/ --outDir logPath --file coolFileList.txt --it
 		maxSize, _ := cmd.Flags().GetString("max-size")
 
 		// lineBreaks
-		auxiliary.LineBreaks()
+		lineBreaks()
 
 		// buffers
 		var stdout bytes.Buffer
@@ -88,7 +87,7 @@ Bender SRA Fetch --inDir projPath/ --outDir logPath --file coolFileList.txt --it
 		}
 
 		// lineBreaks
-		auxiliary.LineBreaks()
+		lineBreaks()
 
 	},
 

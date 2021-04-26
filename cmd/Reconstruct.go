@@ -23,7 +23,6 @@ import (
 	"os"
 	"os/exec"
 
-	"github.com/DanielRivasMD/Bender/auxiliary"
 	"github.com/atrox/homedir"
 	"github.com/labstack/gommon/color"
 	"github.com/spf13/cobra"
@@ -61,35 +60,35 @@ Bender SRA Reconstruct --inDir projPath/ --outDir ReconstructPath --file coolBin
 		splitFiles, _ := cmd.Flags().GetString("split-files")
 
 		// lineBreaks
-		auxiliary.LineBreaks()
+		lineBreaks()
 
 		// buffers
 		var stdout bytes.Buffer
 		var stderr bytes.Buffer
 
-			// shell call
-			commd := home + "/bin/goTools/sh/SRAreconstruct.sh"
-			shCmd := exec.Command(commd, inDir, outDir, verbose, file, splitFiles)
+		// shell call
+		commd := home + "/bin/goTools/sh/SRAreconstruct.sh"
+		shCmd := exec.Command(commd, inDir, outDir, verbose, file, splitFiles)
 
-			// run
-			shCmd.Stdout = &stdout
-			shCmd.Stderr = &stderr
-			err := shCmd.Run()
+		// run
+		shCmd.Stdout = &stdout
+		shCmd.Stderr = &stderr
+		err := shCmd.Run()
 
-			if err != nil {
-				log.Printf("error: %v\n", err)
-			}
+		if err != nil {
+			log.Printf("error: %v\n", err)
+		}
 
-			// stdout
-			color.Println(color.Cyan(stdout.String(), color.B))
+		// stdout
+		color.Println(color.Cyan(stdout.String(), color.B))
 
-			// stderr
-			if stderr.String() != "" {
-				color.Println(color.Red(stderr.String(), color.B))
-			}
+		// stderr
+		if stderr.String() != "" {
+			color.Println(color.Red(stderr.String(), color.B))
+		}
 
 		// lineBreaks
-		auxiliary.LineBreaks()
+		lineBreaks()
 
 	},
 

@@ -23,7 +23,6 @@ import (
 	"os/exec"
 	"strings"
 
-	"github.com/DanielRivasMD/Bender/auxiliary"
 	"github.com/atrox/homedir"
 	"github.com/labstack/gommon/color"
 	"github.com/spf13/cobra"
@@ -67,7 +66,7 @@ TODO: fill up
 		libraryDir := viper.GetString("libraryDir")
 
 		// lineBreaks
-		auxiliary.LineBreaks()
+		lineBreaks()
 
 		// buffers
 		var stdout bytes.Buffer
@@ -93,7 +92,7 @@ TODO: fill up
 		// auxiliary.FileReader(outDir + genome)
 
 		// lineBreaks
-		auxiliary.LineBreaks()
+		lineBreaks()
 
 	},
 
