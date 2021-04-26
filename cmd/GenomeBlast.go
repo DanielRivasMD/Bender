@@ -22,13 +22,23 @@ import (
 	"log"
 	"os"
 	"os/exec"
-	"strings"
 
 	"github.com/atrox/homedir"
 	"github.com/labstack/gommon/color"
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 )
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+var (
+	assemblyBlast    string
+	assemblyDirBlast string
+	speciesBlast     string
+	libraryBlast     string
+	libraryDirBlast  string
+)
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // GenomeBlastCmd represents the GenomeBlast command
 var GenomeBlastCmd = &cobra.Command{
@@ -42,7 +52,7 @@ GenomeBlast performs several operations:
 - Searches possible homology in an assembly
 - Formats output the values`,
 	Example: `
-bender GenomeBlast -l toQuery.fa -L findQuery/ -g toSearch.fa -G findSearch/`,
+bender GenomeBlast -s SuperMouse -a toSearch.fa.gz -A findSearch -l toQuery.fa -L findQuery`,
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -55,22 +65,6 @@ bender GenomeBlast -l toQuery.fa -L findQuery/ -g toSearch.fa -G findSearch/`,
 			os.Exit(1)
 		}
 
-		// bound flags
-		outDir := viper.GetString("outDir")
-
-		// TODO: write function to select flag or config. patch on cobra / viper
-		genome := viper.GetString("genome")
-		if genome == "" {
-			genome, _ = cmd.Flags().GetString("genome")
-		}
-		genome = strings.TrimSuffix(genome, ".fasta")
-
-		genomeDir := viper.GetString("genomeDir")
-
-		library := viper.GetString("library")
-
-		libraryDir := viper.GetString("libraryDir")
-
 		// lineBreaks
 		lineBreaks()
 
@@ -80,7 +74,7 @@ bender GenomeBlast -l toQuery.fa -L findQuery/ -g toSearch.fa -G findSearch/`,
 
 		// shell call
 		commd := home + "/bin/goTools/sh/GenomeBlast.sh"
-		shCmd := exec.Command(commd, genome, genomeDir, library, libraryDir, outDir)
+		shCmd := exec.Command(commd, speciesBlast, assemblyBlast, assemblyDirBlast, libraryBlast, libraryDirBlast, outDir)
 
 		// run
 		shCmd.Stdout = &stdout
@@ -110,24 +104,22 @@ bender GenomeBlast -l toQuery.fa -L findQuery/ -g toSearch.fa -G findSearch/`,
 
 }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 func init() {
 	rootCmd.AddCommand(GenomeBlastCmd)
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// flags
-	GenomeBlastCmd.Flags().StringP("genome", "g", "", "Genome to BLAST")
-	viper.BindPFlag("genome", GenomeBlastCmd.Flags().Lookup("genome"))
-
-	GenomeBlastCmd.Flags().StringP("genomeDir", "G", "", "Genome directory")
-	viper.BindPFlag("genomeDir", GenomeBlastCmd.Flags().Lookup("genomeDir"))
-
-	GenomeBlastCmd.Flags().StringP("library", "l", "", "Library to BLAST against")
-	viper.BindPFlag("library", GenomeBlastCmd.Flags().Lookup("library"))
-
-	GenomeBlastCmd.Flags().StringP("libraryDir", "L", "", "Library directory")
-	viper.BindPFlag("libraryDir", GenomeBlastCmd.Flags().Lookup("libraryDir"))
+	GenomeBlastCmd.Flags().StringVarP(&speciesBlast, "species", "s", "", "Species")
+	GenomeBlastCmd.Flags().StringVarP(&assemblyBlast, "assembly", "a", "", "Assembly to BLAST")
+	GenomeBlastCmd.Flags().StringVarP(&assemblyDirBlast, "assemblyDir", "A", "", "Assembly directory")
+	GenomeBlastCmd.Flags().StringVarP(&libraryBlast, "library", "l", "", "Library to BLAST against")
+	GenomeBlastCmd.Flags().StringVarP(&libraryDirBlast, "libraryDir", "L", "", "Library directory")
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
