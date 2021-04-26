@@ -32,6 +32,8 @@ var (
 	cfgPath     string
 	cfgFile     string
 	verboseBool string
+	inDir       string
+	outDir      string
 )
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -79,18 +81,11 @@ func init() {
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	// TODO: standarize flag order on call
 	// persistent flags
-	rootCmd.PersistentFlags().StringVarP(&cfgPath, "configPath", "p", ".", "Path to config file")
-
 	rootCmd.PersistentFlags().StringVarP(&cfgFile, "configFile", "c", "", "Config file")
-
-	// rootCmd.PersistentFlags().StringP("inDir", "i", "", "Directory where input files are located")
-	// viper.BindPFlag("inDir", rootCmd.PersistentFlags().Lookup("inDir"))
-
-	// rootCmd.PersistentFlags().StringP("outDir", "o", "", "Output directory. Creates if not exitst")
-	// viper.BindPFlag("outDir", rootCmd.PersistentFlags().Lookup("outDir"))
-
+	rootCmd.PersistentFlags().StringVarP(&cfgPath, "configPath", "C", ".", "Path to config file")
+	rootCmd.PersistentFlags().StringVarP(&inDir, "inDir", "I", "", "Directory where input files are located")
+	rootCmd.PersistentFlags().StringVarP(&outDir, "outDir", "O", "", "Output directory. Creates if not exitst")
 	rootCmd.PersistentFlags().StringVarP(&verboseBool, "verbose", "v", "false", "Verbosity switch")
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
