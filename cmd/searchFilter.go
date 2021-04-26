@@ -1,6 +1,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-package auxiliary
+package cmd
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -15,20 +15,20 @@ import (
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-type Ratio struct {
+type ratio struct {
 	numerator   float64
 	denominator float64
 }
 
-type Blast struct {
-	identities Ratio
-	positives  Ratio
-	gaps       Ratio
+type blast struct {
+	identities ratio
+	positives  ratio
+	gaps       ratio
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-func FileReader(preffixFile string) {
+func blastFilter(preffixFile string) {
 
 	// open an input file, exit on error
 	inputFile, readErr := os.Open(preffixFile + ".out")
@@ -46,7 +46,7 @@ func FileReader(preffixFile string) {
 		// filter results
 		// TODO: record location & identity
 		if len(records) > 1 {
-			var blast Blast
+			var blast blast
 			if strings.Contains(records[1], "Identities") {
 
 				blast.identities.numerator, _ = strconv.ParseFloat(strings.Split(records[3], "/")[0], 64)

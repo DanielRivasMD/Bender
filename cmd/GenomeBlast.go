@@ -100,7 +100,7 @@ bender GenomeBlast -l toQuery.fa -L findQuery/ -g toSearch.fa -G findSearch/`,
 			color.Println(color.Red(stderr.String(), color.B))
 		}
 
-		auxiliary.FileReader(outDir + genome)
+		blastFilter(outDir + speciesBlast)
 
 		// lineBreaks
 		auxiliary.LineBreaks()
