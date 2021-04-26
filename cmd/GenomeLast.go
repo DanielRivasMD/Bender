@@ -21,13 +21,23 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
-	"strings"
 
 	"github.com/atrox/homedir"
 	"github.com/labstack/gommon/color"
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 )
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+var (
+	assemblyLast    string
+	assemblyDirLast string
+	speciesLast     string
+	libraryLast     string
+	libraryDirLast  string
+)
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // GenomeLastCmd represents the GenomeLast command
 var GenomeLastCmd = &cobra.Command{
@@ -50,21 +60,6 @@ TODO: fill up
 			os.Exit(1)
 		}
 
-		// bound flags
-		outDir := viper.GetString("outDir")
-
-		genome := viper.GetString("genome")
-		if genome == "" {
-			genome, _ = cmd.Flags().GetString("genome")
-		}
-		genome = strings.TrimSuffix(genome, ".fasta")
-
-		genomeDir := viper.GetString("genomeDir")
-
-		library := viper.GetString("library")
-
-		libraryDir := viper.GetString("libraryDir")
-
 		// lineBreaks
 		lineBreaks()
 
@@ -74,7 +69,7 @@ TODO: fill up
 
 		// shell call
 		commd := home + "/bin/goTools/sh/GenomeLast.sh"
-		shCmd := exec.Command(commd, genome, genomeDir, library, libraryDir, outDir)
+		shCmd := exec.Command(commd, speciesLast, assemblyLast, assemblyDirLast, libraryLast, libraryDirLast, outDir)
 
 		// run
 		shCmd.Stdout = &stdout
@@ -89,7 +84,8 @@ TODO: fill up
 			color.Println(color.Red(stderr.String(), color.B))
 		}
 
-		// auxiliary.FileReader(outDir + genome)
+		// TODO: filter records after check
+		// // filter records
 
 		// lineBreaks
 		lineBreaks()
@@ -106,18 +102,14 @@ func init() {
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// flags
-	GenomeLastCmd.Flags().StringP("genome", "g", "", "Genome to LAST")
-	viper.BindPFlag("genome", GenomeLastCmd.Flags().Lookup("genome"))
-
-	GenomeLastCmd.Flags().StringP("genomeDir", "G", "", "Genome directory")
-	viper.BindPFlag("genomeDir", GenomeLastCmd.Flags().Lookup("genomeDir"))
-
-	GenomeLastCmd.Flags().StringP("library", "l", "", "Library to LAST against")
-	viper.BindPFlag("library", GenomeLastCmd.Flags().Lookup("library"))
-
-	GenomeLastCmd.Flags().StringP("libraryDir", "L", "", "Library directory")
-	viper.BindPFlag("libraryDir", GenomeLastCmd.Flags().Lookup("libraryDir"))
+	GenomeLastCmd.Flags().StringVarP(&speciesLast, "species", "s", "", "Species")
+	GenomeLastCmd.Flags().StringVarP(&assemblyLast, "assembly", "a", "", "Assembly to Last")
+	GenomeLastCmd.Flags().StringVarP(&assemblyDirLast, "assemblyDir", "A", "", "Assembly directory")
+	GenomeLastCmd.Flags().StringVarP(&libraryLast, "library", "l", "", "Library to Last against")
+	GenomeLastCmd.Flags().StringVarP(&libraryDirLast, "libraryDir", "L", "", "Library directory")
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
