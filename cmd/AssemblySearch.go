@@ -21,6 +21,7 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"strings"
 
 	"github.com/atrox/homedir"
 	"github.com/labstack/gommon/color"
@@ -65,6 +66,10 @@ to quickly create a Cobra application.`,
 			fmt.Println(errHomedir)
 			os.Exit(1)
 		}
+
+		// trim suffixes
+		library = strings.TrimSuffix(library, ".fasta")
+		assembly = strings.TrimSuffix(assembly, ".fasta.gz")
 
 		// lineBreaks
 		lineBreaks()
