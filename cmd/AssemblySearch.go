@@ -53,7 +53,7 @@ to quickly create a Cobra application.`,
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	ValidArgs: []string{"blast", "diamond", "last"},
+	ValidArgs: []string{"blast", "diamond"},
 	Args:      cobra.ExactValidArgs(1),
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -84,8 +84,6 @@ to quickly create a Cobra application.`,
 			searchType = "GenomeBlast.sh"
 		case "diamond":
 			searchType = "GenomeDiamond.sh"
-		case "last":
-			searchType = "GenomeLast.sh"
 		}
 
 		// shell call
