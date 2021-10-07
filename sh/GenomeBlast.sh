@@ -2,12 +2,13 @@
 
 ################################################################################
 
-genome=$1
-genomeDir=$2
-library=$3
-libraryDir=$4
-dbDir=$5
-dbDir=${outDir}/${genome}
+species=$1
+assembly=$2
+assemblyDir=$3
+library=$4
+libraryDir=$5
+outDir=$6
+dbDir=${outDir}/${species}
 
 ################################################################################
 
@@ -20,25 +21,24 @@ fi
 ################################################################################
 
 # make database from nucleotide sequence
-if [[ ! -f ${dbDir}/${genome} ]]
+if [[ ! -f ${dbDir}/${species} ]]
 then
-  echo "Build BLAST database => ${genome}"
-  makeblastdb -in ${genomeDir}/${genome}.fasta -dbtype nucl -out ${dbDir}/${genome}
+  echo "Build BLAST database => ${species}"
+  gzip -dc ${assemblyDir}/${assembly} | \
+    makeblastdb \
+      -in - \
+      -dbtype nucl \
+      -out ${dbDir}/${species} \
+      -title ${species}
 fi
 
 ################################################################################
 
 # use protein sequence as query to blast six reading frames
 echo "Blasting database..."
-tblastn -query ${libraryDir}/${library} -db ${dbDir}/${genome} -out ${dbDir}/${genome}.out
-
-################################################################################
-
-# purge filtered file
-if [[ -f ${dbDir}/${genome}.filtered.out ]]
-then
-  echo "Cleaning filtered..."
-  ${dbDir}/${genome}.filtered.out
-fi
+tblastn \
+  -query ${libraryDir}/${library} \
+  -db ${dbDir}/${species} \
+  -out ${dbDir}/${species}.out
 
 ################################################################################
