@@ -26,6 +26,7 @@ import (
 	"github.com/atrox/homedir"
 	"github.com/labstack/gommon/color"
 	"github.com/spf13/cobra"
+	"github.com/ttacon/chalk"
 )
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -43,13 +44,22 @@ var (
 // AssemblySearchCmd represents the AssemblySearch command
 var AssemblySearchCmd = &cobra.Command{
 	Use:   "AssemblySearch",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "Perform similarity search.",
+	Long: `Daniel Rivas <danielrivasmd@gmail.com>
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+Perform similarity search on assemblies
+using different tools, i.e., blast, diamond.
+
+First, create database.
+Next, execute similarity search.
+`,
+
+	Example: `
+` + chalk.Cyan.Color("bender") + ` AssemblySearch ` + chalk.Yellow.Color("diamond") + `
+  --configPath willLeadToConfig/
+  --configFile foundConfig.toml
+  --species awesomeSapiens
+  --assembly aweSap01.fa`,
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 

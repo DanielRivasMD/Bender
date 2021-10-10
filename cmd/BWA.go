@@ -27,19 +27,22 @@ import (
 	"github.com/labstack/gommon/color"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"github.com/ttacon/chalk"
 )
 
 // BWACmd represents the BWA command
 var BWACmd = &cobra.Command{
 	Use:   "BWA",
-	Short: "Align fasta using BWA",
+	Short: "Align fasta using BWA.",
 	Long: `Daniel Rivas <danielrivasmd@gmail.com>
 
-BWA aligns fasta files to a reference genome.
-Additionally, BWA can perform quality control
-prealignment through FastX`,
+Aligns fasta files to a reference genome.
+Additionally, perform quality control
+prealignment through FastX.
+`,
+
 	Example: `
-Bender BWA -f lastOneAlive.fa -r cyclops.fa`,
+` + chalk.Cyan.Color("bender") + ` BWA -f lastOneAlive.fa -r cyclops.fa`,
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 

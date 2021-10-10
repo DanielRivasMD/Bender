@@ -27,19 +27,21 @@ import (
 	"github.com/labstack/gommon/color"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"github.com/ttacon/chalk"
 )
 
 // FetchCmd represents the Fetch command
 var FetchCmd = &cobra.Command{
 	Use:   "Fetch",
-	Short: "Fetch SRA accessions",
+	Short: "Fetch SRA accessions.",
 	Long: `Daniel Rivas <danielrivasmd@gmail.com>
 
-SRA Fetch collects files from Short Read Archive (SRA)
-and checks the state of the downloads`,
+Collect files from Short Read Archive (SRA)
+and check the state of the downloads.
+`,
 
 	Example: `
-Bender SRA Fetch --inDir projPath/ --outDir logPath --file coolFileList.txt --iterations 20 --max-size 35G`,
+` + chalk.Cyan.Color("bender") + ` SRA Fetch --inDir projPath/ --outDir logPath --file coolFileList.txt --iterations 20 --max-size 35G`,
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 

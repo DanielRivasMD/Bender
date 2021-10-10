@@ -27,17 +27,20 @@ import (
 	"github.com/labstack/gommon/color"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"github.com/ttacon/chalk"
 )
 
 // BamFastqExtractCmd represents the BamFastqExtract command
 var BamFastqExtractCmd = &cobra.Command{
 	Use:   "BamFastqExtract",
-	Short: "Extract FASTQ from BAM files",
+	Short: "Extract FASTQ from BAM files.",
 	Long: `Daniel Rivas <danielrivasmd@gmail.com>
 
-BamFastqExtract dissects BAM files and retrieves FASTQ files`,
+Dissect BAM files and retrieve FASTQ files.
+`,
+
 	Example: `
-Bender BamFastqExtract -f aCloneOfMyOwn.bam`,
+` + chalk.Cyan.Color("bender") + ` BamFastqExtract -f aCloneOfMyOwn.bam`,
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 

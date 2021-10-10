@@ -27,18 +27,20 @@ import (
 	"github.com/labstack/gommon/color"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"github.com/ttacon/chalk"
 )
 
 // ReconstructCmd represents the Reconstruct command
 var ReconstructCmd = &cobra.Command{
 	Use:   "Reconstruct",
-	Short: "Reconstruct SRA binaries",
+	Short: "Reconstruct SRA binaries.",
 	Long: `Daniel Rivas <danielrivasmd@gmail.com>
 
-SRA reconstruct binary SRA files to fastq
+Reconstruct binary SRA files to fastq.
 `,
+
 	Example: `
-Bender SRA Reconstruct --inDir projPath/ --outDir ReconstructPath --file coolBinaryList.txt --split-files`,
+` + chalk.Cyan.Color("bender") + ` SRA Reconstruct --inDir projPath/ --outDir ReconstructPath --file coolBinaryList.txt --split-files`,
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 

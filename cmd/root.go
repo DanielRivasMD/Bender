@@ -24,6 +24,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
+	"github.com/ttacon/chalk"
 )
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -39,20 +40,22 @@ var (
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 var rootCmd = &cobra.Command{
-	Use:   "bender",
-	Short: "A robot to handle Slurm Genomic jobs",
+	Use:     "bender",
+	Version: "v0.3",
+	Short:   "A robot to handle Slurm Genomic jobs",
 	Long: `Daniel Rivas <danielrivasmd@gmail.com>
 
 "Good news everyone!"
-Bender is a robot for automation on
+` + chalk.Green.Color("Bender") + ` is a robot for automation on
 Genomic jobs in Slurm systems.
-"It's highly addictive!"
+` + chalk.Magenta.Color("It's highly addictive!") + `
 
-Bender creates a convinient command line interphase
-with built-in and accessible documentation`,
-	Version: "v0.3",
+` + chalk.Green.Color("Bender") + ` creates a convenient command line interphase
+with built-in and accessible documentation.
+`,
+
 	Example: `
-bender help`,
+` + chalk.Cyan.Color("bender") + ` help`,
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -18,20 +18,23 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
+	"github.com/ttacon/chalk"
 )
 
 // SRACmd represents the SRA command
 var SRACmd = &cobra.Command{
 	Use:   "SRA",
-	Short: "Handles SRA operations",
+	Short: "Handles SRA operations.",
 	Long: `Daniel Rivas <danielrivasmd@gmail.com>
 
-SRA fetch collects files from Short Read Archive (SRA)
-and checks the state of the downloads
+Collect files from Short Read Archive (SRA)
+and check the state of the downloads.
 
-SRA reconstruct binary SRA files to fastq`,
+Reconstruct binary SRA files to fastq.
+`,
+
 	Example: `
-Bender SRA help`,
+` + chalk.Cyan.Color("bender") + ` SRA help`,
 }
 
 func init() {

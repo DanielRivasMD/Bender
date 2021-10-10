@@ -1,3 +1,4 @@
+<!-- TODO: update documation -->
 
 ## Bender is a set of Genomic tools for deployment on Slurm managed systems
 
@@ -7,18 +8,19 @@
 
 ## Table of contents
 
-- [Overview](#overview)
-- [Installation](#installation)
-  - [Homebrew](#via-homebrew-for-macos)
-  - [APT](#via-apt-for-debian-based-linux-distros)
-  - [GitHub](#from-github-release)
-- [Documentation](#documentation)
-  - [Usage](#usage)
-- [Examples](#examples)
-  - [Config](#example-bender-config)
-- [For the curious](#bender-for-the-curious)
-- [Acknowledgements](#acknowledgements)
-- [License](#license)
+  - [Table of contents](#table-of-contents)
+  - [Overview](#overview)
+  - [Installation](#installation)
+    - [Via Homebrew (for macOS)](#via-homebrew-for-macos)
+    - [Via APT (for Debian-based Linux distros)](#via-apt-for-debian-based-linux-distros)
+    - [From Github release](#from-github-release)
+  - [Documentation](#documentation)
+    - [Usage](#usage)
+  - [Examples](#examples)
+    - [Example `bender` config](#example-bender-config)
+  - [_Bender_ for the curious](#bender-for-the-curious)
+  - [Acknowledgements](#acknowledgements)
+  - [License](#license)
 
 
 ## Overview
@@ -37,7 +39,7 @@ Prerequisites:
 - [Homebrew](https://brew.sh/)
 
 ```
-brew install danielrivasmd/bender
+brew install danielrivasmd/Bender
 ```
 
 
@@ -81,16 +83,16 @@ Bender creates a convinient command line interphase
 with built-in and accessible documentation
 
 Usage:
-  Bender [command]
+  bender [command]
 
 Available Commands:
-  help            Help about any command
+  help                  Help about any command
 
 Flags:
   -h, --help            help for Bender
   -o, --outDir string   Output directory. creates if not exitst
 
-Use "Bender [command] --help" for more information about a command.
+Use "bender [command] --help" for more information about a command.
 ```
 
 

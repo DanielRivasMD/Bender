@@ -27,20 +27,23 @@ import (
 	"github.com/labstack/gommon/color"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"github.com/ttacon/chalk"
 )
 
 // RepeatModelerCmd represents the RepeatModeler command
 var RepeatModelerCmd = &cobra.Command{
 	Use:   "RepeatModeler",
-	Short: "Creates Repeat Library from assembly",
+	Short: "Create Repeat Library from assembly.",
 	Long: `Daniel Rivas <danielrivasmd@gmail.com>
 
-RepeatModeler creates Repeat Library from assembly using RepeatModeler v2.0.1.
+Create Repeat Library from assembly using RepeatModeler v2.0.1.
 
-First, RepeatModeler builds a database.
-Next, RepeatModeler creates a libray`,
+First, build a database.
+Next, create a libray.
+`,
+
 	Example: `
-Bender RepeatModeler -r phillipFry.fa`,
+` + chalk.Cyan.Color("bender") + ` RepeatModeler -r phillipFry.fa`,
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 

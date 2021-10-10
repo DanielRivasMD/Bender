@@ -26,19 +26,22 @@ import (
 	"github.com/labstack/gommon/color"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"github.com/ttacon/chalk"
 )
 
 // HTSeqCmd represents the HTSeq command
 var HTSeqCmd = &cobra.Command{
 	Use:   "HTSeq",
-	Short: "Wrapper for HTSeq",
+	Short: "Wrapper for HTSeq.",
 	Long: `Daniel Rivas <danielrivasmd@gmail.com>
 
-HTSeq wraps the namesake python package,
-which is a command line tool application for
-processing high-throughput sequencing data`,
+Wrap HTSeq python package,
+a command line tool application for
+processing high-throughput sequencing data.
+`,
+
 	Example: `
-Bender HTSeq -f forDESeq`,
+` + chalk.Cyan.Color("bender") + ` HTSeq -f forDESeq`,
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
