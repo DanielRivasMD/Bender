@@ -96,7 +96,7 @@ Next, execute similarity search.
 
 		// shell call
 		commd := home + "/bin/goTools/sh/" + searchType
-		shCmd := exec.Command(commd, species, assemblyT, inDir, library, libraryDir, outDir)
+		shCmd := exec.Command(commd, species, assemblyT, assemblyDir, library, libraryDir, outDir)
 
 		// run
 		shCmd.Stdout = &stdout
