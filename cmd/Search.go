@@ -32,18 +32,16 @@ import (
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 var (
-	assembly    string
-	assemblyDir string
-	species     string
-	library     string
-	libraryDir  string
+	species    string
+	library    string
+	libraryDir string
 )
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// AssemblySearchCmd represents the AssemblySearch command
-var AssemblySearchCmd = &cobra.Command{
-	Use:   "AssemblySearch",
+// SearchCmd represents the Search command
+var SearchCmd = &cobra.Command{
+	Use:   "Search",
 	Short: "Perform similarity search.",
 	Long: `Daniel Rivas <danielrivasmd@gmail.com>
 
@@ -55,11 +53,11 @@ Next, execute similarity search.
 `,
 
 	Example: `
-` + chalk.Cyan.Color("bender") + ` AssemblySearch ` + chalk.Yellow.Color("diamond") + `
+` + chalk.Cyan.Color("bender") + ` Assembly Search ` + chalk.Yellow.Color("diamond") + `
   --configPath willLeadToConfig/
   --configFile foundConfig.toml
-  --species awesomeSapiens
-  --assembly aweSap01.fa`,
+  --assembly aweSap01.fa
+  --species awesomeSapiens`,
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -79,7 +77,7 @@ Next, execute similarity search.
 
 		// trim suffixes
 		library = strings.TrimSuffix(library, ".fasta")
-		assembly = strings.TrimSuffix(assembly, ".fasta.gz")
+		assemblyT := strings.TrimSuffix(assembly, ".fasta.gz")
 
 		// lineBreaks
 		lineBreaks()
@@ -98,7 +96,7 @@ Next, execute similarity search.
 
 		// shell call
 		commd := home + "/bin/goTools/sh/" + searchType
-		shCmd := exec.Command(commd, species, assembly, assemblyDir, library, libraryDir, outDir)
+		shCmd := exec.Command(commd, species, assemblyT, inDir, library, libraryDir, outDir)
 
 		// run
 		shCmd.Stdout = &stdout
@@ -117,6 +115,7 @@ Next, execute similarity search.
 		lineBreaks()
 
 	},
+
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }
@@ -124,16 +123,14 @@ Next, execute similarity search.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 func init() {
-	rootCmd.AddCommand(AssemblySearchCmd)
+	AssemblyCmd.AddCommand(SearchCmd)
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// flags
-	AssemblySearchCmd.Flags().StringVarP(&species, "species", "s", "", "Species")
-	AssemblySearchCmd.Flags().StringVarP(&assembly, "assembly", "a", "", "Assembly to search")
-	AssemblySearchCmd.Flags().StringVarP(&assemblyDir, "assemblyDir", "A", "", "Assembly directory")
-	AssemblySearchCmd.Flags().StringVarP(&library, "library", "l", "", "Library to search against")
-	AssemblySearchCmd.Flags().StringVarP(&libraryDir, "libraryDir", "L", "", "Library directory")
+	SearchCmd.Flags().StringVarP(&species, "species", "s", "", "Species")
+	SearchCmd.Flags().StringVarP(&library, "library", "l", "", "Library to search against")
+	SearchCmd.Flags().StringVarP(&libraryDir, "libraryDir", "L", "", "Library directory")
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
