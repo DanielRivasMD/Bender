@@ -32,7 +32,6 @@ import (
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 var (
-	species    string
 	library    string
 	libraryDir string
 )
@@ -128,7 +127,6 @@ func init() {
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// flags
-	SearchCmd.Flags().StringVarP(&species, "species", "s", "", "Species")
 	SearchCmd.Flags().StringVarP(&library, "library", "l", "", "Library to search against")
 	SearchCmd.Flags().StringVarP(&libraryDir, "libraryDir", "L", "", "Library directory")
 

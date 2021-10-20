@@ -27,6 +27,7 @@ import (
 var (
 	assembly    string
 	assemblyDir string
+	species     string
 )
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -63,6 +64,7 @@ func init() {
 	// persistent flags
 	AssemblyCmd.PersistentFlags().StringVarP(&assembly, "assembly", "a", "", "Assembly")
 	AssemblyCmd.PersistentFlags().StringVarP(&assemblyDir, "assemblyDir", "A", "", "Assembly directory")
+	AssemblyCmd.PersistentFlags().StringVarP(&species, "species", "s", "", "Species")
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
