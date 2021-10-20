@@ -1,11 +1,12 @@
 #!/bin/bash
+set -euo pipefail
 
 ################################################################################
 
 species=$1
-assembly=$2
-assemblyDir=$3
-library=$4
+assemblyT=$2
+inDir=$3
+libraryT=$4
 libraryDir=$5
 outDir=$6
 dbDir=${outDir}/${species}
@@ -21,24 +22,24 @@ fi
 ################################################################################
 
 # make database from syncytin protein sequence
-if [[ ! -f ${libraryDir}/${library}.dmnd ]]
+if [[ ! -f ${libraryDir}/${libraryT}.dmnd ]]
 then
   echo "Build Diamond database => ${species}"
   diamond makedb \
-    --in ${libraryDir}/${library}.fasta \
-    --db ${libraryDir}/${library}.dmnd
+    --in ${libraryDir}/${libraryT}.fasta \
+    --db ${libraryDir}/${libraryT}.dmnd
 fi
 
 ################################################################################
 
 # use assembly as query with six reading frames
 echo "Searching diamond database..."
-gzip --decompress --stdout ${assemblyDir}/${assembly}.fasta.gz | \
+gzip --decompress --stdout ${inDir}/${assemblyT}.fasta.gz | \
   diamond blastx \
-    --db ${libraryDir}/${library}.dmnd \
+    --db ${libraryDir}/${libraryT}.dmnd \
     --query - \
     --frameshift 15 \
-    --block-size 5 \
+    --block-size 6 \
     --index-chunks 1 \
     --out ${dbDir}/${species}.tsv
 

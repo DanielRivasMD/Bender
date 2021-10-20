@@ -75,7 +75,7 @@ Next, execute similarity search.
 		}
 
 		// trim suffixes
-		library = strings.TrimSuffix(library, ".fasta")
+		libraryT := strings.TrimSuffix(library, ".fasta")
 		assemblyT := strings.TrimSuffix(assembly, ".fasta.gz")
 
 		// lineBreaks
@@ -95,7 +95,7 @@ Next, execute similarity search.
 
 		// shell call
 		commd := home + "/bin/goTools/sh/" + searchType
-		shCmd := exec.Command(commd, species, assemblyT, assemblyDir, library, libraryDir, outDir)
+		shCmd := exec.Command(commd, species, assemblyT, inDir, libraryT, libraryDir, outDir)
 
 		// run
 		shCmd.Stdout = &stdout
