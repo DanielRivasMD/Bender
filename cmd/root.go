@@ -87,8 +87,8 @@ func init() {
 	// persistent flags
 	rootCmd.PersistentFlags().StringVarP(&cfgFile, "configFile", "c", "", "Config file")
 	rootCmd.PersistentFlags().StringVarP(&cfgPath, "configPath", "C", ".", "Path to config file")
-	rootCmd.PersistentFlags().StringVarP(&inDir, "inDir", "I", "", "Directory where input files are located")
-	rootCmd.PersistentFlags().StringVarP(&outDir, "outDir", "O", "", "Output directory. Creates if not exitst")
+	rootCmd.PersistentFlags().StringVarP(&inDir, "inDir", "I", ".", "Directory where input files are located")
+	rootCmd.PersistentFlags().StringVarP(&outDir, "outDir", "O", ".", "Output directory. Creates if not exitst")
 	rootCmd.PersistentFlags().StringVarP(&verboseBool, "verbose", "v", "false", "Verbosity switch")
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
