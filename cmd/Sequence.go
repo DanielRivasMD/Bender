@@ -37,29 +37,27 @@ import (
 
 // declarations
 var (
-	fileOut  string     // infered from input
-	syncytin identified // identified struct
-	scaffold string
-	start    float64
-	end      float64
-	suffix   string
-	hood     int64
+	syncytin   identified // identified struct
+	scaffoldID string
+	startCoor  float64
+	endCoor    float64
+	hood       float64
 )
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // syncytin features
 type identified struct {
-	scaffold  string
-	positions position
+	scaffoldIdent string
+	positionIdent position
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // positions
 type position struct {
-	start float64
-	end   float64
+	startPos float64
+	endPos   float64
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -82,16 +80,18 @@ to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 
 		// scaffold
-		syncytin.scaffold = scaffold
+		syncytin.scaffoldIdent = scaffoldID
 
 		// positions
-		syncytin.positions.parseMinMax(start, end)
+		syncytin.positionIdent.minMax(startCoor, endCoor)
 
 		// declare file output
-		fileOut = defineOut(assembly, suffix)
+		if outFile == "" {
+			outFile = sequenceOut(species)
+		}
 
 		// execute logic
-		collectCoordinates(inDir + "/" + "DNAzoo" + "/" + assembly)
+		collectCoordinates(inDir + "/" + species)
 
 	},
 
@@ -101,43 +101,53 @@ to quickly create a Cobra application.`,
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// define output file
-func defineOut(readFile, suffix string) string {
+func init() {
+	AssemblyCmd.AddCommand(SequenceCmd)
 
-	var path string
-	if suffix == "" {
-		path = "candidate"
-	} else {
-		path = "insertion"
-	}
+	////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	fileOut = readFile
-	reg := regexp.MustCompile(`HiC*`)
-	res := reg.FindStringIndex(fileOut)
-	fileOut = fileOut[0:res[0]]
+	// flags
+	SequenceCmd.Flags().StringVarP(&scaffoldID, "scaffold", "S", "", "Scaffold ID")
+	SequenceCmd.Flags().Float64VarP(&startCoor, "start", "b", 0., "Start coordinate")
+	SequenceCmd.Flags().Float64VarP(&endCoor, "end", "e", 0., "End coordinate")
+	SequenceCmd.Flags().Float64VarP(&hood, "hood", "n", 20000, "Neighborhood to look into")
 
-	fileOut = inDir + "/" + path + "/" +
-		fileOut +
-		syncytin.scaffold + "_" +
-		strconv.FormatFloat(syncytin.positions.start, 'f', 0, 64) + "_" +
-		strconv.FormatFloat(syncytin.positions.end, 'f', 0, 64) +
-		suffix + ".fasta"
-	return fileOut
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // pass struct as reference to update
-func (position *position) minMax(num1, num2 float64) {
-	position.start = math.Min(num1, num2)
-	position.end = math.Max(num1, num2)
+func (position *position) updateMinMax(num1, num2 float64) {
+	position.startPos = math.Min(num1, num2)
+	position.endPos = math.Max(num1, num2)
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// parse values & determine minimum / maximum
-func (position *position) parseMinMax(num1, num2 float64) {
-	position.minMax(num1, num2)
+// determine minimum / maximum
+func (position *position) minMax(num1, num2 float64) {
+	position.updateMinMax(num1, num2)
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// define output file
+func sequenceOut(readFile string) string {
+
+	outFile = readFile
+	reg := regexp.MustCompile(`HiC*`)
+	res := reg.FindStringIndex(outFile)
+	outFile = outFile[0:res[0]]
+
+	// assembly directory
+	outFile = outFile +
+		syncytin.scaffoldIdent + "_" +
+		strconv.FormatFloat(syncytin.positionIdent.startPos, 'f', 0, 64) + "_" +
+		strconv.FormatFloat(syncytin.positionIdent.endPos, 'f', 0, 64) +
+		".fasta"
+	return outFile
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -145,14 +155,15 @@ func (position *position) parseMinMax(num1, num2 float64) {
 // read file & collect sequences
 func collectCoordinates(readFile string) {
 
-	contentFile, err := ioutil.ReadFile(readFile) // the file is inside the local directory
+	// open an input file, exit on error
+	contentFile, err := ioutil.ReadFile(readFile)
 	if err != nil {
 		log.Fatal("Error opending input file :", err)
 	}
 
 	// check whether file exists to avoid appending
-	if fileExist(fileOut) {
-		os.Remove(fileOut)
+	if fileExist(outFile) {
+		os.Remove(outFile)
 	}
 
 	// mount data string
@@ -163,41 +174,31 @@ func collectCoordinates(readFile string) {
 	template := linear.NewSeq("", nil, alphabet.DNAredundant)
 	readerFasta := fasta.NewReader(dataFasta, template)
 
-	// Make a seqio.Scanner to simplify iterating over a
+	// make a seqio.Scanner to simplify iterating over a
 	// stream of data.
 	scanFasta := seqio.NewScanner(readerFasta)
 
-	// Iterate through each sequence in a multifasta and examine the
-	// ID, description and sequence data.
+	// iterate through each sequence in a multifasta and
+	// examine the ID, description and sequence data.
 	for scanFasta.Next() {
-		// Get the current sequence and type assert to *linear.Seq.
-		// While this is unnecessary here, it can be useful to have
+		// get the current sequence and type assert to *linear.Seq.
+		// while this is unnecessary here, it can be useful to have
 		// the concrete type.
 		sequence := scanFasta.Seq().(*linear.Seq)
 
 		// find scaffold
-		if sequence.ID == syncytin.scaffold {
+		if sequence.ID == syncytin.scaffoldIdent {
 
 			// cast coordinates
-			startI := int64(syncytin.positions.start)
-			endI := int64(syncytin.positions.end)
+			startI := int64(syncytin.positionIdent.startPos - hood)
+			endI := int64(syncytin.positionIdent.endPos + hood)
 
-			// extract neighborhood
-			switch suffix {
-			case "_upstream":
-				endI = startI
-				startI = startI - hood
-			case "_downstream":
-				startI = endI
-				endI = endI + hood
-			}
-
-			id := syncytin.scaffold + "_" + strconv.FormatFloat(syncytin.positions.start, 'f', 0, 64) + "_" + strconv.FormatFloat(syncytin.positions.end, 'f', 0, 64)
+			id := syncytin.scaffoldIdent + "_" + strconv.FormatFloat(syncytin.positionIdent.startPos, 'f', 0, 64) + "_" + strconv.FormatFloat(syncytin.positionIdent.endPos, 'f', 0, 64)
 			// find coordinates
 			targatSeq := linear.NewSeq(id, sequence.Seq[startI:endI], alphabet.DNA)
 
 			// write candidate
-			writeFasta(fileOut, targatSeq)
+			writeFasta(outFile, targatSeq)
 		}
 
 	}
@@ -210,10 +211,10 @@ func collectCoordinates(readFile string) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // write positions
-func writeFasta(fileOut string, sequence *linear.Seq) {
+func writeFasta(outFile string, sequence *linear.Seq) {
 
 	// declare io
-	f, err := os.OpenFile(fileOut, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0666)
+	f, err := os.OpenFile(outFile, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0666)
 
 	if err != nil {
 		panic(err)
@@ -230,24 +231,6 @@ func writeFasta(fileOut string, sequence *linear.Seq) {
 	if err != nil {
 		panic(err)
 	}
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-func init() {
-	AssemblyCmd.AddCommand(SequenceCmd)
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	// flags
-	SequenceCmd.Flags().StringVarP(&scaffold, "scaffold", "i", "", "Scaffold ID")
-	SequenceCmd.Flags().Float64P("start", "s", 0., "Start coordinate")
-	SequenceCmd.Flags().Float64P("end", "e", 0., "End coordinate")
-	SequenceCmd.Flags().StringVarP(&suffix, "suffix", "x", "", "Suffix")
-	SequenceCmd.Flags().Int64P("hood", "n", 10000, "Neighborhood to look into")
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
