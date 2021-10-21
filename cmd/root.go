@@ -137,3 +137,15 @@ func bindFlags(cmd *cobra.Command, v *viper.Viper) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// fileExist checks if a file exists and is not a directory before
+// try using it to prevent further errors
+func fileExist(filename string) bool {
+	info, err := os.Stat(filename)
+	if os.IsNotExist(err) {
+		return false
+	}
+	return !info.IsDir()
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////

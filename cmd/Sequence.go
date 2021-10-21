@@ -234,18 +234,6 @@ func writeFasta(fileOut string, sequence *linear.Seq) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// fileExist checks if a file exists and is not a directory before
-// try using it to prevent further errors
-func fileExist(filename string) bool {
-	info, err := os.Stat(filename)
-	if os.IsNotExist(err) {
-		return false
-	}
-	return !info.IsDir()
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
 func init() {
 	AssemblyCmd.AddCommand(SequenceCmd)
 
