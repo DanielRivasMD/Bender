@@ -67,51 +67,8 @@ Next, execute similarity search.
 
 	Run: func(cmd *cobra.Command, args []string) {
 
-		// Find home directory.
-		home, errHomedir := homedir.Dir()
-		if errHomedir != nil {
-			fmt.Println(errHomedir)
-			os.Exit(1)
-		}
-
-		// trim suffixes
-		libraryT := strings.TrimSuffix(library, ".fasta")
-		assemblyT := strings.TrimSuffix(assembly, ".fasta.gz")
-
-		// lineBreaks
-		lineBreaks()
-
-		// buffers
-		var stdout bytes.Buffer
-		var stderr bytes.Buffer
-
-		searchType := ""
-		switch args[0] {
-		case "blast":
-			searchType = "GenomeBlast.sh"
-		case "diamond":
-			searchType = "GenomeDiamond.sh"
-		}
-
-		// shell call
-		commd := home + "/bin/goTools/sh/" + searchType
-		shCmd := exec.Command(commd, species, assemblyT, inDir, libraryT, libraryDir, outDir)
-
-		// run
-		shCmd.Stdout = &stdout
-		shCmd.Stderr = &stderr
-		_ = shCmd.Run()
-
-		// stdout
-		color.Println(color.Cyan(stdout.String(), color.B))
-
-		// stderr
-		if stderr.String() != "" {
-			color.Println(color.Red(stderr.String(), color.B))
-		}
-
-		// lineBreaks
-		lineBreaks()
+		// execute logic
+		assemblySearch(args[0])
 
 	},
 
@@ -132,6 +89,57 @@ func init() {
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+func assemblySearch(searchTool string) {
+
+	// find home directory.
+	home, errHomedir := homedir.Dir()
+	if errHomedir != nil {
+		fmt.Println(errHomedir)
+		os.Exit(1)
+	}
+
+	// trim suffixes
+	libraryT := strings.TrimSuffix(library, ".fasta")
+	assemblyT := strings.TrimSuffix(assembly, ".fasta.gz")
+
+	// lineBreaks
+	lineBreaks()
+
+	// buffers
+	var stdout bytes.Buffer
+	var stderr bytes.Buffer
+
+	searchType := ""
+	switch searchTool {
+	case "blast":
+		searchType = "GenomeBlast.sh"
+	case "diamond":
+		searchType = "GenomeDiamond.sh"
+	}
+
+	// shell call
+	commd := home + "/bin/goTools/sh/" + searchType
+	shCmd := exec.Command(commd, species, assemblyT, inDir, libraryT, libraryDir, outDir)
+
+	// run
+	shCmd.Stdout = &stdout
+	shCmd.Stderr = &stderr
+	_ = shCmd.Run()
+
+	// stdout
+	color.Println(color.Cyan(stdout.String(), color.B))
+
+	// stderr
+	if stderr.String() != "" {
+		color.Println(color.Red(stderr.String(), color.B))
+	}
+
+	// lineBreaks
+	lineBreaks()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
