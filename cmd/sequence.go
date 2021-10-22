@@ -29,6 +29,7 @@ import (
 	"github.com/biogo/biogo/io/seqio"
 	"github.com/biogo/biogo/io/seqio/fasta"
 	"github.com/biogo/biogo/seq/linear"
+	"github.com/ttacon/chalk"
 
 	"github.com/spf13/cobra"
 )
@@ -62,18 +63,21 @@ type position struct {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// SequenceCmd represents the Sequence command
-var SequenceCmd = &cobra.Command{
-	Use:   "Sequence",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+// TODO: documentation assembly sequence
+// sequenceCmd represents the sequence command
+var sequenceCmd = &cobra.Command{
+	Use:   "sequence",
+	Short: "Retrieve sequence from assembly",
+	Long:  `Retrieve sequence from assembly from coordinates.`,
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-
-	Example: ``,
+	Example: `` + chalk.Cyan.Color("bender") + ` assembly sequence
+--assembly aweSap01.fa
+--inDir pathToAssembly/
+--scaffold Scaffold_1
+--start	102400
+--end	124600
+--hood	20000
+`,
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -102,15 +106,15 @@ to quickly create a Cobra application.`,
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 func init() {
-	AssemblyCmd.AddCommand(SequenceCmd)
+	assemblyCmd.AddCommand(sequenceCmd)
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// flags
-	SequenceCmd.Flags().StringVarP(&scaffoldID, "scaffold", "S", "", "Scaffold ID")
-	SequenceCmd.Flags().Float64VarP(&startCoor, "start", "b", 0., "Start coordinate")
-	SequenceCmd.Flags().Float64VarP(&endCoor, "end", "e", 0., "End coordinate")
-	SequenceCmd.Flags().Float64VarP(&hood, "hood", "n", 20000, "Neighborhood to look into")
+	sequenceCmd.Flags().StringVarP(&scaffoldID, "scaffold", "S", "", "Scaffold ID")
+	sequenceCmd.Flags().Float64VarP(&startCoor, "start", "b", 0., "Start coordinate")
+	sequenceCmd.Flags().Float64VarP(&endCoor, "end", "e", 0., "End coordinate")
+	sequenceCmd.Flags().Float64VarP(&hood, "hood", "n", 20000, "Neighborhood to look into")
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 

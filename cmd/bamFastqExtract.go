@@ -21,6 +21,7 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"strings"
 
 	"github.com/atrox/homedir"
 	"github.com/labstack/gommon/color"
@@ -29,19 +30,17 @@ import (
 	"github.com/ttacon/chalk"
 )
 
-// HTSeqCmd represents the HTSeq command
-var HTSeqCmd = &cobra.Command{
-	Use:   "HTSeq",
-	Short: "Wrapper for HTSeq.",
+// bamFastqExtractCmd represents the bamFastqExtract command
+var bamFastqExtractCmd = &cobra.Command{
+	Use:   "bamFastqExtract",
+	Short: "Extract FASTQ from BAM files.",
 	Long: `Daniel Rivas <danielrivasmd@gmail.com>
 
-Wrap HTSeq python package,
-a command line tool application for
-processing high-throughput sequencing data.
+Dissect BAM files and retrieve FASTQ files.
 `,
 
 	Example: `
-` + chalk.Cyan.Color("bender") + ` HTSeq -f forDESeq`,
+` + chalk.Cyan.Color("bender") + ` bamFastqExtract -f aCloneOfMyOwn.bam`,
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -55,7 +54,12 @@ processing high-throughput sequencing data.
 		}
 
 		// flags
+		storageDir, _ := cmd.Flags().GetString("outDir")
+
 		file, _ := cmd.Flags().GetString("file")
+		file = strings.TrimSuffix(file, ".bam")
+
+		directory, _ := cmd.Flags().GetString("inDir")
 
 		verbose, _ := cmd.Flags().GetString("verbose")
 
@@ -67,8 +71,8 @@ processing high-throughput sequencing data.
 		var stderr bytes.Buffer
 
 		// shell call
-		commd := home + "/bin/goTools/sh/HTSeq.sh"
-		shCmd := exec.Command(commd, file, verbose)
+		commd := home + "/bin/goTools/sh/bamFastqExtract.sh"
+		shCmd := exec.Command(commd, file, directory, verbose, storageDir)
 
 		// run
 		shCmd.Stdout = &stdout
@@ -93,14 +97,14 @@ processing high-throughput sequencing data.
 }
 
 func init() {
-	rootCmd.AddCommand(HTSeqCmd)
+	rootCmd.AddCommand(bamFastqExtractCmd)
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// flags
-	HTSeqCmd.Flags().StringP("file", "f", "", "File")
-	HTSeqCmd.MarkFlagRequired("file")
-	viper.BindPFlag("file", HTSeqCmd.Flags().Lookup("file"))
+	bamFastqExtractCmd.Flags().StringP("file", "f", "", "Alignment file. bam format")
+	bamFastqExtractCmd.MarkFlagRequired("file")
+	viper.BindPFlag("file", bamFastqExtractCmd.Flags().Lookup("file"))
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 

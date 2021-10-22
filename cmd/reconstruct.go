@@ -1,5 +1,5 @@
 /*
-Copyright © 2020 Daniel Rivas <danielrivasmd@gmail.com>
+Copyright © 2021 Daniel Rivas <danielrivasmd@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -19,9 +19,9 @@ package cmd
 import (
 	"bytes"
 	"fmt"
+	"log"
 	"os"
 	"os/exec"
-	"strings"
 
 	"github.com/atrox/homedir"
 	"github.com/labstack/gommon/color"
@@ -30,17 +30,17 @@ import (
 	"github.com/ttacon/chalk"
 )
 
-// BamFastqExtractCmd represents the BamFastqExtract command
-var BamFastqExtractCmd = &cobra.Command{
-	Use:   "BamFastqExtract",
-	Short: "Extract FASTQ from BAM files.",
+// reconstructCmd represents the reconstruct command
+var reconstructCmd = &cobra.Command{
+	Use:   "reconstruct",
+	Short: "Reconstruct SRA binaries.",
 	Long: `Daniel Rivas <danielrivasmd@gmail.com>
 
-Dissect BAM files and retrieve FASTQ files.
+Reconstruct binary SRA files to fastq.
 `,
 
 	Example: `
-` + chalk.Cyan.Color("bender") + ` BamFastqExtract -f aCloneOfMyOwn.bam`,
+` + chalk.Cyan.Color("bender") + ` sra reconstruct --inDir projPath/ --outDir ReconstructPath --file coolBinaryList.txt --split-files`,
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -54,14 +54,12 @@ Dissect BAM files and retrieve FASTQ files.
 		}
 
 		// flags
-		storageDir, _ := cmd.Flags().GetString("outDir")
-
-		file, _ := cmd.Flags().GetString("file")
-		file = strings.TrimSuffix(file, ".bam")
-
-		directory, _ := cmd.Flags().GetString("inDir")
-
+		inDir, _ := cmd.Flags().GetString("inDir")
+		outDir, _ := cmd.Flags().GetString("outDir")
 		verbose, _ := cmd.Flags().GetString("verbose")
+		file, _ := cmd.Flags().GetString("file")
+
+		splitFiles, _ := cmd.Flags().GetString("split-files")
 
 		// lineBreaks
 		lineBreaks()
@@ -71,13 +69,17 @@ Dissect BAM files and retrieve FASTQ files.
 		var stderr bytes.Buffer
 
 		// shell call
-		commd := home + "/bin/goTools/sh/BamFastqExtract.sh"
-		shCmd := exec.Command(commd, file, directory, verbose, storageDir)
+		commd := home + "/bin/goTools/sh/SRAreconstruct.sh"
+		shCmd := exec.Command(commd, inDir, outDir, verbose, file, splitFiles)
 
 		// run
 		shCmd.Stdout = &stdout
 		shCmd.Stderr = &stderr
-		_ = shCmd.Run()
+		err := shCmd.Run()
+
+		if err != nil {
+			log.Printf("error: %v\n", err)
+		}
 
 		// stdout
 		color.Println(color.Cyan(stdout.String(), color.B))
@@ -97,14 +99,19 @@ Dissect BAM files and retrieve FASTQ files.
 }
 
 func init() {
-	rootCmd.AddCommand(BamFastqExtractCmd)
+	sraCmd.AddCommand(reconstructCmd)
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// flags
-	BamFastqExtractCmd.Flags().StringP("file", "f", "", "Alignment file. bam format")
-	BamFastqExtractCmd.MarkFlagRequired("file")
-	viper.BindPFlag("file", BamFastqExtractCmd.Flags().Lookup("file"))
+	reconstructCmd.Flags().StringP("file", "f", "", "File containing binary list")
+	reconstructCmd.MarkFlagRequired("file")
+	viper.BindPFlag("file", reconstructCmd.Flags().Lookup("file"))
+
+	// TODO: toggle?
+	reconstructCmd.Flags().StringP("split-files", "s", "false", "Indicates whether binary will be reconstructed in different files")
+	reconstructCmd.MarkFlagRequired("split-files")
+	viper.BindPFlag("split-files", reconstructCmd.Flags().Lookup("split-files"))
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 

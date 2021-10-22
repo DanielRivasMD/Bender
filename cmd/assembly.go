@@ -17,8 +17,6 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 package cmd
 
 import (
-	"fmt"
-
 	"github.com/spf13/cobra"
 )
 
@@ -32,22 +30,21 @@ var (
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// AssemblyCmd represents the Assembly command
-var AssemblyCmd = &cobra.Command{
-	Use:   "Assembly",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+// TODO: documentation assembly
+// assemblyCmd represents the assembly command
+var assemblyCmd = &cobra.Command{
+	Use:   "assembly",
+	Short: "Handle assembly operations.",
+	Long: `Handle assembly operations, such as:
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+description: parse assembly features.
+loci: read diamond assembly search output & filter results.
+search: perform similarity search.
+sequence: extract sequences from assemblies.
+synteny: .
+`,
 
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("Assembly called")
-	},
+	Example: ``,
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -59,12 +56,12 @@ func init() {
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	rootCmd.AddCommand(AssemblyCmd)
+	rootCmd.AddCommand(assemblyCmd)
 
 	// persistent flags
-	AssemblyCmd.PersistentFlags().StringVarP(&assembly, "assembly", "a", "", "Assembly file")
-	AssemblyCmd.PersistentFlags().StringVarP(&species, "species", "s", "", "Species file")
-	AssemblyCmd.PersistentFlags().StringVarP(&outFile, "outfile", "o", "", "Out file. If empty it will be defined by input")
+	assemblyCmd.PersistentFlags().StringVarP(&assembly, "assembly", "a", "", "Assembly file")
+	assemblyCmd.PersistentFlags().StringVarP(&species, "species", "s", "", "Species file")
+	assemblyCmd.PersistentFlags().StringVarP(&outFile, "outfile", "o", "", "Out file. If empty it will be defined by input")
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 

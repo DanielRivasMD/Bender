@@ -46,9 +46,9 @@ var rootCmd = &cobra.Command{
 	Long: `Daniel Rivas <danielrivasmd@gmail.com>
 
 "Good news everyone!"
-` + chalk.Green.Color("Bender") + ` is a robot for automation on
+` + chalk.Green.Color("Bender") + chalk.Magenta.Color(` is a robot for automation on
 Genomic jobs in Slurm systems.
-` + chalk.Magenta.Color("It's highly addictive!") + `
+`) + chalk.Yellow.Color("It's highly addictive!") + `
 
 ` + chalk.Green.Color("Bender") + ` creates a convenient command line interphase
 with built-in and accessible documentation.

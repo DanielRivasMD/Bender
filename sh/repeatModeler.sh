@@ -31,7 +31,7 @@ cp ${refDir}${refFile}.fa ${tmpDir}
 # change directory
 cd ${tmpDir}
 
-# run RepeatModeler
+# run repeatModeler
 BuildDatabase -name ${refFile}.DB -engine ncbi ${refFile}.fa
 [[ $verbose == "true" ]] && echo "database created" || echo -n ""
 

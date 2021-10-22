@@ -30,9 +30,9 @@ import (
 	"github.com/ttacon/chalk"
 )
 
-// BWACmd represents the BWA command
-var BWACmd = &cobra.Command{
-	Use:   "BWA",
+// bwaCmd represents the bwa command
+var bwaCmd = &cobra.Command{
+	Use:   "bwa",
 	Short: "Align fasta using BWA.",
 	Long: `Daniel Rivas <danielrivasmd@gmail.com>
 
@@ -42,7 +42,7 @@ prealignment through FastX.
 `,
 
 	Example: `
-` + chalk.Cyan.Color("bender") + ` BWA -f lastOneAlive.fa -r cyclops.fa`,
+` + chalk.Cyan.Color("bender") + ` bwa -f lastOneAlive.fa -r cyclops.fa`,
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -73,7 +73,7 @@ prealignment through FastX.
 		var stderr bytes.Buffer
 
 		// shell call
-		commd := home + "/bin/goTools/sh/BWA.sh"
+		commd := home + "/bin/goTools/sh/bwa.sh"
 		shCmd := exec.Command(commd, file, directory, verbose, storageDir)
 
 		// run
@@ -99,18 +99,18 @@ prealignment through FastX.
 }
 
 func init() {
-	rootCmd.AddCommand(BWACmd)
+	rootCmd.AddCommand(bwaCmd)
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// flags
-	BWACmd.Flags().StringP("file", "f", "", "File to align. fasta format")
-	BWACmd.MarkFlagRequired("file")
-	viper.BindPFlag("file", BWACmd.Flags().Lookup("file"))
+	bwaCmd.Flags().StringP("file", "f", "", "File to align. fasta format")
+	bwaCmd.MarkFlagRequired("file")
+	viper.BindPFlag("file", bwaCmd.Flags().Lookup("file"))
 
-	BWACmd.Flags().StringP("reference", "r", "", "Reference file. fasta format")
-	BWACmd.MarkFlagRequired("reference")
-	viper.BindPFlag("reference", BWACmd.Flags().Lookup("reference"))
+	bwaCmd.Flags().StringP("reference", "r", "", "Reference file. fasta format")
+	bwaCmd.MarkFlagRequired("reference")
+	viper.BindPFlag("reference", bwaCmd.Flags().Lookup("reference"))
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 

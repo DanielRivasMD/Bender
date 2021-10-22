@@ -1,5 +1,5 @@
 /*
-Copyright © 2021 Daniel Rivas <danielrivasmd@gmail.com>
+Copyright © 2020 Daniel Rivas <danielrivasmd@gmail.com>
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -21,7 +21,6 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
-	"strings"
 
 	"github.com/atrox/homedir"
 	"github.com/labstack/gommon/color"
@@ -30,18 +29,19 @@ import (
 	"github.com/ttacon/chalk"
 )
 
-// FetchCmd represents the Fetch command
-var FetchCmd = &cobra.Command{
-	Use:   "Fetch",
-	Short: "Fetch SRA accessions.",
+// htSeqCmd represents the htseq command
+var htSeqCmd = &cobra.Command{
+	Use:   "htSeq",
+	Short: "Wrapper for HTseq.",
 	Long: `Daniel Rivas <danielrivasmd@gmail.com>
 
-Collect files from Short Read Archive (SRA)
-and check the state of the downloads.
+Wrap HTseq python package,
+a command line tool application for
+processing high-throughput sequencing data.
 `,
 
 	Example: `
-` + chalk.Cyan.Color("bender") + ` SRA Fetch --inDir projPath/ --outDir logPath --file coolFileList.txt --iterations 20 --max-size 35G`,
+` + chalk.Cyan.Color("bender") + ` htseq -f forDESeq`,
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -55,14 +55,9 @@ and check the state of the downloads.
 		}
 
 		// flags
-		inDir, _ := cmd.Flags().GetString("inDir")
-		outDir, _ := cmd.Flags().GetString("outDir")
-		verbose, _ := cmd.Flags().GetString("verbose")
 		file, _ := cmd.Flags().GetString("file")
 
-		file = strings.TrimSuffix(file, ".txt")
-		maxIt, _ := cmd.Flags().GetString("iterations")
-		maxSize, _ := cmd.Flags().GetString("max-size")
+		verbose, _ := cmd.Flags().GetString("verbose")
 
 		// lineBreaks
 		lineBreaks()
@@ -72,8 +67,8 @@ and check the state of the downloads.
 		var stderr bytes.Buffer
 
 		// shell call
-		commd := home + "/bin/goTools/sh/SRAfetch.sh"
-		shCmd := exec.Command(commd, inDir, outDir, verbose, file, maxIt, maxSize, verbose)
+		commd := home + "/bin/goTools/sh/htSeq.sh"
+		shCmd := exec.Command(commd, file, verbose)
 
 		// run
 		shCmd.Stdout = &stdout
@@ -98,22 +93,14 @@ and check the state of the downloads.
 }
 
 func init() {
-	SRACmd.AddCommand(FetchCmd)
+	rootCmd.AddCommand(htSeqCmd)
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// flags
-	FetchCmd.Flags().StringP("file", "f", "", "File containing accession numbers")
-	FetchCmd.MarkFlagRequired("file")
-	viper.BindPFlag("file", FetchCmd.Flags().Lookup("file"))
-
-	FetchCmd.Flags().StringP("max-size", "m", "20G", "File size limit to download")
-	FetchCmd.MarkFlagRequired("max-size")
-	viper.BindPFlag("max-size", FetchCmd.Flags().Lookup("max-size"))
-
-	FetchCmd.Flags().StringP("iterations", "t", "10", "Number of iterations for download to fail")
-	FetchCmd.MarkFlagRequired("iterations")
-	viper.BindPFlag("iterations", FetchCmd.Flags().Lookup("iterations"))
+	htSeqCmd.Flags().StringP("file", "f", "", "File")
+	htSeqCmd.MarkFlagRequired("file")
+	viper.BindPFlag("file", htSeqCmd.Flags().Lookup("file"))
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -30,20 +30,18 @@ import (
 	"github.com/ttacon/chalk"
 )
 
-// RepeatModelerCmd represents the RepeatModeler command
-var RepeatModelerCmd = &cobra.Command{
-	Use:   "RepeatModeler",
-	Short: "Create Repeat Library from assembly.",
+// fetchCmd represents the fetch command
+var fetchCmd = &cobra.Command{
+	Use:   "fetch",
+	Short: "Fetch SRA accessions.",
 	Long: `Daniel Rivas <danielrivasmd@gmail.com>
 
-Create Repeat Library from assembly using RepeatModeler v2.0.1.
-
-First, build a database.
-Next, create a libray.
+Collect files from Short Read Archive (SRA)
+and check the state of the downloads.
 `,
 
 	Example: `
-` + chalk.Cyan.Color("bender") + ` RepeatModeler -r phillipFry.fa`,
+` + chalk.Cyan.Color("bender") + ` sra fetch --inDir projPath/ --outDir logPath --file coolFileList.txt --iterations 20 --max-size 35G`,
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -57,15 +55,14 @@ Next, create a libray.
 		}
 
 		// flags
-		storageDir, _ := cmd.Flags().GetString("outDir")
-
-		directory, _ := cmd.Flags().GetString("inDir")
-
+		inDir, _ := cmd.Flags().GetString("inDir")
+		outDir, _ := cmd.Flags().GetString("outDir")
 		verbose, _ := cmd.Flags().GetString("verbose")
+		file, _ := cmd.Flags().GetString("file")
 
-		// bound flags
-		reference := viper.GetString("reference")
-		reference = strings.TrimSuffix(reference, ".fa")
+		file = strings.TrimSuffix(file, ".txt")
+		maxIt, _ := cmd.Flags().GetString("iterations")
+		maxSize, _ := cmd.Flags().GetString("max-size")
 
 		// lineBreaks
 		lineBreaks()
@@ -75,8 +72,8 @@ Next, create a libray.
 		var stderr bytes.Buffer
 
 		// shell call
-		commd := home + "/bin/goTools/sh/RepeatModeler.sh"
-		shCmd := exec.Command(commd, reference, directory, verbose, storageDir)
+		commd := home + "/bin/goTools/sh/fetch.sh"
+		shCmd := exec.Command(commd, inDir, outDir, verbose, file, maxIt, maxSize, verbose)
 
 		// run
 		shCmd.Stdout = &stdout
@@ -101,13 +98,22 @@ Next, create a libray.
 }
 
 func init() {
-	rootCmd.AddCommand(RepeatModelerCmd)
+	sraCmd.AddCommand(fetchCmd)
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// flags
-	RepeatModelerCmd.Flags().StringP("reference", "r", "", "Reference file. fasta format")
-	viper.BindPFlag("reference", RepeatModelerCmd.Flags().Lookup("reference"))
+	fetchCmd.Flags().StringP("file", "f", "", "File containing accession numbers")
+	fetchCmd.MarkFlagRequired("file")
+	viper.BindPFlag("file", fetchCmd.Flags().Lookup("file"))
+
+	fetchCmd.Flags().StringP("max-size", "m", "20G", "File size limit to download")
+	fetchCmd.MarkFlagRequired("max-size")
+	viper.BindPFlag("max-size", fetchCmd.Flags().Lookup("max-size"))
+
+	fetchCmd.Flags().StringP("iterations", "t", "10", "Number of iterations for download to fail")
+	fetchCmd.MarkFlagRequired("iterations")
+	viper.BindPFlag("iterations", fetchCmd.Flags().Lookup("iterations"))
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 

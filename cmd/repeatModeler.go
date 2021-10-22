@@ -19,9 +19,9 @@ package cmd
 import (
 	"bytes"
 	"fmt"
-	"log"
 	"os"
 	"os/exec"
+	"strings"
 
 	"github.com/atrox/homedir"
 	"github.com/labstack/gommon/color"
@@ -30,17 +30,20 @@ import (
 	"github.com/ttacon/chalk"
 )
 
-// ReconstructCmd represents the Reconstruct command
-var ReconstructCmd = &cobra.Command{
-	Use:   "Reconstruct",
-	Short: "Reconstruct SRA binaries.",
+// repeatModelerCmd represents the repeatModeler command
+var repeatModelerCmd = &cobra.Command{
+	Use:   "repeatModeler",
+	Short: "Create Repeat Library from assembly.",
 	Long: `Daniel Rivas <danielrivasmd@gmail.com>
 
-Reconstruct binary SRA files to fastq.
+Create Repeat Library from assembly using RepeatModeler v2.0.1.
+
+First, build a database.
+Next, create a libray.
 `,
 
 	Example: `
-` + chalk.Cyan.Color("bender") + ` SRA Reconstruct --inDir projPath/ --outDir ReconstructPath --file coolBinaryList.txt --split-files`,
+` + chalk.Cyan.Color("bender") + ` repeatModeler -r phillipFry.fa`,
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -54,12 +57,15 @@ Reconstruct binary SRA files to fastq.
 		}
 
 		// flags
-		inDir, _ := cmd.Flags().GetString("inDir")
-		outDir, _ := cmd.Flags().GetString("outDir")
-		verbose, _ := cmd.Flags().GetString("verbose")
-		file, _ := cmd.Flags().GetString("file")
+		storageDir, _ := cmd.Flags().GetString("outDir")
 
-		splitFiles, _ := cmd.Flags().GetString("split-files")
+		directory, _ := cmd.Flags().GetString("inDir")
+
+		verbose, _ := cmd.Flags().GetString("verbose")
+
+		// bound flags
+		reference := viper.GetString("reference")
+		reference = strings.TrimSuffix(reference, ".fa")
 
 		// lineBreaks
 		lineBreaks()
@@ -69,17 +75,13 @@ Reconstruct binary SRA files to fastq.
 		var stderr bytes.Buffer
 
 		// shell call
-		commd := home + "/bin/goTools/sh/SRAreconstruct.sh"
-		shCmd := exec.Command(commd, inDir, outDir, verbose, file, splitFiles)
+		commd := home + "/bin/goTools/sh/repeatModeler.sh"
+		shCmd := exec.Command(commd, reference, directory, verbose, storageDir)
 
 		// run
 		shCmd.Stdout = &stdout
 		shCmd.Stderr = &stderr
-		err := shCmd.Run()
-
-		if err != nil {
-			log.Printf("error: %v\n", err)
-		}
+		_ = shCmd.Run()
 
 		// stdout
 		color.Println(color.Cyan(stdout.String(), color.B))
@@ -99,19 +101,13 @@ Reconstruct binary SRA files to fastq.
 }
 
 func init() {
-	SRACmd.AddCommand(ReconstructCmd)
+	rootCmd.AddCommand(repeatModelerCmd)
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// flags
-	ReconstructCmd.Flags().StringP("file", "f", "", "File containing binary list")
-	ReconstructCmd.MarkFlagRequired("file")
-	viper.BindPFlag("file", ReconstructCmd.Flags().Lookup("file"))
-
-	// TODO: toggle?
-	ReconstructCmd.Flags().StringP("split-files", "s", "false", "Indicates whether binary will be reconstructed in different files")
-	ReconstructCmd.MarkFlagRequired("split-files")
-	viper.BindPFlag("split-files", ReconstructCmd.Flags().Lookup("split-files"))
+	repeatModelerCmd.Flags().StringP("reference", "r", "", "Reference file. fasta format")
+	viper.BindPFlag("reference", repeatModelerCmd.Flags().Lookup("reference"))
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -38,9 +38,9 @@ var (
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// SearchCmd represents the Search command
-var SearchCmd = &cobra.Command{
-	Use:   "Search",
+// searchCmd represents the search command
+var searchCmd = &cobra.Command{
+	Use:   "search",
 	Short: "Perform similarity search.",
 	Long: `Daniel Rivas <danielrivasmd@gmail.com>
 
@@ -52,11 +52,11 @@ Next, execute similarity search.
 `,
 
 	Example: `
-` + chalk.Cyan.Color("bender") + ` Assembly Search ` + chalk.Yellow.Color("diamond") + `
-  --configPath willLeadToConfig/
-  --configFile foundConfig.toml
-  --assembly aweSap01.fa
-  --species awesomeSapiens`,
+` + chalk.Cyan.Color("bender") + ` assembly Search ` + chalk.Yellow.Color("diamond") + `
+  ` + chalk.Green.Color("--configPath") + ` willLeadToConfig/
+  ` + chalk.Green.Color("--configFile") + ` foundConfig.toml
+  ` + chalk.Green.Color("--assembly") + ` aweSap01.fa
+  ` + chalk.Green.Color("--species") + ` awesomeSapiens`,
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -79,13 +79,13 @@ Next, execute similarity search.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 func init() {
-	AssemblyCmd.AddCommand(SearchCmd)
+	assemblyCmd.AddCommand(searchCmd)
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// flags
-	SearchCmd.Flags().StringVarP(&library, "library", "l", "", "Library to search against")
-	SearchCmd.Flags().StringVarP(&libraryDir, "libraryDir", "L", "", "Library directory")
+	searchCmd.Flags().StringVarP(&library, "library", "l", "", "Library to search against")
+	searchCmd.Flags().StringVarP(&libraryDir, "libraryDir", "L", "", "Library directory")
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -116,9 +116,9 @@ func assemblySearch(searchTool string) {
 	searchType := ""
 	switch searchTool {
 	case "blast":
-		searchType = "GenomeBlast.sh"
+		searchType = "genomeBlast.sh"
 	case "diamond":
-		searchType = "GenomeDiamond.sh"
+		searchType = "genomeDiamond.sh"
 	}
 
 	// shell call

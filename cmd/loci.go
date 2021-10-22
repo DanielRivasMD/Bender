@@ -36,9 +36,9 @@ var (
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // TODO: documentation assembly positions
-// PositionsCmd represents the Positions command
-var PositionsCmd = &cobra.Command{
-	Use:   "Positions",
+// lociCmd represents the loci command
+var lociCmd = &cobra.Command{
+	Use:   "loci",
 	Short: "A brief description of your command",
 	Long: `A longer description that spans multiple lines and likely contains examples
 and usage of using your command. For example:
@@ -63,13 +63,13 @@ to quickly create a Cobra application.`,
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 func init() {
-	AssemblyCmd.AddCommand(PositionsCmd)
+	assemblyCmd.AddCommand(lociCmd)
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// flags
-	PositionsCmd.Flags().Float64VarP(&identity, "identity", "i", 80, "Percentage of sequence identity")
-	PositionsCmd.Flags().Float64VarP(&length, "length", "l", 400, "Length of sequence alignment")
+	lociCmd.Flags().Float64VarP(&identity, "identity", "i", 80, "Percentage of sequence identity")
+	lociCmd.Flags().Float64VarP(&length, "length", "l", 400, "Length of sequence alignment")
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 

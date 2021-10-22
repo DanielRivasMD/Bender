@@ -59,12 +59,12 @@ type Data struct {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// DescriptionCmd represents the Description command
-var DescriptionCmd = &cobra.Command{
-	Use:   "Description",
+// TODO: documentation assembly description
+// descriptionCmd represents the description command
+var descriptionCmd = &cobra.Command{
+	Use:   "description",
 	Short: "Collect assembly information.",
 	Long: `Daniel Rivas <danielrivasmd@gmail.com>
-
 
 Parse JSON file containing description of genome assemblies.
 
@@ -100,7 +100,7 @@ Collect information and concatenate.
 }
 
 func init() {
-	AssemblyCmd.AddCommand(DescriptionCmd)
+	assemblyCmd.AddCommand(descriptionCmd)
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -129,7 +129,8 @@ func writeSpeciesFeatures(features Data) {
 
 	// writing
 	_, err = w.WriteString(
-		features.Organism.Vernacular + "," +
+		features.Organism.Binominal + "," +
+			strings.ReplaceAll(features.Organism.Vernacular, ",", "") + "," +
 			features.ChromlengthAssembly.Karyotype + "," +
 			strings.ReplaceAll(features.ChromlengthAssembly.ScaffoldN50, ",", "") + "," +
 			strings.ReplaceAll(features.ChromlengthAssembly.NumberOfScaffolds, ",", "") +

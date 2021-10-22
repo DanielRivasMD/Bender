@@ -21,9 +21,9 @@ import (
 	"github.com/ttacon/chalk"
 )
 
-// SRACmd represents the SRA command
-var SRACmd = &cobra.Command{
-	Use:   "SRA",
+// sraCmd represents the sra command
+var sraCmd = &cobra.Command{
+	Use:   "sra",
 	Short: "Handles SRA operations.",
 	Long: `Daniel Rivas <danielrivasmd@gmail.com>
 
@@ -34,11 +34,11 @@ Reconstruct binary SRA files to fastq.
 `,
 
 	Example: `
-` + chalk.Cyan.Color("bender") + ` SRA help`,
+` + chalk.Cyan.Color("bender") + ` sra help`,
 }
 
 func init() {
-	rootCmd.AddCommand(SRACmd)
+	rootCmd.AddCommand(sraCmd)
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
