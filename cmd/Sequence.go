@@ -87,11 +87,11 @@ to quickly create a Cobra application.`,
 
 		// declare file output
 		if outFile == "" {
-			outFile = sequenceOut(species)
+			outFile = sequenceOut(assembly)
 		}
 
 		// execute logic
-		collectCoordinates(inDir + "/" + species)
+		collectCoordinates(inDir + "/" + assembly)
 
 	},
 
@@ -142,11 +142,14 @@ func sequenceOut(readFile string) string {
 	outFile = outFile[0:res[0]]
 
 	// assembly directory
-	outFile = outFile +
+	outFile = outDir + "/" +
+		outFile +
 		syncytin.scaffoldIdent + "_" +
 		strconv.FormatFloat(syncytin.positionIdent.startPos, 'f', 0, 64) + "_" +
 		strconv.FormatFloat(syncytin.positionIdent.endPos, 'f', 0, 64) +
 		".fasta"
+
+	// return full path
 	return outFile
 }
 
