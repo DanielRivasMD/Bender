@@ -25,9 +25,9 @@ import (
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 var (
-	assembly    string
-	assemblyDir string
-	species     string
+	assembly string
+	species  string
+	outFile  string
 )
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -62,9 +62,9 @@ func init() {
 	rootCmd.AddCommand(AssemblyCmd)
 
 	// persistent flags
-	AssemblyCmd.PersistentFlags().StringVarP(&assembly, "assembly", "a", "", "Assembly")
-	AssemblyCmd.PersistentFlags().StringVarP(&assemblyDir, "assemblyDir", "A", "", "Assembly directory")
-	AssemblyCmd.PersistentFlags().StringVarP(&species, "species", "s", "", "Species")
+	AssemblyCmd.PersistentFlags().StringVarP(&assembly, "assembly", "a", "", "Assembly file")
+	AssemblyCmd.PersistentFlags().StringVarP(&species, "species", "s", "", "Species file")
+	AssemblyCmd.PersistentFlags().StringVarP(&outFile, "outfile", "o", "", "Out file. If empty it will be defined by input")
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
