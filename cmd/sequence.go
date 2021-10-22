@@ -76,7 +76,7 @@ var sequenceCmd = &cobra.Command{
 --scaffold Scaffold_1
 --start	102400
 --end	124600
---hood	20000
+--hood	25000
 `,
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -112,9 +112,9 @@ func init() {
 
 	// flags
 	sequenceCmd.Flags().StringVarP(&scaffoldID, "scaffold", "S", "", "Scaffold ID")
-	sequenceCmd.Flags().Float64VarP(&startCoor, "start", "b", 0., "Start coordinate")
-	sequenceCmd.Flags().Float64VarP(&endCoor, "end", "e", 0., "End coordinate")
-	sequenceCmd.Flags().Float64VarP(&hood, "hood", "n", 20000, "Neighborhood to look into")
+	sequenceCmd.Flags().Float64VarP(&startCoor, "start", "b", 0, "Start coordinate")
+	sequenceCmd.Flags().Float64VarP(&endCoor, "end", "e", 0, "End coordinate")
+	sequenceCmd.Flags().Float64VarP(&hood, "hood", "n", 25000, "Neighborhood to look into")
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
