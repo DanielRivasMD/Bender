@@ -19,9 +19,7 @@ package cmd
 import (
 	"io/ioutil"
 	"log"
-	"math"
 	"os"
-	"regexp"
 	"strconv"
 	"strings"
 
@@ -37,29 +35,7 @@ import (
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // declarations
-var (
-	syncytin   identified // identified struct
-	scaffoldID string
-	startCoor  float64
-	endCoor    float64
-	hood       float64
-)
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// syncytin features
-type identified struct {
-	scaffoldIdent string
-	positionIdent position
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// positions
-type position struct {
-	startPos float64
-	endPos   float64
-}
+var ()
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -91,7 +67,8 @@ var sequenceCmd = &cobra.Command{
 
 		// declare file output
 		if outFile == "" {
-			outFile = sequenceOut(assembly)
+			outFile = coordinateOut(assembly)
+			outFile = outFile + ".fasta"
 		}
 
 		// execute logic
@@ -111,50 +88,9 @@ func init() {
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	// flags
-	sequenceCmd.Flags().StringVarP(&scaffoldID, "scaffold", "S", "", "Scaffold ID")
-	sequenceCmd.Flags().Float64VarP(&startCoor, "start", "b", 0, "Start coordinate")
-	sequenceCmd.Flags().Float64VarP(&endCoor, "end", "e", 0, "End coordinate")
-	sequenceCmd.Flags().Float64VarP(&hood, "hood", "n", 25000, "Neighborhood to look into")
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// pass struct as reference to update
-func (position *position) updateMinMax(num1, num2 float64) {
-	position.startPos = math.Min(num1, num2)
-	position.endPos = math.Max(num1, num2)
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// determine minimum / maximum
-func (position *position) minMax(num1, num2 float64) {
-	position.updateMinMax(num1, num2)
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// define output file
-func sequenceOut(readFile string) string {
-
-	outFile = readFile
-	reg := regexp.MustCompile(`HiC*`)
-	res := reg.FindStringIndex(outFile)
-	outFile = outFile[0:res[0]]
-
-	// assembly directory
-	outFile = outDir + "/" +
-		outFile +
-		syncytin.scaffoldIdent + "_" +
-		strconv.FormatFloat(syncytin.positionIdent.startPos, 'f', 0, 64) + "_" +
-		strconv.FormatFloat(syncytin.positionIdent.endPos, 'f', 0, 64) +
-		".fasta"
-
-	// return full path
-	return outFile
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
