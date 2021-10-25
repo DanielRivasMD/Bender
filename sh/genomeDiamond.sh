@@ -9,15 +9,6 @@ inDir=$3
 libraryT=$4
 libraryDir=$5
 outDir=$6
-dbDir=${outDir}/${species}
-
-################################################################################
-
-# set output directory
-if [[ ! -d ${dbDir} ]]
-then
-  mkdir -vp ${dbDir}
-fi
 
 ################################################################################
 
@@ -44,4 +35,3 @@ gzip --decompress --stdout ${inDir}/${assemblyT}.fasta.gz | \
     --out ${dbDir}/${species}.tsv
 
 ################################################################################
-

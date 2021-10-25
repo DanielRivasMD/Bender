@@ -1,34 +1,26 @@
 #!/bin/bash
+set -euo pipefail
 
 ################################################################################
 
 species=$1
-assembly=$2
-assemblyDir=$3
-library=$4
+assemblyT=$2
+inDir=$3
+libraryT=$4
 libraryDir=$5
 outDir=$6
-dbDir=${outDir}/${species}
-
-################################################################################
-
-# set output directory
-if [[ ! -d ${dbDir} ]]
-then
-  mkdir -vp ${dbDir}
-fi
 
 ################################################################################
 
 # make database from nucleotide sequence
-if [[ ! -f ${dbDir}/${species} ]]
+if [[ ! -f ${outDir}/${species} ]]
 then
   echo "Build BLAST database => ${species}"
-  gzip -dc ${assemblyDir}/${assembly} | \
+  gzip -dc ${assemblyDir}/${assemblyT} | \
     makeblastdb \
       -in - \
       -dbtype nucl \
-      -out ${dbDir}/${species} \
+      -out ${outDir}/${species} \
       -title ${species}
 fi
 
@@ -37,8 +29,8 @@ fi
 # use protein sequence as query to blast six reading frames
 echo "Blasting database..."
 tblastn \
-  -query ${libraryDir}/${library} \
-  -db ${dbDir}/${species} \
-  -out ${dbDir}/${species}.out
+  -query ${libraryDir}/${libraryT} \
+  -db ${outDir}/${species} \
+  -out ${outDir}/${species}.out
 
 ################################################################################
