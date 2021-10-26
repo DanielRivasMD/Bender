@@ -48,6 +48,7 @@ var sequenceCmd = &cobra.Command{
 
 	Example: `` + chalk.Cyan.Color("bender") + ` assembly sequence
 --assembly aweSap01.fa
+--species Awesome_sapiens
 --inDir pathToAssembly/
 --scaffold Scaffold_1
 --start	102400
@@ -132,11 +133,28 @@ func collectCoordinates(readFile string) {
 		// find scaffold
 		if sequence.ID == syncytin.scaffoldIdent {
 
-			// cast coordinates
+			// define extraction coordinates
 			startI := int64(syncytin.positionIdent.startPos - hood)
 			endI := int64(syncytin.positionIdent.endPos + hood)
 
-			id := syncytin.scaffoldIdent + "_" + strconv.FormatFloat(syncytin.positionIdent.startPos, 'f', 0, 64) + "_" + strconv.FormatFloat(syncytin.positionIdent.endPos, 'f', 0, 64)
+			// verify limits
+			if startI < 0 {
+				startI = 0
+			}
+
+			if endI > int64(len(sequence.Seq)) {
+				endI = int64(len(sequence.Seq) - 1)
+			}
+
+			// define record id
+			id := syncytin.scaffoldIdent + "_" +
+				strconv.FormatFloat(syncytin.positionIdent.startPos, 'f', 0, 64) + "_" +
+				strconv.FormatFloat(syncytin.positionIdent.endPos, 'f', 0, 64) + " " +
+				species + " " +
+				syncytin.scaffoldIdent + "_" +
+				strconv.FormatInt(startI, 10) + "_" +
+				strconv.FormatInt(endI, 10)
+
 			// find coordinates
 			targatSeq := linear.NewSeq(id, sequence.Seq[startI:endI], alphabet.DNA)
 
