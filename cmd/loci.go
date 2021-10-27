@@ -87,8 +87,8 @@ func genomicPositionsCollect(readFile string) {
 	}
 
 	// check whether file exists to avoid appending
-	if fileExist(outFile) {
-		os.Remove(outFile)
+	if fileExist(outDir + "/" + species) {
+		os.Remove(outDir + "/" + species)
 	}
 
 	// headers := []string{
@@ -146,12 +146,18 @@ func writeGenomicPositions(outFile string, records []string) {
 
 	// writing
 	_, err = w.WriteString(
-		records[0] + " " +
-			records[1] + " " +
-			records[2] + " " +
-			records[6] + " " +
-			records[7] + " " +
-			records[10] +
+		records[0] + "\t" +
+			records[1] + "\t" +
+			records[2] + "\t" +
+			records[3] + "\t" +
+			records[4] + "\t" +
+			records[5] + "\t" +
+			records[6] + "\t" +
+			records[7] + "\t" +
+			records[8] + "\t" +
+			records[9] + "\t" +
+			records[10] + "\t" +
+			records[11] +
 			"\n")
 	if err != nil {
 		panic(err)
