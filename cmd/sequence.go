@@ -134,7 +134,7 @@ func collectCoordinates(readFile string) {
 		if sequence.ID == syncytin.scaffoldIdent {
 
 			// define extraction coordinates
-			startI := int64(syncytin.positionIdent.startPos - hood)
+			startI := int64(syncytin.positionIdent.startPos - 1 - hood)
 			endI := int64(syncytin.positionIdent.endPos + hood)
 
 			// verify limits
