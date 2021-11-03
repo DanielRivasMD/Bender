@@ -17,14 +17,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 package cmd
 
 import (
-	"bytes"
 	"fmt"
 	"os"
 	"os/exec"
 	"strings"
+	"syscall"
 
-	"github.com/atrox/homedir"
-	"github.com/labstack/gommon/color"
 	"github.com/spf13/cobra"
 	"github.com/ttacon/chalk"
 )
@@ -32,8 +30,11 @@ import (
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 var (
-	library    string
-	libraryDir string
+	library     string
+	libraryDir  string
+	frameshit   string
+	blockSize   string
+	indexChunks string
 )
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -86,6 +87,9 @@ func init() {
 	// flags
 	searchCmd.Flags().StringVarP(&library, "library", "l", "", "Library to search against")
 	searchCmd.Flags().StringVarP(&libraryDir, "libraryDir", "L", "", "Library directory")
+	searchCmd.Flags().StringVarP(&frameshit, "frameshit", "f", "15", "diamond blastx frameshit")
+	searchCmd.Flags().StringVarP(&blockSize, "blockSize", "b", "6", "diamond blastx blockSize")
+	searchCmd.Flags().StringVarP(&indexChunks, "indexChunks", "x", "1", "diamond blastx indexChunks")
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -95,49 +99,54 @@ func init() {
 
 func assemblySearch(searchTool string) {
 
-	// find home directory.
-	home, errHomedir := homedir.Dir()
-	if errHomedir != nil {
-		fmt.Println(errHomedir)
-		os.Exit(1)
-	}
-
 	// trim suffixes
 	libraryT := strings.TrimSuffix(library, ".fasta")
-	assemblyT := strings.TrimSuffix(assembly, ".fasta.gz")
+	assemblyT := strings.TrimSuffix(assembly, ".fasta")
 
-	// lineBreaks
-	lineBreaks()
-
-	// buffers
-	var stdout bytes.Buffer
-	var stderr bytes.Buffer
-
-	searchType := ""
+	// TODO: manipulate sequences to identify ORFs & use blastn
 	switch searchTool {
+
+	// diamond
 	case "diamond":
-		searchType = "genomeDiamond.sh"
+
+		// check executable availability
+		command, err := exec.LookPath(searchTool)
+		if err != nil {
+			panic(err)
+		}
+
+		// make database from syncytin protein sequence
+		if !fileExist(library + libraryT + ".dmnd") {
+			fmt.Println("Building diamond database...")
+			diamondMakedb := []string{
+				searchTool + " makedb",
+				"--in " + libraryDir + "/" + libraryT + ".fasta",
+				"--db " + libraryDir + "/" + libraryT + ".dmnd",
+			}
+
+			err = syscall.Exec(command, diamondMakedb, os.Environ())
+			if err != nil {
+				panic(err)
+			}
+		}
+
+		// use assembly as query with six reading frames
+		fmt.Println("Searching diamond database...")
+		diamondBlastx := []string{
+			searchTool + " blastx",
+			"--db " + libraryDir + "/" + libraryT + ".dmnd",
+			"--query " + inDir + "/" + assemblyT + ".fasta",
+			"--frameshift " + frameshit,
+			"--block-size " + blockSize,
+			"--index-chunks " + indexChunks,
+			"--out " + outDir + "/" + species + ".tsv",
+		}
+
+		err = syscall.Exec(command, diamondBlastx, os.Environ())
+		if err != nil {
+			panic(err)
+		}
 	}
-
-	// shell call
-	commd := home + "/bin/goTools/sh/" + searchType
-	shCmd := exec.Command(commd, species, assemblyT, inDir, libraryT, libraryDir, outDir)
-
-	// run
-	shCmd.Stdout = &stdout
-	shCmd.Stderr = &stderr
-	_ = shCmd.Run()
-
-	// stdout
-	color.Println(color.Cyan(stdout.String(), color.B))
-
-	// stderr
-	if stderr.String() != "" {
-		color.Println(color.Red(stderr.String(), color.B))
-	}
-
-	// lineBreaks
-	lineBreaks()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
