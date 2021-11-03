@@ -60,7 +60,7 @@ Next, execute similarity search.
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	ValidArgs: []string{"blast", "diamond"},
+	ValidArgs: []string{"diamond"},
 	Args:      cobra.ExactValidArgs(1),
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -115,8 +115,6 @@ func assemblySearch(searchTool string) {
 
 	searchType := ""
 	switch searchTool {
-	case "blast":
-		searchType = "genomeBlast.sh"
 	case "diamond":
 		searchType = "genomeDiamond.sh"
 	}
