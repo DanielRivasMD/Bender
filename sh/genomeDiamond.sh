@@ -25,13 +25,12 @@ fi
 
 # use assembly as query with six reading frames
 echo "Searching diamond database..."
-gzip --decompress --stdout ${inDir}/${assemblyT}.fasta.gz | \
-  diamond blastx \
-    --db ${libraryDir}/${libraryT}.dmnd \
-    --query - \
-    --frameshift 15 \
-    --block-size 6 \
-    --index-chunks 1 \
-    --out ${dbDir}/${species}.tsv
+diamond blastx \
+  --db ${libraryDir}/${libraryT}.dmnd \
+  --query ${inDir}/${assemblyT}.fasta \
+  --frameshift 15 \
+  --block-size 6 \
+  --index-chunks 1 \
+  --out ${outDir}/${species}.tsv
 
 ################################################################################
