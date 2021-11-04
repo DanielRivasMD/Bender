@@ -146,14 +146,25 @@ func collectCoordinates(readFile string) {
 				endI = int64(len(sequence.Seq) - 1)
 			}
 
+			// determine strand
+			strand := ""
+			if startCoor == syncytin.positionIdent.startPos {
+				strand = "+"
+			} else if startCoor == syncytin.positionIdent.endPos {
+				strand = "-"
+			} else {
+				log.Fatal("Strand could not be determined")
+			}
+
 			// define record id
 			id := syncytin.scaffoldIdent + "_" +
 				strconv.FormatFloat(syncytin.positionIdent.startPos, 'f', 0, 64) + "_" +
 				strconv.FormatFloat(syncytin.positionIdent.endPos, 'f', 0, 64) + " " +
 				species + " " +
-				syncytin.scaffoldIdent + "_" +
-				strconv.FormatInt(startI, 10) + "_" +
-				strconv.FormatInt(endI, 10)
+				syncytin.scaffoldIdent + " " +
+				strconv.FormatInt(startI, 10) + " " +
+				strconv.FormatInt(endI, 10) + " " +
+				strand
 
 			// find coordinates
 			targatSeq := linear.NewSeq(id, sequence.Seq[startI:endI], alphabet.DNA)
