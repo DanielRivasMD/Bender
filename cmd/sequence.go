@@ -172,7 +172,6 @@ func collectCoordinates(readFile string) {
 			// write candidate
 			writeFasta(outFile, targatSeq)
 		}
-
 	}
 
 	if err := scanFasta.Error(); err != nil {

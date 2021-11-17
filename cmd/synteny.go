@@ -114,7 +114,31 @@ func (annotations *annotation) print() string {
 		annotations.attributeStruct.Alias + "," +
 		annotations.attributeStruct.Note + "," +
 		annotations.attributeStruct.Target + "\n"
+}
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// print syncytin
+func (syncytin *identified) print() string {
+	strand := ""
+	if syncytin.positionIdent.startPos == startCoor {
+		strand = "+"
+	} else if syncytin.positionIdent.endPos == startCoor {
+		strand = "-"
+	} else {
+		log.Fatal("Could not determine syncytin orientation")
+	}
+	return syncytin.scaffoldIdent + "," +
+		strconv.FormatFloat(syncytin.positionIdent.startPos, 'f', 0, 64) + "," +
+		strconv.FormatFloat(syncytin.positionIdent.endPos, 'f', 0, 64) + "," +
+		"" + "," +
+		"0" + "," +
+		strand + "," +
+		"0" + "," +
+		"" + "," +
+		"" + "," +
+		"Syncytin" + "," +
+		"" + "\n"
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -166,7 +190,6 @@ func annotate(species string) {
 
 		// collect patterns. internal values are redeclared every iteration
 		annotationCollect(records)
-
 	}
 }
 
@@ -304,8 +327,13 @@ func writeSyntenyGenes(outFile, suffixOut string, annotations annotation) {
 	// gene header
 	if headg && suffixOut == "gene" {
 		headg = false
-		_, err = w.WriteString(header)
 
+		_, err = w.WriteString(header)
+		if err != nil {
+			panic(err)
+		}
+
+		_, err = w.WriteString(syncytin.print())
 		if err != nil {
 			panic(err)
 		}
@@ -314,8 +342,13 @@ func writeSyntenyGenes(outFile, suffixOut string, annotations annotation) {
 	// repeatmasker header
 	if headr && suffixOut == "repm" {
 		headr = false
-		_, err = w.WriteString(header)
 
+		_, err = w.WriteString(header)
+		if err != nil {
+			panic(err)
+		}
+
+		_, err = w.WriteString(syncytin.print())
 		if err != nil {
 			panic(err)
 		}

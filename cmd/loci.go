@@ -123,7 +123,6 @@ func genomicPositionsCollect(readFile string) {
 			// write
 			writeGenomicPositions(outDir+"/"+species, records)
 		}
-
 	}
 }
 
