@@ -119,9 +119,9 @@ func assemblySearch(searchTool string) {
 		if !fileExist(library + libraryT + ".dmnd") {
 			fmt.Println("Building diamond database...")
 			diamondMakedb := []string{
-				searchTool + " makedb",
-				"--in " + libraryDir + "/" + libraryT + ".fasta",
-				"--db " + libraryDir + "/" + libraryT + ".dmnd",
+				searchTool, "makedb",
+				"--in", libraryDir + "/" + libraryT + ".fasta",
+				"--db", libraryDir + "/" + libraryT + ".dmnd",
 			}
 
 			err = syscall.Exec(command, diamondMakedb, os.Environ())
@@ -133,13 +133,13 @@ func assemblySearch(searchTool string) {
 		// use assembly as query with six reading frames
 		fmt.Println("Searching diamond database...")
 		diamondBlastx := []string{
-			searchTool + " blastx",
-			"--db " + libraryDir + "/" + libraryT + ".dmnd",
-			"--query " + inDir + "/" + assemblyT + ".fasta",
-			"--frameshift " + frameshit,
-			"--block-size " + blockSize,
-			"--index-chunks " + indexChunks,
-			"--out " + outDir + "/" + species + ".tsv",
+			searchTool, "blastx",
+			"--db", libraryDir + "/" + libraryT + ".dmnd",
+			"--query", inDir + "/" + assemblyT + ".fasta",
+			"--frameshift", frameshit,
+			"--block-size", blockSize,
+			"--index-chunks", indexChunks,
+			"--out", outDir + "/" + species + ".tsv",
 		}
 
 		err = syscall.Exec(command, diamondBlastx, os.Environ())

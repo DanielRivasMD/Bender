@@ -109,11 +109,11 @@ func init() {
 
 	// persistent flags
 	assemblyCmd.PersistentFlags().StringVarP(&assembly, "assembly", "a", "", "Assembly file")
-	assemblyCmd.PersistentFlags().StringVarP(&species, "species", "s", "", "Species file")
+	assemblyCmd.PersistentFlags().StringVarP(&species, "species", "p", "", "Species file")
 	assemblyCmd.PersistentFlags().StringVarP(&outFile, "outfile", "o", "", "Out file. If empty it will be defined by input")
 
 	assemblyCmd.PersistentFlags().StringVarP(&scaffoldID, "scaffold", "S", "", "Scaffold ID")
-	assemblyCmd.PersistentFlags().Float64VarP(&startCoor, "start", "b", 0, "Start coordinate")
+	assemblyCmd.PersistentFlags().Float64VarP(&startCoor, "start", "s", 0, "Start coordinate")
 	assemblyCmd.PersistentFlags().Float64VarP(&endCoor, "end", "e", 0, "End coordinate")
 	assemblyCmd.PersistentFlags().Float64VarP(&hood, "hood", "n", 0, "Neighborhood to look into")
 
