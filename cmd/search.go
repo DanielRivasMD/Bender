@@ -101,7 +101,6 @@ func assemblySearch(searchTool string) {
 
 	// trim suffixes
 	libraryT := strings.TrimSuffix(library, ".fasta")
-	assemblyT := strings.TrimSuffix(assembly, ".fasta")
 
 	// TODO: manipulate sequences to identify ORFs & use blastn
 	switch searchTool {
@@ -116,11 +115,11 @@ func assemblySearch(searchTool string) {
 		}
 
 		// make database from syncytin protein sequence
-		if !fileExist(library + libraryT + ".dmnd") {
+		if !fileExist(libraryDir + "/" + libraryT + ".dmnd") {
 			fmt.Println("Building diamond database...")
 			diamondMakedb := []string{
 				searchTool, "makedb",
-				"--in", libraryDir + "/" + libraryT + ".fasta",
+				"--in", libraryDir + "/" + library,
 				"--db", libraryDir + "/" + libraryT + ".dmnd",
 			}
 
@@ -135,7 +134,7 @@ func assemblySearch(searchTool string) {
 		diamondBlastx := []string{
 			searchTool, "blastx",
 			"--db", libraryDir + "/" + libraryT + ".dmnd",
-			"--query", inDir + "/" + assemblyT + ".fasta",
+			"--query", inDir + "/" + assembly,
 			"--frameshift", frameshit,
 			"--block-size", blockSize,
 			"--index-chunks", indexChunks,
