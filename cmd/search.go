@@ -29,6 +29,7 @@ import (
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// declarations
 var (
 	library     string
 	libraryDir  string
@@ -72,9 +73,6 @@ Next, execute similarity search.
 		assemblySearch(args[0])
 
 	},
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -82,16 +80,12 @@ Next, execute similarity search.
 func init() {
 	assemblyCmd.AddCommand(searchCmd)
 
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-
 	// flags
 	searchCmd.Flags().StringVarP(&library, "library", "l", "", "Library to search against")
 	searchCmd.Flags().StringVarP(&libraryDir, "libraryDir", "L", "", "Library directory")
 	searchCmd.Flags().StringVarP(&frameshit, "frameshit", "f", "15", "diamond blastx frameshit")
 	searchCmd.Flags().StringVarP(&blockSize, "blockSize", "b", "6", "diamond blastx blockSize")
 	searchCmd.Flags().StringVarP(&indexChunks, "indexChunks", "x", "1", "diamond blastx indexChunks")
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }
 
