@@ -11,8 +11,21 @@ print:
 
 ################################################################################
 
+# build bender for OSX & store `excalibur`
+buildOSX:
+  #!/bin/bash
+  set -euo pipefail
+
+  # declarations
+  source .just.sh
+
+  echo "Building..."
+  go build -v -o ${bender}/excalibur/bender
+
+################################################################################
+
 # build bender for linux & store `excalibur`
-build:
+buildLinux:
   #!/bin/bash
   set -euo pipefail
 
@@ -75,6 +88,8 @@ hermesPawsey:
 ################################################################################
 
 # aliases
+alias b := buildLinux
+alias i := install
 alias p := hermesPawsey
 alias u := hermesUppmax
 
