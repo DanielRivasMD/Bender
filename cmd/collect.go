@@ -43,11 +43,11 @@ var (
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// collectIDCmd represents the collectID command
-var collectIDCmd = &cobra.Command{
-	Use:   "collectID",
-	Short: "Collect ID",
-	Long:  `Collect ID & reformats for ` + chalk.White.Color("Chromosome List File") + `for ` + chalk.White.Color("European Nucleotide Archive") + ` submission`,
+// collectCmd represents the collect command
+var collectCmd = &cobra.Command{
+	Use:   "collect",
+	Short: "Collect",
+	Long:  `Collect & reformats for ` + chalk.White.Color("Chromosome List File") + `for ` + chalk.White.Color("European Nucleotide Archive") + ` submission`,
 
 	Example: ``,
 
@@ -66,10 +66,10 @@ var collectIDCmd = &cobra.Command{
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 func init() {
-	fastaCmd.AddCommand(collectIDCmd)
+	fastaCmd.AddCommand(collectCmd)
 
 	// flags
-	collectIDCmd.Flags().StringVarP(&outFastaID, "out", "o", "", "Out file. If empty, results will be written to stdout")
+	collectCmd.Flags().StringVarP(&outFastaID, "out", "o", "", "Out file. If empty, results will be written to stdout")
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
