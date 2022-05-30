@@ -66,7 +66,7 @@ func init() {
 	fastaCmd.AddCommand(collectIDCmd)
 
 	// flags
-
+	collectIDCmd.Flags().StringVarP(&outFastaID, "out", "o", "", "Out file. If empty, results will be written to stdout")
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

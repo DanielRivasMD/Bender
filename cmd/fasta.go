@@ -26,8 +26,7 @@ import (
 
 // declarations
 var (
-	fastF string
-	outF  string
+	fastaFile string
 )
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -57,8 +56,7 @@ func init() {
 	rootCmd.AddCommand(fastaCmd)
 
 	// persistent flags
-	fastaCmd.PersistentFlags().StringVarP(&fastF, "fasta", "f", "", "Fasta file")
-	fastaCmd.PersistentFlags().StringVarP(&outFile, "outfile", "o", "", "Out file. If empty it will be defined by input")
+	fastaCmd.PersistentFlags().StringVarP(&fastaFile, "fasta", "f", "", "Fasta file")
 
 }
 
