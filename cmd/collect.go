@@ -38,7 +38,7 @@ import (
 var (
 	sequenceID      []string
 	outFastaID      string
-	chromosomeField = "Linear-Chromosome"
+	chromosomeField = "Linear-Chromosome" // TODO: hardcoded value
 )
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -46,8 +46,8 @@ var (
 // collectCmd represents the collect command
 var collectCmd = &cobra.Command{
 	Use:   "collect",
-	Short: "Collect",
-	Long:  `Collect & reformats for ` + chalk.White.Color("Chromosome List File") + `for ` + chalk.White.Color("European Nucleotide Archive") + ` submission`,
+	Short: "Collect sequence IDs",
+	Long:  `Collect sequence IDs and reformat for ` + chalk.Bold.TextStyle("Chromosome List File") + ` for ` + chalk.Bold.TextStyle("European Nucleotide Archive") + ` submission.`,
 
 	Example: ``,
 

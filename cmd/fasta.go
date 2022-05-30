@@ -17,9 +17,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 package cmd
 
 import (
-	"fmt"
-
 	"github.com/spf13/cobra"
+	"github.com/ttacon/chalk"
 )
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -33,21 +32,14 @@ var (
 // fastaCmd represents the fasta command
 var fastaCmd = &cobra.Command{
 	Use:   "fasta",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "Handle fasta operations.",
+	Long: `Handle fasta operations, such as:
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+collect: collect sequence IDs.
+convert: convert ` + chalk.Yellow.Color("fasta") + ` files.
+`,
 
 	Example: ``,
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////
-
-	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("fasta called")
-	},
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

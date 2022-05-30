@@ -47,7 +47,7 @@ var searchCmd = &cobra.Command{
 	Long: `Daniel Rivas <danielrivasmd@gmail.com>
 
 Perform similarity search on assemblies
-using different tools, i.e., blast, diamond.
+using different tools, i.e., ` + chalk.Yellow.Color("blast") + `, ` + chalk.Yellow.Color("diamond") + `.
 
 First, create database.
 Next, execute similarity search.
