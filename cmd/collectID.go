@@ -18,6 +18,7 @@ package cmd
 
 import (
 	"bufio"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -35,7 +36,9 @@ import (
 
 // declarations
 var (
-	sequenceID []string
+	sequenceID      []string
+	outFastaID      string
+	chromosomeField = "Linear-Chromosome"
 )
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -53,10 +56,10 @@ var collectIDCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 
 		// collect ids
-		collectID(fastF)
+		collectID(fastaFile)
 
 		// write
-		writeID(outFile)
+		writeID()
 	},
 }
 
@@ -81,8 +84,8 @@ func collectID(readFile string) {
 	}
 
 	// check whether file exists to avoid appending
-	if fileExist(outFile) {
-		os.Remove(outFile)
+	if fileExist(outFastaID) {
+		os.Remove(outFastaID)
 	}
 
 	// mount data string
@@ -116,33 +119,48 @@ func collectID(readFile string) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // write positions
-func writeID(outF string) {
+func writeID() {
 
-	// declare io
-	f, err := os.OpenFile(outDir+"/"+outF, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0666)
+	if outFastaID == "" {
 
-	if err != nil {
-		panic(err)
-	}
+		// printing
+		for i := 0; i < len(sequenceID); i++ {
+			fmt.Println(
+				sequenceID[i] + "\t" +
+					strings.Replace(sequenceID[i], "HiC_scaffold_", "", -1) + "\t" +
+					chromosomeField,
+			)
+		}
+	} else {
 
-	defer f.Close()
-
-	// declare writer
-	w := bufio.NewWriter(f)
-
-	// writing
-	for i := 0; i < len(sequenceID); i++ {
-		_, err = w.WriteString(
-			sequenceID[i] + "\n",
-		)
+		// declare io
+		f, err := os.OpenFile(outDir+"/"+outFastaID, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0666)
 
 		if err != nil {
 			panic(err)
 		}
-	}
 
-	// flush writer
-	w.Flush()
+		defer f.Close()
+
+		// declare writer
+		w := bufio.NewWriter(f)
+
+		// writing
+		for i := 0; i < len(sequenceID); i++ {
+			_, err = w.WriteString(
+				sequenceID[i] + "\t" +
+					strings.Replace(sequenceID[i], "HiC_scaffold_", "", -1) + "\t" +
+					chromosomeField + "\n",
+			)
+
+			if err != nil {
+				panic(err)
+			}
+		}
+
+		// flush writer
+		w.Flush()
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
