@@ -6,27 +6,25 @@ _default:
 ####################################################################################################
 
 # print justfile
-show:
+@show:
   bat .justfile --language make
 
 ####################################################################################################
 
 # edit justfile
-edit:
+@edit:
   micro .justfile
 
 ####################################################################################################
 
 # aliases
-alias b := buildLinux
-alias i := install
-alias p := hermesPawsey
-alias u := hermesUppmax
+alias pawey := hermesPawsey
+alias uppmax := hermesUppmax
 
 ####################################################################################################
 
 # build bender for OSX & store `excalibur`
-buildOSX:
+osx:
   #!/bin/bash
   set -euo pipefail
 
@@ -39,7 +37,7 @@ buildOSX:
 ####################################################################################################
 
 # build bender for linux & store `excalibur`
-buildLinux:
+linux:
   #!/bin/bash
   set -euo pipefail
 
@@ -75,7 +73,7 @@ hermesUppmax:
   source .just.sh
 
   echo "Deploying to Uppmax..."
-  rsync -azvhP "${bender}excalibur/bender" "${uppmaxID}:${uppmaxBin}"
+  rsync -azvhP "${bender}/excalibur/bender" "${uppmaxID}:${uppmaxBin}"
 
   # link sh scripts
   echo "Linking remotely..."
