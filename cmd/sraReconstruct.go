@@ -50,7 +50,7 @@ Reconstruct binary SRA files to fastq.
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	Run: func(cmd *cobra.Command, args []string) {
+	Run: func(κ *cobra.Command, args []string) {
 
 		// find home directory.
 		home, errHomedir := homedir.Dir()
@@ -60,12 +60,12 @@ Reconstruct binary SRA files to fastq.
 		}
 
 		// flags
-		inDir, _ := cmd.Flags().GetString("inDir")
-		outDir, _ := cmd.Flags().GetString("outDir")
-		verbose, _ := cmd.Flags().GetString("verbose")
-		file, _ := cmd.Flags().GetString("file")
+		inDir, _ := κ.Flags().GetString("inDir")
+		outDir, _ := κ.Flags().GetString("outDir")
+		ɣ, _ := κ.Flags().GetString("ɣ")
+		ƒ, _ := κ.Flags().GetString("file")
 
-		splitFiles, _ := cmd.Flags().GetString("split-files")
+		splitFiles, _ := κ.Flags().GetString("split-files")
 
 		// lineBreaks
 		lineBreaks()
@@ -76,7 +76,7 @@ Reconstruct binary SRA files to fastq.
 
 		// shell call
 		commd := home + "/bin/goTools/sh/SRAreconstruct.sh"
-		shCmd := exec.Command(commd, inDir, outDir, verbose, file, splitFiles)
+		shCmd := exec.Command(commd, inDir, outDir, ɣ, ƒ, splitFiles)
 
 		// run
 		shCmd.Stdout = &stdout

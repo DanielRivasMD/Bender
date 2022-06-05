@@ -53,12 +53,12 @@ Dissect BAM files and retrieve FASTQ files.
 		// flags
 		storageDir, _ := κ.Flags().GetString("outDir")
 
-		file, _ := κ.Flags().GetString("file")
-		file = strings.TrimSuffix(file, ".bam")
+		ƒ, _ := κ.Flags().GetString("file")
+		ƒ = strings.TrimSuffix(ƒ, ".bam")
 
 		directory, _ := κ.Flags().GetString("inDir")
 
-		verbose, _ := κ.Flags().GetString("verbose")
+		ɣ, _ := κ.Flags().GetString("ɣ")
 
 		// lineBreaks
 		lineBreaks()
@@ -69,7 +69,7 @@ Dissect BAM files and retrieve FASTQ files.
 
 		// shell call
 		commd := findHome() + "/bin/goTools/sh/bamFastqExtract.sh"
-		shCmd := exec.Command(commd, file, directory, verbose, storageDir)
+		shCmd := exec.Command(commd, ƒ, directory, ɣ, storageDir)
 
 		// run
 		shCmd.Stdout = &stdout

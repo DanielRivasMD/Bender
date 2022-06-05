@@ -52,7 +52,7 @@ processing high-throughput sequencing data.
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	Run: func(cmd *cobra.Command, args []string) {
+	Run: func(κ *cobra.Command, args []string) {
 
 		// find home directory.
 		home, errHomedir := homedir.Dir()
@@ -62,9 +62,9 @@ processing high-throughput sequencing data.
 		}
 
 		// flags
-		file, _ := cmd.Flags().GetString("file")
+		ƒ, _ := κ.Flags().GetString("file")
 
-		verbose, _ := cmd.Flags().GetString("verbose")
+		ɣ, _ := κ.Flags().GetString("ɣ")
 
 		// lineBreaks
 		lineBreaks()
@@ -75,7 +75,7 @@ processing high-throughput sequencing data.
 
 		// shell call
 		commd := home + "/bin/goTools/sh/htSeq.sh"
-		shCmd := exec.Command(commd, file, verbose)
+		shCmd := exec.Command(commd, ƒ, ɣ)
 
 		// run
 		shCmd.Stdout = &stdout

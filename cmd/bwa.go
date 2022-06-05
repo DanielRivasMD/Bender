@@ -54,12 +54,12 @@ Additionally, ` + chalk.Green.Color("Bender") + ` perform quality control preali
 		// flags
 		storageDir, _ := κ.Flags().GetString("outDir")
 
-		file, _ := κ.Flags().GetString("file")
-		file = strings.TrimSuffix(file, ".fa")
+		ƒ, _ := κ.Flags().GetString("file")
+		ƒ = strings.TrimSuffix(ƒ, ".fa")
 
 		directory, _ := κ.Flags().GetString("inDir")
 
-		verbose, _ := κ.Flags().GetString("verbose")
+		ɣ, _ := κ.Flags().GetString("ɣ")
 
 		// lineBreaks
 		lineBreaks()
@@ -70,7 +70,7 @@ Additionally, ` + chalk.Green.Color("Bender") + ` perform quality control preali
 
 		// shell call
 		commd := findHome() + "/bin/goTools/sh/bwa.sh"
-		shCmd := exec.Command(commd, file, directory, verbose, storageDir)
+		shCmd := exec.Command(commd, ƒ, directory, ɣ, storageDir)
 
 		// run
 		shCmd.Stdout = &stdout

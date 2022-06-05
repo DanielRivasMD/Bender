@@ -54,7 +54,7 @@ Next, create a libray.
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	Run: func(cmd *cobra.Command, args []string) {
+	Run: func(κ *cobra.Command, args []string) {
 
 		// find home directory.
 		home, errHomedir := homedir.Dir()
@@ -64,11 +64,11 @@ Next, create a libray.
 		}
 
 		// flags
-		storageDir, _ := cmd.Flags().GetString("outDir")
+		storageDir, _ := κ.Flags().GetString("outDir")
 
-		directory, _ := cmd.Flags().GetString("inDir")
+		directory, _ := κ.Flags().GetString("inDir")
 
-		verbose, _ := cmd.Flags().GetString("verbose")
+		ɣ, _ := κ.Flags().GetString("ɣ")
 
 		// bound flags
 		reference := viper.GetString("reference")
@@ -83,7 +83,7 @@ Next, create a libray.
 
 		// shell call
 		commd := home + "/bin/goTools/sh/repeatModeler.sh"
-		shCmd := exec.Command(commd, reference, directory, verbose, storageDir)
+		shCmd := exec.Command(commd, reference, directory, ɣ, storageDir)
 
 		// run
 		shCmd.Stdout = &stdout

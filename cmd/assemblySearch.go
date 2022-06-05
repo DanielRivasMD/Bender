@@ -67,7 +67,7 @@ Next, execute similarity search.
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	Run: func(cmd *cobra.Command, args []string) {
+	Run: func(κ *cobra.Command, args []string) {
 
 		// execute logic
 		assemblySearch(args[0])

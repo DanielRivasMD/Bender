@@ -35,7 +35,7 @@ var convertCmd = &cobra.Command{
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	Run: func(cmd *cobra.Command, args []string) {
+	Run: func(κ *cobra.Command, args []string) {
 		log.Fatal("convert called")
 	},
 }
