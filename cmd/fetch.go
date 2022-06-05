@@ -52,7 +52,6 @@ and check the state of the downloads.
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	Run: func(cmd *cobra.Command, args []string) {
 
 		// find home directory.
 		home, errHomedir := homedir.Dir()
@@ -60,16 +59,17 @@ and check the state of the downloads.
 			fmt.Println(errHomedir)
 			os.Exit(1)
 		}
+	Run: func(κ *cobra.Command, args []string) {
 
 		// flags
-		inDir, _ := cmd.Flags().GetString("inDir")
-		outDir, _ := cmd.Flags().GetString("outDir")
-		verbose, _ := cmd.Flags().GetString("verbose")
-		file, _ := cmd.Flags().GetString("file")
+		inDir, _ := κ.Flags().GetString("inDir")
+		outDir, _ := κ.Flags().GetString("outDir")
+		verbose, _ := κ.Flags().GetString("verbose")
+		file, _ := κ.Flags().GetString("file")
 
 		file = strings.TrimSuffix(file, ".txt")
-		maxIt, _ := cmd.Flags().GetString("iterations")
-		maxSize, _ := cmd.Flags().GetString("max-size")
+		maxIt, _ := κ.Flags().GetString("iterations")
+		maxSize, _ := κ.Flags().GetString("max-size")
 
 		// lineBreaks
 		lineBreaks()

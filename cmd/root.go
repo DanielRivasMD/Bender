@@ -60,9 +60,9 @@ with built-in and accessible documentation.
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	PersistentPreRun: func(cmd *cobra.Command, arg []string) {
+	PersistentPreRun: func(κ *cobra.Command, arg []string) {
 
-		initializeConfig(cmd, cfgPath, strings.TrimSuffix(cfgFile, ".toml"))
+		initializeConfig(κ, cfgPath, strings.TrimSuffix(cfgFile, ".toml"))
 
 	},
 }
@@ -70,34 +70,37 @@ with built-in and accessible documentation.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 func Execute() {
-	if err := rootCmd.Execute(); err != nil {
-		fmt.Println(err)
+	ε := rootCmd.Execute()
+	if ε != nil {
+		log.Fatal(ε)
 		os.Exit(1)
 	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-func initializeConfig(cmd *cobra.Command, configPath string, configName string) error {
+func initializeConfig(κ *cobra.Command, configPath string, configName string) error {
 
 	// initialize viper
-	v := viper.New()
+	ʌ := viper.New()
 
 	// collect config path & file from persistent flags
-	v.AddConfigPath(configPath)
-	v.SetConfigName(configName)
+	ʌ.AddConfigPath(configPath)
+	ʌ.SetConfigName(configName)
 
 	// read the config file
-	if err := v.ReadInConfig(); err != nil {
+	ε := ʌ.ReadInConfig()
+	if ε != nil {
 		// okay if there isn't a config file
-		if _, ok := err.(viper.ConfigFileNotFoundError); !ok {
+		_, ϙ := ε.(viper.ConfigFileNotFoundError)
+		if !ϙ {
 			// return an error if we cannot parse the config file
-			return err
+			return ε
 		}
 	}
 
 	// bind flags to viper
-	bindFlags(cmd, v)
+	bindFlags(κ, ʌ)
 
 	return nil
 }
@@ -105,24 +108,24 @@ func initializeConfig(cmd *cobra.Command, configPath string, configName string) 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // bind each cobra flag to its associated viper configuration
-func bindFlags(cmd *cobra.Command, v *viper.Viper) {
+func bindFlags(κ *cobra.Command, ʌ *viper.Viper) {
 
-	cmd.Flags().VisitAll(func(f *pflag.Flag) {
+	κ.Flags().VisitAll(func(σ *pflag.Flag) {
 
 		// apply the viper config value to the flag when the flag is not set and viper has a value
-		if !f.Changed && v.IsSet(f.Name) {
-			val := v.Get(f.Name)
-			cmd.Flags().Set(f.Name, fmt.Sprintf("%v", val))
+		if !σ.Changed && ʌ.IsSet(σ.Name) {
+			ν := ʌ.Get(σ.Name)
+			κ.Flags().Set(σ.Name, fmt.Sprintf("%v", ν))
 		}
 	})
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-func fileExist(filename string) bool {
-	info, err := os.Stat(filename)
-	if os.IsNotExist(err) {
 // fileExist checks if a file exists and is not a directory before try using it to prevent further errors
+func fileExist(ƒ string) bool {
+	info, ε := os.Stat(ƒ)
+	if os.IsNotExist(ε) {
 		return false
 	}
 	return !info.IsDir()

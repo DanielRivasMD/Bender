@@ -52,7 +52,6 @@ Additionally, ` + chalk.Green.Color("Bender") + ` perform quality control preali
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	Run: func(cmd *cobra.Command, args []string) {
 
 		// find home directory.
 		home, errHomedir := homedir.Dir()
@@ -60,16 +59,17 @@ Additionally, ` + chalk.Green.Color("Bender") + ` perform quality control preali
 			fmt.Println(errHomedir)
 			os.Exit(1)
 		}
+	Run: func(κ *cobra.Command, args []string) {
 
 		// flags
-		storageDir, _ := cmd.Flags().GetString("outDir")
+		storageDir, _ := κ.Flags().GetString("outDir")
 
-		file, _ := cmd.Flags().GetString("file")
+		file, _ := κ.Flags().GetString("file")
 		file = strings.TrimSuffix(file, ".fa")
 
-		directory, _ := cmd.Flags().GetString("inDir")
+		directory, _ := κ.Flags().GetString("inDir")
 
-		verbose, _ := cmd.Flags().GetString("verbose")
+		verbose, _ := κ.Flags().GetString("verbose")
 
 		// lineBreaks
 		lineBreaks()

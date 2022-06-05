@@ -75,19 +75,19 @@ Collect information and concatenate.
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
-	Run: func(cmd *cobra.Command, args []string) {
+	Run: func(κ *cobra.Command, args []string) {
 
 		// json file
-		content, err := ioutil.ReadFile(inDir + "/" + species)
-		if err != nil {
-			log.Fatal("Error when opening file: ", err)
+		content, ε := ioutil.ReadFile(inDir + "/" + species)
+		if ε != nil {
+			log.Fatal("Error when opening file: ", ε)
 		}
 
 		// unmarshall the data into features
 		var features Data
-		err = json.Unmarshal(content, &features)
-		if err != nil {
-			log.Fatal("Error during Unmarshal(): ", err)
+		ε = json.Unmarshal(content, &features)
+		if ε != nil {
+			log.Fatal("Error during Unmarshal(): ", ε)
 		}
 
 		// write extracted
@@ -102,31 +102,32 @@ Collect information and concatenate.
 func writeSpeciesFeatures(features Data) {
 
 	// declare io
-	f, err := os.OpenFile(outDir+"/"+outFile, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0666)
-
-	if err != nil {
-		panic(err)
+	ƒ, ε := os.OpenFile(outDir+"/"+outFile, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0666)
+	if ε != nil {
+		panic(ε)
 	}
 
-	defer f.Close()
+	defer ƒ.Close()
 
 	// declare writer
-	w := bufio.NewWriter(f)
+	ϖ := bufio.NewWriter(ƒ)
 
 	// writing
-	_, err = w.WriteString(
+	_, ε = ϖ.WriteString(
 		features.Organism.Binominal + "," +
 			strings.ReplaceAll(features.Organism.Vernacular, ",", "") + "," +
 			features.ChromlengthAssembly.Karyotype + "," +
 			strings.ReplaceAll(features.ChromlengthAssembly.ScaffoldN50, ",", "") + "," +
 			strings.ReplaceAll(features.ChromlengthAssembly.NumberOfScaffolds, ",", "") +
 			"\n")
-	if err != nil {
-		panic(err)
+	if ε != nil {
+		panic(ε)
 	}
 
 	// flush writer
-	w.Flush()
+	ϖ.Flush()
+}
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 func init() {

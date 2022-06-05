@@ -128,9 +128,9 @@ func (position *position) parseMinMax(str1, str2 string) {
 func coordinateOut(readFile string) string {
 
 	outFile = readFile
-	reg := regexp.MustCompile(`HiC*`)
-	res := reg.FindStringIndex(outFile)
-	outFile = outFile[0:res[0]]
+	я := regexp.MustCompile(`HiC*`)
+	ρ := я.FindStringIndex(outFile)
+	outFile = outFile[0:ρ[0]]
 
 	// assembly directory
 	outFile = outDir + "/" +
