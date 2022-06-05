@@ -18,12 +18,9 @@ package cmd
 
 import (
 	"bytes"
-	"log"
-	"os"
 	"os/exec"
 	"strings"
 
-	"github.com/atrox/homedir"
 	"github.com/labstack/gommon/color"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -56,13 +53,6 @@ Next, create a libray.
 
 	Run: func(κ *cobra.Command, args []string) {
 
-		// find home directory.
-		home, errHomedir := homedir.Dir()
-		if errHomedir != nil {
-			log.Fatal(errHomedir)
-			os.Exit(1)
-		}
-
 		// flags
 		storageDir, _ := κ.Flags().GetString("outDir")
 
@@ -82,7 +72,7 @@ Next, create a libray.
 		var stderr bytes.Buffer
 
 		// shell call
-		commd := home + "/bin/goTools/sh/repeatModeler.sh"
+		commd := findHome() + "/bin/goTools/sh/repeatModeler.sh"
 		shCmd := exec.Command(commd, reference, directory, ɣ, storageDir)
 
 		// run

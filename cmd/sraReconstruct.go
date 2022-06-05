@@ -19,10 +19,8 @@ package cmd
 import (
 	"bytes"
 	"log"
-	"os"
 	"os/exec"
 
-	"github.com/atrox/homedir"
 	"github.com/labstack/gommon/color"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -52,13 +50,6 @@ Reconstruct binary SRA files to fastq.
 
 	Run: func(κ *cobra.Command, args []string) {
 
-		// find home directory.
-		home, errHomedir := homedir.Dir()
-		if errHomedir != nil {
-			log.Fatal(errHomedir)
-			os.Exit(1)
-		}
-
 		// flags
 		inDir, _ := κ.Flags().GetString("inDir")
 		outDir, _ := κ.Flags().GetString("outDir")
@@ -75,7 +66,7 @@ Reconstruct binary SRA files to fastq.
 		var stderr bytes.Buffer
 
 		// shell call
-		commd := home + "/bin/goTools/sh/SRAreconstruct.sh"
+		commd := findHome() + "/bin/goTools/sh/SRAreconstruct.sh"
 		shCmd := exec.Command(commd, inDir, outDir, ɣ, ƒ, splitFiles)
 
 		// run

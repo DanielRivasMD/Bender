@@ -18,11 +18,8 @@ package cmd
 
 import (
 	"bytes"
-	"log"
-	"os"
 	"os/exec"
 
-	"github.com/atrox/homedir"
 	"github.com/labstack/gommon/color"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -54,13 +51,6 @@ processing high-throughput sequencing data.
 
 	Run: func(κ *cobra.Command, args []string) {
 
-		// find home directory.
-		home, errHomedir := homedir.Dir()
-		if errHomedir != nil {
-			log.Fatal(errHomedir)
-			os.Exit(1)
-		}
-
 		// flags
 		ƒ, _ := κ.Flags().GetString("file")
 
@@ -74,7 +64,7 @@ processing high-throughput sequencing data.
 		var stderr bytes.Buffer
 
 		// shell call
-		commd := home + "/bin/goTools/sh/htSeq.sh"
+		commd := findHome() + "/bin/goTools/sh/htSeq.sh"
 		shCmd := exec.Command(commd, ƒ, ɣ)
 
 		// run
