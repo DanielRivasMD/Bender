@@ -54,7 +54,7 @@ processing high-throughput sequencing data.
 		// flags
 		ƒ, _ := κ.Flags().GetString("file")
 
-		ɣ, _ := κ.Flags().GetString("ɣ")
+		ɣ, _ := κ.Flags().GetString("verbose")
 
 		// lineBreaks
 		lineBreaks()

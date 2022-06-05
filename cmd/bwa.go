@@ -59,7 +59,7 @@ Additionally, ` + chalk.Green.Color("Bender") + ` perform quality control preali
 
 		directory, _ := κ.Flags().GetString("inDir")
 
-		ɣ, _ := κ.Flags().GetString("ɣ")
+		ɣ, _ := κ.Flags().GetString("verbose")
 
 		// lineBreaks
 		lineBreaks()

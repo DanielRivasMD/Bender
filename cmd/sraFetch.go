@@ -54,7 +54,7 @@ and check the state of the downloads.
 		// flags
 		inDir, _ := κ.Flags().GetString("inDir")
 		outDir, _ := κ.Flags().GetString("outDir")
-		ɣ, _ := κ.Flags().GetString("ɣ")
+		ɣ, _ := κ.Flags().GetString("verbose")
 		ƒ, _ := κ.Flags().GetString("file")
 
 		ƒ = strings.TrimSuffix(ƒ, ".txt")

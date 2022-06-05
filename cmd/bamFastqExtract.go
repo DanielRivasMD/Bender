@@ -58,7 +58,7 @@ Dissect BAM files and retrieve FASTQ files.
 
 		directory, _ := κ.Flags().GetString("inDir")
 
-		ɣ, _ := κ.Flags().GetString("ɣ")
+		ɣ, _ := κ.Flags().GetString("verbose")
 
 		// lineBreaks
 		lineBreaks()

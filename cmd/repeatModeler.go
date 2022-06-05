@@ -58,7 +58,7 @@ Next, create a libray.
 
 		directory, _ := κ.Flags().GetString("inDir")
 
-		ɣ, _ := κ.Flags().GetString("ɣ")
+		ɣ, _ := κ.Flags().GetString("verbose")
 
 		// bound flags
 		reference := viper.GetString("reference")

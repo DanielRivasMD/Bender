@@ -77,9 +77,9 @@ func init() {
 func collectID(readFile string) {
 
 	// open an input file, exit on error
-	contentFile, err := ioutil.ReadFile(readFile)
-	if err != nil {
-		log.Fatal("Error opending input file :", err)
+	contentFile, ε := ioutil.ReadFile(readFile)
+	if ε != nil {
+		log.Fatal("Error opending input file :", ε)
 	}
 
 	// check whether file exists to avoid appending
@@ -90,28 +90,23 @@ func collectID(readFile string) {
 	// mount data string
 	dataFasta := strings.NewReader(string(contentFile))
 
-	// fasta.Reader requires a known type template to fill
-	// with FASTA data. Here we use *linear.Seq.
+	// fasta.Reader requires a known type template to fill with FASTA data. Here we use *linear.Seq
 	template := linear.NewSeq("", nil, alphabet.DNAredundant)
 	readerFasta := fasta.NewReader(dataFasta, template)
 
-	// make a seqio.Scanner to simplify iterating over a
-	// stream of data.
+	// make a seqio.Scanner to simplify iterating over a stream of data
 	scanFasta := seqio.NewScanner(readerFasta)
 
-	// iterate through each sequence in a multifasta and
-	// examine the ID, description and sequence data.
+	// iterate through each sequence in a multifasta and examine the ID, description and sequence data
 	for scanFasta.Next() {
-		// get the current sequence and type assert to *linear.Seq.
-		// while this is unnecessary here, it can be useful to have
-		// the concrete type.
+		// get the current sequence and type assert to *linear.Seq while this is unnecessary here, it can be useful to have the concrete type
 		sequence := scanFasta.Seq().(*linear.Seq)
 
 		sequenceID = append(sequenceID, sequence.ID)
 	}
 
-	if err := scanFasta.Error(); err != nil {
-		log.Fatal(err)
+	if ε := scanFasta.Error(); ε != nil {
+		log.Fatal(ε)
 	}
 }
 
@@ -123,42 +118,42 @@ func writeID() {
 	if outFastaID == "" {
 
 		// printing
-		for i := 0; i < len(sequenceID); i++ {
+		for ι := 0; ι < len(sequenceID); ι++ {
 			log.Fatal(
-				sequenceID[i] + "\t" +
-					strings.Replace(sequenceID[i], "HiC_scaffold_", "", -1) + "\t" +
+				sequenceID[ι] + "\t" +
+					strings.Replace(sequenceID[ι], "HiC_scaffold_", "", -1) + "\t" +
 					chromosomeField,
 			)
 		}
 	} else {
 
 		// declare io
-		f, err := os.OpenFile(outDir+"/"+outFastaID, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0666)
+		f, ε := os.OpenFile(outDir+"/"+outFastaID, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0666)
 
-		if err != nil {
-			panic(err)
+		if ε != nil {
+			panic(ε)
 		}
 
 		defer f.Close()
 
 		// declare writer
-		w := bufio.NewWriter(f)
+		ϖ := bufio.NewWriter(f)
 
 		// writing
 		for i := 0; i < len(sequenceID); i++ {
-			_, err = w.WriteString(
+			_, ε = ϖ.WriteString(
 				sequenceID[i] + "\t" +
 					strings.Replace(sequenceID[i], "HiC_scaffold_", "", -1) + "\t" +
 					chromosomeField + "\n",
 			)
 
-			if err != nil {
-				panic(err)
+			if ε != nil {
+				panic(ε)
 			}
 		}
 
 		// flush writer
-		w.Flush()
+		ϖ.Flush()
 	}
 }
 
