@@ -43,7 +43,7 @@ var (
 var rootCmd = &cobra.Command{
 	Use:     "bender",
 	Version: "v0.3",
-	Short:   "A robot to handle Slurm Genomic jobs",
+	Short:   "A robot to handle Slurm Genomic jobs.",
 	Long: `Daniel Rivas <danielrivasmd@gmail.com>
 
 "Good news everyone!"
@@ -74,19 +74,6 @@ func Execute() {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-func init() {
-
-	// persistent flags
-	rootCmd.PersistentFlags().StringVarP(&cfgFile, "configFile", "c", "", "Config file")
-	rootCmd.PersistentFlags().StringVarP(&cfgPath, "configPath", "C", ".", "Path to config file")
-	rootCmd.PersistentFlags().StringVarP(&inDir, "inDir", "I", ".", "Directory where input files are located")
-	rootCmd.PersistentFlags().StringVarP(&outDir, "outDir", "O", ".", "Output directory. Creates if not exitst")
-	rootCmd.PersistentFlags().StringVarP(&verboseBool, "verbose", "v", "false", "Verbosity switch")
-
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -132,14 +119,25 @@ func bindFlags(cmd *cobra.Command, v *viper.Viper) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// fileExist checks if a file exists and is not a directory before
-// try using it to prevent further errors
 func fileExist(filename string) bool {
 	info, err := os.Stat(filename)
 	if os.IsNotExist(err) {
+// fileExist checks if a file exists and is not a directory before try using it to prevent further errors
 		return false
 	}
 	return !info.IsDir()
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+func init() {
+
+	// persistent flags
+	rootCmd.PersistentFlags().StringVarP(&cfgFile, "configFile", "c", "", "Config file")
+	rootCmd.PersistentFlags().StringVarP(&cfgPath, "configPath", "C", ".", "Path to config file")
+	rootCmd.PersistentFlags().StringVarP(&inDir, "inDir", "I", ".", "Directory where input files are located")
+	rootCmd.PersistentFlags().StringVarP(&outDir, "outDir", "O", ".", "Output directory. Creates if not exitst")
+	rootCmd.PersistentFlags().StringVarP(&verboseBool, "verbose", "v", "false", "Verbosity switch")
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

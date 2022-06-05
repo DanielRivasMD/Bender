@@ -43,9 +43,8 @@ var bwaCmd = &cobra.Command{
 	Short: "Align fasta using BWA.",
 	Long: `Daniel Rivas <danielrivasmd@gmail.com>
 
-Aligns fasta files to a reference genome.
-Additionally, perform quality control
-prealignment through FastX.
+` + chalk.Green.Color("Bender") + ` will align fasta files to a reference genome.
+Additionally, ` + chalk.Green.Color("Bender") + ` perform quality control prealignment through FastX.
 `,
 
 	Example: `

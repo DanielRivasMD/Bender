@@ -31,11 +31,10 @@ var ()
 // sraCmd represents the sra command
 var sraCmd = &cobra.Command{
 	Use:   "sra",
-	Short: "Handles SRA operations.",
+	Short: "Handle SRA operations.",
 	Long: `Daniel Rivas <danielrivasmd@gmail.com>
 
-Collect files from Short Read Archive (SRA)
-and check the state of the downloads.
+Collect files from Short Read Archive (SRA) and check the state of the downloads.
 
 Reconstruct binary SRA files to fastq.
 `,
