@@ -18,7 +18,7 @@ package cmd
 
 import (
 	"bytes"
-	"fmt"
+	"log"
 	"os"
 	"os/exec"
 	"strings"
@@ -59,7 +59,7 @@ Next, create a libray.
 		// find home directory.
 		home, errHomedir := homedir.Dir()
 		if errHomedir != nil {
-			fmt.Println(errHomedir)
+			log.Fatal(errHomedir)
 			os.Exit(1)
 		}
 

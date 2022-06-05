@@ -17,7 +17,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 package cmd
 
 import (
-	"fmt"
+	"log"
 	"os"
 	"os/exec"
 	"strings"
@@ -110,7 +110,7 @@ func assemblySearch(searchTool string) {
 
 		// make database from syncytin protein sequence
 		if !fileExist(libraryDir + "/" + libraryT + ".dmnd") {
-			fmt.Println("Building diamond database...")
+			log.Fatal("Building diamond database...")
 			diamondMakedb := []string{
 				searchTool, "makedb",
 				"--in", libraryDir + "/" + library,
@@ -124,7 +124,7 @@ func assemblySearch(searchTool string) {
 		}
 
 		// use assembly as query with six reading frames
-		fmt.Println("Searching diamond database...")
+		log.Fatal("Searching diamond database...")
 		diamondBlastx := []string{
 			searchTool, "blastx",
 			"--db", libraryDir + "/" + libraryT + ".dmnd",

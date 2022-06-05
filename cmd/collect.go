@@ -18,7 +18,6 @@ package cmd
 
 import (
 	"bufio"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -125,7 +124,7 @@ func writeID() {
 
 		// printing
 		for i := 0; i < len(sequenceID); i++ {
-			fmt.Println(
+			log.Fatal(
 				sequenceID[i] + "\t" +
 					strings.Replace(sequenceID[i], "HiC_scaffold_", "", -1) + "\t" +
 					chromosomeField,
