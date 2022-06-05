@@ -18,12 +18,9 @@ package cmd
 
 import (
 	"bytes"
-	"fmt"
-	"os"
 	"os/exec"
 	"strings"
 
-	"github.com/atrox/homedir"
 	"github.com/labstack/gommon/color"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -52,13 +49,6 @@ and check the state of the downloads.
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-		// find home directory.
-		home, errHomedir := homedir.Dir()
-		if errHomedir != nil {
-			fmt.Println(errHomedir)
-			os.Exit(1)
-		}
 	Run: func(κ *cobra.Command, args []string) {
 
 		// flags
@@ -79,7 +69,7 @@ and check the state of the downloads.
 		var stderr bytes.Buffer
 
 		// shell call
-		commd := home + "/bin/goTools/sh/fetch.sh"
+		commd := findHome() + "/bin/goTools/sh/fetch.sh"
 		shCmd := exec.Command(commd, inDir, outDir, verbose, file, maxIt, maxSize, verbose)
 
 		// run

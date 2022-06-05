@@ -18,12 +18,9 @@ package cmd
 
 import (
 	"bytes"
-	"fmt"
-	"os"
 	"os/exec"
 	"strings"
 
-	"github.com/atrox/homedir"
 	"github.com/labstack/gommon/color"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -51,13 +48,6 @@ Dissect BAM files and retrieve FASTQ files.
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-		// find home directory.
-		home, errHomedir := homedir.Dir()
-		if errHomedir != nil {
-			fmt.Println(errHomedir)
-			os.Exit(1)
-		}
 	Run: func(κ *cobra.Command, args []string) {
 
 		// flags
@@ -78,7 +68,7 @@ Dissect BAM files and retrieve FASTQ files.
 		var stderr bytes.Buffer
 
 		// shell call
-		commd := home + "/bin/goTools/sh/bamFastqExtract.sh"
+		commd := findHome() + "/bin/goTools/sh/bamFastqExtract.sh"
 		shCmd := exec.Command(commd, file, directory, verbose, storageDir)
 
 		// run

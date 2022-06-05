@@ -18,9 +18,11 @@ package cmd
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"strings"
 
+	"github.com/atrox/homedir"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
@@ -132,6 +134,19 @@ func fileExist(ƒ string) bool {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// find home directory
+func findHome() string {
+	Ξ, ε := homedir.Dir()
+	if ε != nil {
+		log.Fatal(ε)
+		os.Exit(1)
+	}
+	return Ξ
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 func init() {
 
 	// persistent flags
