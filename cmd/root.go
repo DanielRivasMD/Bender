@@ -17,12 +17,15 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 package cmd
 
 import (
+	"bytes"
 	"fmt"
 	"log"
 	"os"
+	"os/exec"
 	"strings"
 
 	"github.com/atrox/homedir"
+	"github.com/labstack/gommon/color"
 	"github.com/spf13/cobra"
 	"github.com/spf13/pflag"
 	"github.com/spf13/viper"
@@ -143,6 +146,40 @@ func findHome() string {
 		os.Exit(1)
 	}
 	return Ξ
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// execute shell command
+func execCmd(script, ƒ, directory, ɣ, outDir string) {
+
+	// lineBreaks
+	lineBreaks()
+
+	// buffers
+	var stdout bytes.Buffer
+	var stderr bytes.Buffer
+
+	// shell call
+	commd := findHome() + "/bin/goTools/sh/" + script
+	shCmd := exec.Command(commd, ƒ, directory, ɣ, outDir)
+
+	// run
+	shCmd.Stdout = &stdout
+	shCmd.Stderr = &stderr
+	_ = shCmd.Run()
+
+	// stdout
+	color.Println(color.Cyan(stdout.String(), color.B))
+
+	// stderr
+	if stderr.String() != "" {
+		color.Println(color.Red(stderr.String(), color.B))
+	}
+
+	// lineBreaks
+	lineBreaks()
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

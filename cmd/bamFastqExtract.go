@@ -17,11 +17,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 package cmd
 
 import (
-	"bytes"
-	"os/exec"
 	"strings"
 
-	"github.com/labstack/gommon/color"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"github.com/ttacon/chalk"
@@ -51,8 +48,6 @@ Dissect BAM files and retrieve FASTQ files.
 	Run: func(κ *cobra.Command, args []string) {
 
 		// flags
-		storageDir, _ := κ.Flags().GetString("outDir")
-
 		ƒ, _ := κ.Flags().GetString("file")
 		ƒ = strings.TrimSuffix(ƒ, ".bam")
 
@@ -60,32 +55,10 @@ Dissect BAM files and retrieve FASTQ files.
 
 		ɣ, _ := κ.Flags().GetString("verbose")
 
-		// lineBreaks
-		lineBreaks()
+		outDir, _ := κ.Flags().GetString("outDir")
 
-		// buffers
-		var stdout bytes.Buffer
-		var stderr bytes.Buffer
-
-		// shell call
-		commd := findHome() + "/bin/goTools/sh/bamFastqExtract.sh"
-		shCmd := exec.Command(commd, ƒ, directory, ɣ, storageDir)
-
-		// run
-		shCmd.Stdout = &stdout
-		shCmd.Stderr = &stderr
-		_ = shCmd.Run()
-
-		// stdout
-		color.Println(color.Cyan(stdout.String(), color.B))
-
-		// stderr
-		if stderr.String() != "" {
-			color.Println(color.Red(stderr.String(), color.B))
-		}
-
-		// lineBreaks
-		lineBreaks()
+		// execute shell
+		execCmd("bamFastqExtract.sh", ƒ, directory, ɣ, outDir)
 
 	},
 }

@@ -17,11 +17,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 package cmd
 
 import (
-	"bytes"
-	"os/exec"
 	"strings"
 
-	"github.com/labstack/gommon/color"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"github.com/ttacon/chalk"
@@ -53,43 +50,19 @@ Next, create a libray.
 
 	Run: func(κ *cobra.Command, args []string) {
 
-		// flags
-		storageDir, _ := κ.Flags().GetString("outDir")
-
-		directory, _ := κ.Flags().GetString("inDir")
-
-		ɣ, _ := κ.Flags().GetString("verbose")
-
 		// bound flags
 		reference := viper.GetString("reference")
 		reference = strings.TrimSuffix(reference, ".fa")
 
-		// lineBreaks
-		lineBreaks()
+		// flags
+		directory, _ := κ.Flags().GetString("inDir")
 
-		// buffers
-		var stdout bytes.Buffer
-		var stderr bytes.Buffer
+		ɣ, _ := κ.Flags().GetString("verbose")
 
-		// shell call
-		commd := findHome() + "/bin/goTools/sh/repeatModeler.sh"
-		shCmd := exec.Command(commd, reference, directory, ɣ, storageDir)
+		outDir, _ := κ.Flags().GetString("outDir")
 
-		// run
-		shCmd.Stdout = &stdout
-		shCmd.Stderr = &stderr
-		_ = shCmd.Run()
-
-		// stdout
-		color.Println(color.Cyan(stdout.String(), color.B))
-
-		// stderr
-		if stderr.String() != "" {
-			color.Println(color.Red(stderr.String(), color.B))
-		}
-
-		// lineBreaks
-		lineBreaks()
+		// execute shell
+		execCmd("repeatModeler.sh", reference, directory, ɣ, outDir)
 
 	},
 }
