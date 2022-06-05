@@ -34,9 +34,9 @@ var ()
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// bamFastqExtractCmd represents the bamFastqExtract command
-var bamFastqExtractCmd = &cobra.Command{
-	Use:   "bamFastqExtract",
+// fastqExtractCmd represents the bamFastqExtract command
+var fastqExtractCmd = &cobra.Command{
+	Use:   "fastqExtract",
 	Short: "Extract FASTQ from BAM files.",
 	Long: `Daniel Rivas <danielrivasmd@gmail.com>
 
@@ -93,12 +93,12 @@ Dissect BAM files and retrieve FASTQ files.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 func init() {
-	rootCmd.AddCommand(bamFastqExtractCmd)
+	bamCmd.AddCommand(fastqExtractCmd)
 
 	// flags
-	bamFastqExtractCmd.Flags().StringP("file", "f", "", "Alignment file. bam format")
-	bamFastqExtractCmd.MarkFlagRequired("file")
-	viper.BindPFlag("file", bamFastqExtractCmd.Flags().Lookup("file"))
+	fastqExtractCmd.Flags().StringP("file", "f", "", "Alignment file. bam format")
+	fastqExtractCmd.MarkFlagRequired("file")
+	viper.BindPFlag("file", fastqExtractCmd.Flags().Lookup("file"))
 
 }
 
