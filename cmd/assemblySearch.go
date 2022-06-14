@@ -17,7 +17,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 package cmd
 
 import (
-	"log"
+	"fmt"
 	"os"
 	"os/exec"
 	"strings"
@@ -103,28 +103,28 @@ func assemblySearch(searchTool string) {
 	case "diamond":
 
 		// check executable availability
-		command, err := exec.LookPath(searchTool)
-		if err != nil {
-			panic(err)
+		κ, ε := exec.LookPath(searchTool)
+		if ε != nil {
+			panic(ε)
 		}
 
 		// make database from syncytin protein sequence
 		if !fileExist(libraryDir + "/" + libraryT + ".dmnd") {
-			log.Fatal("Building diamond database...")
+			fmt.Println("Building diamond database...")
 			diamondMakedb := []string{
 				searchTool, "makedb",
 				"--in", libraryDir + "/" + library,
 				"--db", libraryDir + "/" + libraryT + ".dmnd",
 			}
 
-			err = syscall.Exec(command, diamondMakedb, os.Environ())
-			if err != nil {
-				panic(err)
+			ε = syscall.Exec(κ, diamondMakedb, os.Environ())
+			if ε != nil {
+				panic(ε)
 			}
 		}
 
 		// use assembly as query with six reading frames
-		log.Fatal("Searching diamond database...")
+		fmt.Println("Searching diamond database...")
 		diamondBlastx := []string{
 			searchTool, "blastx",
 			"--db", libraryDir + "/" + libraryT + ".dmnd",
@@ -135,9 +135,9 @@ func assemblySearch(searchTool string) {
 			"--out", outDir + "/" + species + ".tsv",
 		}
 
-		err = syscall.Exec(command, diamondBlastx, os.Environ())
-		if err != nil {
-			panic(err)
+		ε = syscall.Exec(κ, diamondBlastx, os.Environ())
+		if ε != nil {
+			panic(ε)
 		}
 	}
 }
