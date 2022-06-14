@@ -89,6 +89,7 @@ var assemblyCmd = &cobra.Command{
 
 description:	parse assembly features.
 loci:					read diamond assembly search output & filter results.
+database:			build database.
 search:				perform similarity search.
 sequence:			extract sequences from assemblies.
 synteny:			.
