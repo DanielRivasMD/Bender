@@ -30,19 +30,19 @@ import (
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // declarations
-const readmeя = `README`
-const assemblyя = `HiC.fasta.gz`
-const annotя = `fasta_v2.functional.gff3.gz`
+const rmя = `README`
+const asя = `HiC.fasta.gz`
+const anя = `fasta_v2.functional.gff3.gz`
 
 var (
 	// declare regex
-	readmeρ   = regexp.MustCompile(readmeя)
-	assemblyρ = regexp.MustCompile(assemblyя)
-	annotρ    = regexp.MustCompile(annotя)
+	rmρ = regexp.MustCompile(rmя)
+	asρ = regexp.MustCompile(asя)
+	anρ = regexp.MustCompile(anя)
 
 	// declare switches
-	assemblyϟ bool
-	annotϟ    bool
+	asϟ bool
+	anϟ bool
 
 	// declare placeholders
 	readmeLink   string
@@ -104,23 +104,23 @@ func assemblyFilter(readFile string) {
 
 		// match records
 		switch {
-		case readmeρ.MatchString(records[0]):
+		case rmρ.MatchString(records[0]):
 			readmeLink = records[1]
 
-		case assemblyρ.MatchString(records[0]):
-			assemblyϟ = true
+		case asρ.MatchString(records[0]):
+			asϟ = true
 			assemblyID = records[0]
 			assemblyLink = records[1]
 
-		case annotρ.MatchString(records[0]):
-			annotϟ = true
+		case anρ.MatchString(records[0]):
+			anϟ = true
 			annotID = records[0]
 			annotLink = records[1]
 		}
 
 	}
 
-	if assemblyϟ && annotϟ {
+	if asϟ && anϟ {
 		fmt.Println(
 			strings.Replace(species, ".csv", "", -1) + "," +
 				assemblyID + "," +
