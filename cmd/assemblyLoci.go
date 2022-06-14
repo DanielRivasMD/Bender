@@ -75,9 +75,9 @@ func init() {
 func genomicPositionsCollect(readFile string) {
 
 	// open an input file, exit on error
-	inputFile, readErr := os.Open(readFile)
-	if readErr != nil {
-		log.Fatal("Error opening input file : ", readErr)
+	inputFile, ε := os.Open(readFile)
+	if ε != nil {
+		log.Fatal("Error opening input file : ", ε)
 	}
 
 	// check whether file exists to avoid appending
@@ -126,19 +126,19 @@ func genomicPositionsCollect(readFile string) {
 func writeGenomicPositions(outFile string, records []string) {
 
 	// declare io
-	f, err := os.OpenFile(outFile, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0666)
+	ƒ, ε := os.OpenFile(outFile, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0666)
 
-	if err != nil {
-		panic(err)
+	if ε != nil {
+		panic(ε)
 	}
 
-	defer f.Close()
+	defer ƒ.Close()
 
 	// declare writer
-	w := bufio.NewWriter(f)
+	ϖ := bufio.NewWriter(ƒ)
 
 	// writing
-	_, err = w.WriteString(
+	_, ε = ϖ.WriteString(
 		records[0] + "\t" +
 			records[1] + "\t" +
 			records[2] + "\t" +
@@ -152,12 +152,13 @@ func writeGenomicPositions(outFile string, records []string) {
 			records[10] + "\t" +
 			records[11] +
 			"\n")
-	if err != nil {
-		panic(err)
+
+	if ε != nil {
+		panic(ε)
 	}
 
 	// flush writer
-	w.Flush()
+	ϖ.Flush()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
