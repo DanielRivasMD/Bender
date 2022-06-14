@@ -139,18 +139,18 @@ func (syncytin *identified) print() string {
 
 // calculate distance from candidate
 func (candidate *position) distanceCandidate(annotation position) float64 {
-	out := 0.
+	ω := 0.
 	upstream := annotation.endPos - candidate.startPos
 	downstream := annotation.startPos - candidate.endPos
 	minimum := math.Min(math.Abs(upstream), math.Abs(downstream))
 	if math.Abs(upstream) == math.Abs(downstream) {
-		out = upstream
+		ω = upstream
 	} else if minimum == math.Abs(upstream) {
-		out = upstream
+		ω = upstream
 	} else if minimum == math.Abs(downstream) {
-		out = downstream
+		ω = downstream
 	}
-	return out
+	return ω
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -159,9 +159,9 @@ func (candidate *position) distanceCandidate(annotation position) float64 {
 func annotate(species string) {
 
 	// open an input file, exit on error
-	inputFile, readErr := os.Open(species)
-	if readErr != nil {
-		log.Fatal("Error opending input file :", readErr)
+	inputFile, ε := os.Open(species)
+	if ε != nil {
+		log.Fatal("Error opending input file :", ε)
 	}
 
 	// gene check whether file exists to avoid appending
@@ -279,13 +279,13 @@ func attributeSegregate(rawAttributes string, attributes *attribute) {
 	arrayAttributes := strings.Split(rawAttributes, ";")
 
 	// loop over attribute string array
-	for ix := 0; ix < len(arrayAttributes); ix++ {
+	for ι := 0; ι < len(arrayAttributes); ι++ {
 
-		num := fields.NumField()
+		η := fields.NumField()
 		// loop over attribute struct fields
-		for i := 0; i < num; i++ {
-			field := fields.Field(i)
-			attributes.AddAttribute(arrayAttributes[ix], field.Name)
+		for ο := 0; ο < η; ο++ {
+			field := fields.Field(ο)
+			attributes.AddAttribute(arrayAttributes[ι], field.Name)
 		}
 	}
 }
@@ -293,11 +293,11 @@ func attributeSegregate(rawAttributes string, attributes *attribute) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // add collected attribute
-func (attributes *attribute) AddAttribute(ats, field string) {
-	if strings.Contains(ats, field) {
-		out := strings.TrimPrefix(ats, field+"=")
+func (attributes *attribute) AddAttribute(ɒ, field string) {
+	if strings.Contains(ɒ, field) {
+		ω := strings.TrimPrefix(ɒ, field+"=")
 		final := reflect.ValueOf(attributes).Elem()
-		final.FieldByName(field).Set(reflect.ValueOf(out))
+		final.FieldByName(field).Set(reflect.ValueOf(ω))
 	}
 }
 
@@ -307,29 +307,29 @@ func (attributes *attribute) AddAttribute(ats, field string) {
 func writeSyntenyGenes(outFile, suffixOut string, annotations annotation) {
 
 	// declare io
-	f, err := os.OpenFile(outFile+"_"+suffixOut+".csv", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0666)
+	ƒ, ε := os.OpenFile(outFile+"_"+suffixOut+".csv", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0666)
 
-	if err != nil {
-		panic(err)
+	if ε != nil {
+		panic(ε)
 	}
 
-	defer f.Close()
+	defer ƒ.Close()
 
 	// declare writer
-	w := bufio.NewWriter(f)
+	ϖ := bufio.NewWriter(ƒ)
 
 	// gene header
 	if headg && suffixOut == "gene" {
 		headg = false
 
-		_, err = w.WriteString(header)
-		if err != nil {
-			panic(err)
+		_, ε = ϖ.WriteString(header)
+		if ε != nil {
+			panic(ε)
 		}
 
-		_, err = w.WriteString(syncytin.print())
-		if err != nil {
-			panic(err)
+		_, ε = ϖ.WriteString(syncytin.print())
+		if ε != nil {
+			panic(ε)
 		}
 	}
 
@@ -337,26 +337,26 @@ func writeSyntenyGenes(outFile, suffixOut string, annotations annotation) {
 	if headr && suffixOut == "repm" {
 		headr = false
 
-		_, err = w.WriteString(header)
-		if err != nil {
-			panic(err)
+		_, ε = ϖ.WriteString(header)
+		if ε != nil {
+			panic(ε)
 		}
 
-		_, err = w.WriteString(syncytin.print())
-		if err != nil {
-			panic(err)
+		_, ε = ϖ.WriteString(syncytin.print())
+		if ε != nil {
+			panic(ε)
 		}
 	}
 
 	// writing
-	_, err = w.WriteString(annotations.print())
+	_, ε = ϖ.WriteString(annotations.print())
 
-	if err != nil {
-		panic(err)
+	if ε != nil {
+		panic(ε)
 	}
 
 	// flush writer
-	w.Flush()
+	ϖ.Flush()
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
