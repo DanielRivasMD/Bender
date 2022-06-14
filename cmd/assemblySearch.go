@@ -108,21 +108,6 @@ func assemblySearch(searchTool string) {
 			panic(ε)
 		}
 
-		// make database from syncytin protein sequence
-		if !fileExist(libraryDir + "/" + libraryT + ".dmnd") {
-			fmt.Println("Building diamond database...")
-			diamondMakedb := []string{
-				searchTool, "makedb",
-				"--in", libraryDir + "/" + library,
-				"--db", libraryDir + "/" + libraryT + ".dmnd",
-			}
-
-			ε = syscall.Exec(κ, diamondMakedb, os.Environ())
-			if ε != nil {
-				panic(ε)
-			}
-		}
-
 		// use assembly as query with six reading frames
 		fmt.Println("Searching diamond database...")
 		diamondBlastx := []string{
