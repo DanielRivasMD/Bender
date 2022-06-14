@@ -92,9 +92,9 @@ func init() {
 func collectCoordinates(readFile string) {
 
 	// open an input file, exit on error
-	contentFile, err := ioutil.ReadFile(readFile)
-	if err != nil {
-		log.Fatal("Error opending input file :", err)
+	contentFile, ε := ioutil.ReadFile(readFile)
+	if ε != nil {
+		log.Fatal("Error opending input file :", ε)
 	}
 
 	// check whether file exists to avoid appending
@@ -166,8 +166,8 @@ func collectCoordinates(readFile string) {
 		}
 	}
 
-	if err := scanFasta.Error(); err != nil {
-		log.Fatal(err)
+	if ε := scanFasta.Error(); ε != nil {
+		log.Fatal(ε)
 	}
 }
 
@@ -177,22 +177,22 @@ func collectCoordinates(readFile string) {
 func writeFasta(outFile string, sequence *linear.Seq) {
 
 	// declare io
-	f, err := os.OpenFile(outFile, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0666)
+	ƒ, ε := os.OpenFile(outFile, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0666)
 
-	if err != nil {
-		panic(err)
+	if ε != nil {
+		panic(ε)
 	}
 
-	defer f.Close()
+	defer ƒ.Close()
 
 	// declare writer
-	w := fasta.NewWriter(f, 10000)
+	ϖ := fasta.NewWriter(ƒ, 10000)
 
 	// writing
-	_, err = w.Write(sequence)
+	_, ε = ϖ.Write(sequence)
 
-	if err != nil {
-		panic(err)
+	if ε != nil {
+		panic(ε)
 	}
 }
 
