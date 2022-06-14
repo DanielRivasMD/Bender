@@ -75,7 +75,6 @@ func assemblyDatabase(searchTool string) {
 	// trim suffixes
 	libraryT := strings.TrimSuffix(library, ".fasta")
 
-	// TODO: manipulate sequences to identify ORFs & use blastn
 	switch searchTool {
 
 	// diamond
