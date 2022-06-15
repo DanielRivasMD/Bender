@@ -22,6 +22,8 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"regexp"
+	"strconv"
 	"strings"
 
 	"github.com/atrox/homedir"
@@ -180,6 +182,27 @@ func execCmd(script, ƒ, directory, ɣ, outDir string) {
 	// lineBreaks
 	lineBreaks()
 
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// define output file
+func coordinateOut(readFile string) string {
+
+	outFile = readFile
+	я := regexp.MustCompile(`HiC*`)
+	ρ := я.FindStringIndex(outFile)
+	outFile = outFile[0:ρ[0]]
+
+	// assembly directory
+	outFile = outDir + "/" +
+		outFile +
+		syncytin.scaffoldIdent + "_" +
+		strconv.FormatFloat(syncytin.positionIdent.startPos, 'f', 0, 64) + "_" +
+		strconv.FormatFloat(syncytin.positionIdent.endPos, 'f', 0, 64)
+
+	// return full path
+	return outFile
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

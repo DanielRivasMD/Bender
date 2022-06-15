@@ -18,7 +18,6 @@ package cmd
 
 import (
 	"math"
-	"regexp"
 	"strconv"
 
 	"github.com/spf13/cobra"
@@ -120,27 +119,6 @@ func (position *position) parseMinMax(str1, str2 string) {
 	num2, _ := strconv.ParseFloat(str2, 64)
 
 	position.minMax(num1, num2)
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// define output file
-func coordinateOut(readFile string) string {
-
-	outFile = readFile
-	я := regexp.MustCompile(`HiC*`)
-	ρ := я.FindStringIndex(outFile)
-	outFile = outFile[0:ρ[0]]
-
-	// assembly directory
-	outFile = outDir + "/" +
-		outFile +
-		syncytin.scaffoldIdent + "_" +
-		strconv.FormatFloat(syncytin.positionIdent.startPos, 'f', 0, 64) + "_" +
-		strconv.FormatFloat(syncytin.positionIdent.endPos, 'f', 0, 64)
-
-	// return full path
-	return outFile
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
