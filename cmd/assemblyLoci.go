@@ -50,6 +50,14 @@ Identify & filter loci form similarity search result, based on identity & length
 
 	Run: func(κ *cobra.Command, args []string) {
 
+		// declare outfile
+		outFile := outDir + "/" + species
+
+		// check whether file exists to avoid appending
+		if fileExist(outFile) {
+			os.Remove(outFile)
+		}
+
 		// execute logic
 		genomicPositionsCollect(inDir + "/" + species)
 
@@ -76,11 +84,6 @@ func genomicPositionsCollect(readFile string) {
 	inputFile, ε := os.Open(readFile)
 	if ε != nil {
 		log.Fatal("Error opening input file : ", ε)
-	}
-
-	// check whether file exists to avoid appending
-	if fileExist(outDir + "/" + species) {
-		os.Remove(outDir + "/" + species)
 	}
 
 	// headers := []string{
@@ -113,7 +116,7 @@ func genomicPositionsCollect(readFile string) {
 		// filter criteria
 		if pIdent >= identity && alignLen >= length {
 			// write
-			writeGenomicPositions(outDir+"/"+species, records)
+			writeGenomicPositions(records)
 		}
 	}
 }
@@ -121,7 +124,7 @@ func genomicPositionsCollect(readFile string) {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // write positions
-func writeGenomicPositions(outFile string, records []string) {
+func writeGenomicPositions(records []string) {
 
 	// declare io
 	ƒ, ε := os.OpenFile(outFile, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0666)
