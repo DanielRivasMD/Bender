@@ -17,6 +17,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 package cmd
 
 import (
+	"os"
 	"strings"
 
 	"github.com/biogo/biogo/alphabet"
@@ -66,6 +67,31 @@ func fastaScanner(inputFile []byte) seqio.Scanner {
 
 	// return
 	return *scanFasta
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// write fasta
+func writeFasta(sequence *linear.Seq) {
+
+	// declare io
+	ƒ, ε := os.OpenFile(outFile, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0666)
+
+	if ε != nil {
+		panic(ε)
+	}
+
+	defer ƒ.Close()
+
+	// declare writer
+	ϖ := fasta.NewWriter(ƒ, sequence.Len())
+
+	// writing
+	_, ε = ϖ.Write(sequence)
+
+	if ε != nil {
+		panic(ε)
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

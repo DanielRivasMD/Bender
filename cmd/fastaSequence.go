@@ -23,7 +23,6 @@ import (
 	"strconv"
 
 	"github.com/biogo/biogo/alphabet"
-	"github.com/biogo/biogo/io/seqio/fasta"
 	"github.com/biogo/biogo/seq/linear"
 	"github.com/spf13/cobra"
 	"github.com/ttacon/chalk"
@@ -154,31 +153,6 @@ func collectCoordinates(readFile string) {
 
 	if ε := scanFasta.Error(); ε != nil {
 		log.Fatal(ε)
-	}
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// write positions
-func writeFasta(outFile string, sequence *linear.Seq) {
-
-	// declare io
-	ƒ, ε := os.OpenFile(outFile, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0666)
-
-	if ε != nil {
-		panic(ε)
-	}
-
-	defer ƒ.Close()
-
-	// declare writer
-	ϖ := fasta.NewWriter(ƒ, 10000)
-
-	// writing
-	_, ε = ϖ.Write(sequence)
-
-	if ε != nil {
-		panic(ε)
 	}
 }
 
