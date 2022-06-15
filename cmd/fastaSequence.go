@@ -68,6 +68,11 @@ var sequenceCmd = &cobra.Command{
 			outFile = outFile + ".fasta"
 		}
 
+		// check whether file exists to avoid appending
+		if fileExist(outFile) {
+			os.Remove(outFile)
+		}
+
 		// execute logic
 		collectCoordinates(inDir + "/" + assembly)
 
@@ -92,11 +97,6 @@ func collectCoordinates(readFile string) {
 	contentFile, ε := ioutil.ReadFile(readFile)
 	if ε != nil {
 		log.Fatal("Error opending input file :", ε)
-	}
-
-	// check whether file exists to avoid appending
-	if fileExist(outFile) {
-		os.Remove(outFile)
 	}
 
 	// scan fasta
