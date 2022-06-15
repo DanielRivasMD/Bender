@@ -17,6 +17,12 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 package cmd
 
 import (
+	"strings"
+
+	"github.com/biogo/biogo/alphabet"
+	"github.com/biogo/biogo/io/seqio"
+	"github.com/biogo/biogo/io/seqio/fasta"
+	"github.com/biogo/biogo/seq/linear"
 	"github.com/spf13/cobra"
 	"github.com/ttacon/chalk"
 )
@@ -42,6 +48,24 @@ sequence: extract sequences from assemblies.
 `,
 
 	Example: ``,
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+func fastaScanner(inputFile []byte) seqio.Scanner {
+
+	// mount data string
+	dataFasta := strings.NewReader(string(inputFile))
+
+	// fasta.Reader requires a known type template to fill with FASTA data. Here we use *linear.Seq
+	template := linear.NewSeq("", nil, alphabet.DNAredundant)
+	readerFasta := fasta.NewReader(dataFasta, template)
+
+	// make a seqio.Scanner to simplify iterating over a stream of data
+	scanFasta := seqio.NewScanner(readerFasta)
+
+	// return
+	return *scanFasta
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
