@@ -143,11 +143,8 @@ func collectCoordinates(readFile string) {
 				strconv.FormatInt(endI, 10) + " " +
 				strand
 
-			// find coordinates
-			targatSeq := linear.NewSeq(id, sequence.Seq[startI:endI], alphabet.DNA)
-
 			// write candidate
-			writeFasta(targatSeq)
+			writeFasta(linear.NewSeq(id, sequence.Seq[startI:endI], alphabet.DNA))
 		}
 	}
 
