@@ -35,21 +35,23 @@ var ()
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// TODO: documentation assembly sequence
 // sequenceCmd represents the sequence command
 var sequenceCmd = &cobra.Command{
 	Use:   "sequence",
 	Short: "Retrieve sequence from assembly",
-	Long:  `Retrieve sequence from assembly from coordinates.`,
+	Long: chalk.Green.Color("Daniel Rivas <danielrivasmd@gmail.com>") + `
+
+Retrieve sequence from assembly from coordinates.
+`,
 
 	Example: `` + chalk.Cyan.Color("bender") + ` assembly sequence
---assembly aweSap01.fa
---species Awesome_sapiens
---inDir pathToAssembly/
---scaffold Scaffold_1
---start	102400
---end	124600
---hood	25000
+--assembly	aweSap01.fa
+--species	Awesome_sapiens
+--inDir		pathToAssembly/
+--scaffold	Scaffold_1
+--start		102400
+--end		124600
+--hood		25000
 `,
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////

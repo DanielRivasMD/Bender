@@ -37,7 +37,7 @@ var ()
 var htSeqCmd = &cobra.Command{
 	Use:   "htSeq",
 	Short: "Wrapper for HTseq.",
-	Long: `Daniel Rivas <danielrivasmd@gmail.com>
+	Long: chalk.Green.Color("Daniel Rivas <danielrivasmd@gmail.com>") + `
 
 Wrap HTseq python package,
 a command line tool application for

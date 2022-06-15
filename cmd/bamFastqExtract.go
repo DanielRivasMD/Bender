@@ -35,7 +35,7 @@ var ()
 var fastqExtractCmd = &cobra.Command{
 	Use:   "fastqExtract",
 	Short: "Extract FASTQ from BAM files.",
-	Long: `Daniel Rivas <danielrivasmd@gmail.com>
+	Long: chalk.Green.Color("Daniel Rivas <danielrivasmd@gmail.com>") + `
 
 Dissect BAM files and retrieve FASTQ files.
 `,

@@ -25,6 +25,7 @@ import (
 	"strings"
 
 	"github.com/spf13/cobra"
+	"github.com/ttacon/chalk"
 )
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -57,13 +58,11 @@ var (
 // filterCmd represents the filter command
 var filterCmd = &cobra.Command{
 	Use:   "filter",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "Filter assembly list.",
+	Long: chalk.Green.Color("Daniel Rivas <danielrivasmd@gmail.com>") + `
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+Filter assembly list based on the presence of chromosome length assembly & annotation.
+`,
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 

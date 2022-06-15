@@ -18,6 +18,7 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
+	"github.com/ttacon/chalk"
 )
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -30,14 +31,11 @@ var ()
 // bamCmd represents the bam command
 var bamCmd = &cobra.Command{
 	Use:   "bam",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: `Handle ` + chalk.Yellow.Color("bam") + ` operations.`,
+	Long: chalk.Green.Color("Daniel Rivas <danielrivasmd@gmail.com>") + `
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-
+Handle ` + chalk.Yellow.Color("bam") + ` operations.
+`,
 	Example: ``,
 }
 

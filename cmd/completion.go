@@ -20,6 +20,7 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
+	"github.com/ttacon/chalk"
 )
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -34,7 +35,9 @@ var completionCmd = &cobra.Command{
 	Use:    "completion [bash|zsh|fish|powershell]",
 	Hidden: true,
 	Short:  "Generate completion script",
-	Long: `To load completions:
+	Long: chalk.Green.Color("Daniel Rivas <danielrivasmd@gmail.com>") + `
+
+To load completions:
 
 Bash:
 

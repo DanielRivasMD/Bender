@@ -35,7 +35,7 @@ var ()
 var repeatModelerCmd = &cobra.Command{
 	Use:   "repeatModeler",
 	Short: "Create Repeat Library from assembly.",
-	Long: `Daniel Rivas <danielrivasmd@gmail.com>
+	Long: chalk.Green.Color("Daniel Rivas <danielrivasmd@gmail.com>") + `
 
 Create Repeat Library from assembly using RepeatModeler v2.0.1.
 

@@ -51,7 +51,7 @@ var rootCmd = &cobra.Command{
 	Use:     "bender",
 	Version: "v0.3",
 	Short:   "A robot to handle Slurm Genomic jobs.",
-	Long: `Daniel Rivas <danielrivasmd@gmail.com>
+	Long: chalk.Green.Color("Daniel Rivas <danielrivasmd@gmail.com>") + `
 
 "Good news everyone!"
 ` + chalk.Green.Color("Bender") + chalk.Magenta.Color(` is a robot for automation on

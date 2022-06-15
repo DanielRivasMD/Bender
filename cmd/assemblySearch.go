@@ -44,7 +44,7 @@ var (
 var searchCmd = &cobra.Command{
 	Use:   "search",
 	Short: "Perform similarity search.",
-	Long: `Daniel Rivas <danielrivasmd@gmail.com>
+	Long: chalk.Green.Color("Daniel Rivas <danielrivasmd@gmail.com>") + `
 
 Perform similarity search on assemblies
 using different tools, i.e., ` + chalk.Yellow.Color("blast") + `, ` + chalk.Yellow.Color("diamond") + `.

@@ -21,6 +21,7 @@ import (
 	"strconv"
 
 	"github.com/spf13/cobra"
+	"github.com/ttacon/chalk"
 )
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -79,18 +80,20 @@ type attribute struct {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// TODO: documentation assembly
 // assemblyCmd represents the assembly command
 var assemblyCmd = &cobra.Command{
 	Use:   "assembly",
 	Short: "Handle assembly operations.",
-	Long: `Handle assembly operations, such as:
+	Long: chalk.Green.Color("Daniel Rivas <danielrivasmd@gmail.com>") + `
 
-database:			build database.
-description:			parse assembly features.
-loci:				read diamond assembly search output & filter results.
-search:				perform similarity search.
-synteny:			.
+Handle assembly operations, such as:
+
+database:		build database.
+description:		parse assembly features.
+filter:			filter assembly list.
+loci:			read diamond assembly search output & filter results.
+search:			perform similarity search.
+synteny:		collect syntenic information.
 `,
 
 	Example: ``,

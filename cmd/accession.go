@@ -20,6 +20,7 @@ import (
 	"log"
 
 	"github.com/spf13/cobra"
+	"github.com/ttacon/chalk"
 )
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -32,13 +33,14 @@ var ()
 // accessionCmd represents the accession command
 var accessionCmd = &cobra.Command{
 	Use:   "accession",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "Control operations about accessions.",
+	Long: chalk.Green.Color("Daniel Rivas <danielrivasmd@gmail.com>") + `
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+Control operations about accessions.
+`,
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+
 	Run: func(κ *cobra.Command, args []string) {
 		log.Fatal("Accession called")
 	},
@@ -52,91 +54,5 @@ func init() {
 	// flags
 
 }
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// package main
-
-// ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// import (
-// 	"bufio"
-// 	"log"
-// 	"os"
-// 	"strings"
-// )
-
-// ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// // declarations
-// var (
-// 	readFile string = os.Args[1]
-// 	fileOut  string = os.Args[2]
-// )
-
-// ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// func main() {
-
-// 	// execute logic
-// 	proteinAccessionCollect(readFile)
-// }
-
-// ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// // collect accessions
-// func proteinAccessionCollect(readFile string) {
-
-// 	// open an input file, exit on error
-// 	inputFile, readErr := os.Open(readFile)
-// 	if readErr != nil {
-// 		log.Fatal("Error opening input file : ", readErr)
-// 	}
-
-// 	// scanner.Scan() advances to the next token returning false if an error was encountered
-// 	scanner := bufio.NewScanner(inputFile)
-
-// 	// iterate
-// 	for scanner.Scan() {
-
-// 		// collect pattern
-// 		if strings.Contains(scanner.Text(), "protein_id") {
-
-// 			records := strings.Split(scanner.Text(), "=")
-// 			accession := strings.ReplaceAll(records[1], "\"", "")
-
-// 			// write
-// 			writeProtRecord(fileOut, accession)
-// 		}
-// 	}
-// }
-
-// ////////////////////////////////////////////////////////////////////////////////////////////////////
-
-// // write records
-// func writeProtRecord(fileOut, accession string) {
-
-// 	// declare io
-// 	f, err := os.OpenFile(fileOut, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0666)
-
-// 	if err != nil {
-// 		panic(err)
-// 	}
-
-// 	defer f.Close()
-
-// 	// deslcare writer
-// 	w := bufio.NewWriter(f)
-
-// 	// writing
-// 	_, err = w.WriteString(accession + "\n")
-
-// 	if err != nil {
-// 		panic(err)
-// 	}
-
-// 	// flush writer
-// 	w.Flush()
-// }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

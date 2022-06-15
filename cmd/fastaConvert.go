@@ -29,13 +29,17 @@ import (
 var convertCmd = &cobra.Command{
 	Use:   "convert",
 	Short: `Convert ` + chalk.Yellow.Color("fasta") + ` files.`,
-	Long:  `Convert ` + chalk.Yellow.Color("fastq") + ` files to ` + chalk.Yellow.Color("fasta") + ` file format.`,
+	Long: chalk.Green.Color("Daniel Rivas <danielrivasmd@gmail.com>") + `
+
+Convert ` + chalk.Yellow.Color("fastq") + ` files to ` + chalk.Yellow.Color("fasta") + ` file format.
+`,
 
 	Example: ``,
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	Run: func(κ *cobra.Command, args []string) {
+		// TODO: finish logic
 		log.Fatal("convert called")
 	},
 }

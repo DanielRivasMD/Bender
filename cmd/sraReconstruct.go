@@ -38,7 +38,7 @@ var ()
 var reconstructCmd = &cobra.Command{
 	Use:   "reconstruct",
 	Short: "Reconstruct SRA binaries.",
-	Long: `Daniel Rivas <danielrivasmd@gmail.com>
+	Long: chalk.Green.Color("Daniel Rivas <danielrivasmd@gmail.com>") + `
 
 Reconstruct binary SRA files to fastq.
 `,

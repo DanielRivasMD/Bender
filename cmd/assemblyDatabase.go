@@ -24,6 +24,7 @@ import (
 	"syscall"
 
 	"github.com/spf13/cobra"
+	"github.com/ttacon/chalk"
 )
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -36,13 +37,11 @@ var ()
 // databaseCmd represents the database command
 var databaseCmd = &cobra.Command{
 	Use:   "database",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: `Build database for ` + chalk.Yellow.Color("diamond") + `.`,
+	Long: chalk.Green.Color("Daniel Rivas <danielrivasmd@gmail.com>") + `
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+Build database for ` + chalk.Yellow.Color("diamond") + `.
+`,
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 

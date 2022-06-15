@@ -25,6 +25,7 @@ import (
 	"strings"
 
 	"github.com/spf13/cobra"
+	"github.com/ttacon/chalk"
 )
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -59,12 +60,11 @@ type Data struct {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// TODO: documentation assembly description
 // descriptionCmd represents the description command
 var descriptionCmd = &cobra.Command{
 	Use:   "description",
 	Short: "Collect assembly information.",
-	Long: `Daniel Rivas <danielrivasmd@gmail.com>
+	Long: chalk.Green.Color("Daniel Rivas <danielrivasmd@gmail.com>") + `
 
 Parse JSON file containing description of genome assemblies.
 

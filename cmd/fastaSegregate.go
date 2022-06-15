@@ -23,6 +23,7 @@ import (
 
 	"github.com/biogo/biogo/seq/linear"
 	"github.com/spf13/cobra"
+	"github.com/ttacon/chalk"
 )
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -35,13 +36,11 @@ var ()
 // segregateCmd represents the segregate command
 var segregateCmd = &cobra.Command{
 	Use:   "segregate",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "Segregate scaffolds into individual files.",
+	Long: chalk.Green.Color("Daniel Rivas <danielrivasmd@gmail.com>") + `
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+Segregate scaffolds into individual files.
+`,
 
 	////////////////////////////////////////////////////////////////////////////////////////////////////
 

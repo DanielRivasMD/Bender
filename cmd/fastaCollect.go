@@ -43,7 +43,10 @@ var (
 var collectCmd = &cobra.Command{
 	Use:   "collect",
 	Short: "Collect sequence IDs",
-	Long:  `Collect sequence IDs and reformat for ` + chalk.Bold.TextStyle("Chromosome List File") + ` for ` + chalk.Bold.TextStyle("European Nucleotide Archive") + ` submission.`,
+	Long: chalk.Green.Color("Daniel Rivas <danielrivasmd@gmail.com>") + `
+
+Collect sequence IDs and reformat for ` + chalk.Bold.TextStyle("Chromosome List File") + ` for ` + chalk.Bold.TextStyle("European Nucleotide Archive") + ` submission.
+`,
 
 	Example: ``,
 

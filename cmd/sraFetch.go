@@ -38,7 +38,7 @@ var ()
 var fetchCmd = &cobra.Command{
 	Use:   "fetch",
 	Short: "Fetch SRA accessions.",
-	Long: `Daniel Rivas <danielrivasmd@gmail.com>
+	Long: chalk.Green.Color("Daniel Rivas <danielrivasmd@gmail.com>") + `
 
 Collect files from Short Read Archive (SRA)
 and check the state of the downloads.

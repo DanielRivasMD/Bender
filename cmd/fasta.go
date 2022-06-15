@@ -39,13 +39,15 @@ var (
 // fastaCmd represents the fasta command
 var fastaCmd = &cobra.Command{
 	Use:   "fasta",
-	Short: "Handle fasta operations.",
-	Long: `Handle fasta operations, such as:
+	Short: `Handle ` + chalk.Yellow.Color("fasta") + ` operations.`,
+	Long: chalk.Green.Color("Daniel Rivas <danielrivasmd@gmail.com>") + `
 
-collect: collect sequence IDs.
-convert: convert ` + chalk.Yellow.Color("fasta") + ` files.
-segregate: segregate scaffolds into individual files.
-sequence: extract sequences from assemblies.
+Handle ` + chalk.Yellow.Color("fasta") + ` operations, such as:
+
+collect:		collect sequence IDs.
+convert:		convert ` + chalk.Yellow.Color("fasta") + ` files.
+segregate:		segregate scaffolds into individual files.
+sequence:		extract sequences from ` + chalk.Yellow.Color("fasta") + `.
 `,
 
 	Example: ``,
