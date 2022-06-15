@@ -55,7 +55,7 @@ var collectCmd = &cobra.Command{
 	Run: func(κ *cobra.Command, args []string) {
 
 		// collect ids
-		collectID(fastaFile)
+		collectID(inDir + "/" + fastaFile)
 
 		// write
 		writeID()
@@ -112,7 +112,7 @@ func collectID(readFile string) {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// write positions
+// write ids
 func writeID() {
 
 	if outFastaID == "" {
@@ -128,22 +128,22 @@ func writeID() {
 	} else {
 
 		// declare io
-		f, ε := os.OpenFile(outDir+"/"+outFastaID, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0666)
+		ƒ, ε := os.OpenFile(outDir+"/"+outFastaID, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0666)
 
 		if ε != nil {
 			panic(ε)
 		}
 
-		defer f.Close()
+		defer ƒ.Close()
 
 		// declare writer
-		ϖ := bufio.NewWriter(f)
+		ϖ := bufio.NewWriter(ƒ)
 
 		// writing
-		for i := 0; i < len(sequenceID); i++ {
+		for ι := 0; ι < len(sequenceID); ι++ {
 			_, ε = ϖ.WriteString(
-				sequenceID[i] + "\t" +
-					strings.Replace(sequenceID[i], "HiC_scaffold_", "", -1) + "\t" +
+				sequenceID[ι] + "\t" +
+					strings.Replace(sequenceID[ι], "HiC_scaffold_", "", -1) + "\t" +
 					chromosomeField + "\n",
 			)
 
