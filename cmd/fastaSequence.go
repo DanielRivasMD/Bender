@@ -80,7 +80,7 @@ var sequenceCmd = &cobra.Command{
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 func init() {
-	assemblyCmd.AddCommand(sequenceCmd)
+	fastaCmd.AddCommand(sequenceCmd)
 
 	// flags
 

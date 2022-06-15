@@ -37,6 +37,7 @@ var fastaCmd = &cobra.Command{
 
 collect: collect sequence IDs.
 convert: convert ` + chalk.Yellow.Color("fasta") + ` files.
+sequence: extract sequences from assemblies.
 `,
 
 	Example: ``,

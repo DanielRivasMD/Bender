@@ -91,7 +91,6 @@ database:			build database.
 description:			parse assembly features.
 loci:				read diamond assembly search output & filter results.
 search:				perform similarity search.
-sequence:			extract sequences from assemblies.
 synteny:			.
 `,
 
