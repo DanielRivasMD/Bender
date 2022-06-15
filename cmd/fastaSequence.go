@@ -147,7 +147,7 @@ func collectCoordinates(readFile string) {
 			targatSeq := linear.NewSeq(id, sequence.Seq[startI:endI], alphabet.DNA)
 
 			// write candidate
-			writeFasta(outFile, targatSeq)
+			writeFasta(targatSeq)
 		}
 	}
 

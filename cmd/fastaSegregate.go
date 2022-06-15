@@ -17,9 +17,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 package cmd
 
 import (
-	"fmt"
 	"io/ioutil"
 	"log"
+	"strings"
 
 	"github.com/biogo/biogo/seq/linear"
 	"github.com/spf13/cobra"
@@ -81,8 +81,11 @@ func segregateID(readFile string) {
 		// get the current sequence and type assert to *linear.Seq while this is unnecessary here, it can be useful to have the concrete type
 		sequence := scanFasta.Seq().(*linear.Seq)
 
-		fmt.Printf(">%s\n%s\n", sequence.ID, sequence.Seq)
+		// assign outfile dynamically
+		outFile = outDir + "/" + strings.Replace(readFile, ".fasta", "", -1) + "_" + sequence.ID + ".fasta"
 
+		// write sequence
+		writeFasta(sequence)
 	}
 
 	if ε := scanFasta.Error(); ε != nil {
