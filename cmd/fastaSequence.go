@@ -21,10 +21,8 @@ import (
 	"log"
 	"os"
 	"strconv"
-	"strings"
 
 	"github.com/biogo/biogo/alphabet"
-	"github.com/biogo/biogo/io/seqio"
 	"github.com/biogo/biogo/io/seqio/fasta"
 	"github.com/biogo/biogo/seq/linear"
 	"github.com/spf13/cobra"
@@ -102,24 +100,12 @@ func collectCoordinates(readFile string) {
 		os.Remove(outFile)
 	}
 
-	// mount data string
-	dataFasta := strings.NewReader(string(contentFile))
+	// scan fasta
+	scanFasta := fastaScanner(contentFile)
 
-	// fasta.Reader requires a known type template to fill
-	// with FASTA data. Here we use *linear.Seq.
-	template := linear.NewSeq("", nil, alphabet.DNAredundant)
-	readerFasta := fasta.NewReader(dataFasta, template)
-
-	// make a seqio.Scanner to simplify iterating over a
-	// stream of data.
-	scanFasta := seqio.NewScanner(readerFasta)
-
-	// iterate through each sequence in a multifasta and
-	// examine the ID, description and sequence data.
+	// iterate through each sequence in a multifasta and examine the ID, description and sequence data
 	for scanFasta.Next() {
-		// get the current sequence and type assert to *linear.Seq.
-		// while this is unnecessary here, it can be useful to have
-		// the concrete type.
+		// get the current sequence and type assert to *linear.Seq while this is unnecessary here, it can be useful to have the concrete type
 		sequence := scanFasta.Seq().(*linear.Seq)
 
 		// find scaffold

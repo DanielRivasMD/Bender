@@ -20,12 +20,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
-	"os"
-	"strings"
 
-	"github.com/biogo/biogo/alphabet"
-	"github.com/biogo/biogo/io/seqio"
-	"github.com/biogo/biogo/io/seqio/fasta"
 	"github.com/biogo/biogo/seq/linear"
 	"github.com/spf13/cobra"
 )
@@ -78,20 +73,8 @@ func segregateID(readFile string) {
 		log.Fatal("Error opending input file :", ε)
 	}
 
-	// check whether file exists to avoid appending
-	if fileExist(outFastaID) {
-		os.Remove(outFastaID)
-	}
-
-	// mount data string
-	dataFasta := strings.NewReader(string(contentFile))
-
-	// fasta.Reader requires a known type template to fill with FASTA data. Here we use *linear.Seq
-	template := linear.NewSeq("", nil, alphabet.DNAredundant)
-	readerFasta := fasta.NewReader(dataFasta, template)
-
-	// make a seqio.Scanner to simplify iterating over a stream of data
-	scanFasta := seqio.NewScanner(readerFasta)
+	// scan fasta
+	scanFasta := fastaScanner(contentFile)
 
 	// iterate through each sequence in a multifasta and examine the ID, description and sequence data
 	for scanFasta.Next() {
