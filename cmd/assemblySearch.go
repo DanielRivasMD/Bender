@@ -81,8 +81,6 @@ func init() {
 	assemblyCmd.AddCommand(searchCmd)
 
 	// flags
-	searchCmd.Flags().StringVarP(&library, "library", "l", "", "Library to search against")
-	searchCmd.Flags().StringVarP(&libraryDir, "libraryDir", "L", "", "Library directory")
 	searchCmd.Flags().StringVarP(&frameshit, "frameshit", "f", "15", "diamond blastx frameshit")
 	searchCmd.Flags().StringVarP(&blockSize, "blockSize", "b", "2", "diamond blastx blockSize")
 	searchCmd.Flags().StringVarP(&indexChunks, "indexChunks", "x", "4", "diamond blastx indexChunks")
