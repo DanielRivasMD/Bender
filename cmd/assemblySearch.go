@@ -83,7 +83,7 @@ func init() {
 	// flags
 	searchCmd.Flags().StringVarP(&frameshit, "frameshit", "f", "15", "diamond blastx frameshit")
 	searchCmd.Flags().StringVarP(&blockSize, "blockSize", "b", "2", "diamond blastx blockSize")
-	searchCmd.Flags().StringVarP(&indexChunks, "indexChunks", "x", "4", "diamond blastx indexChunks")
+	searchCmd.Flags().StringVarP(&indexChunks, "indexChunks", "x", "1", "diamond blastx indexChunks")
 
 }
 
