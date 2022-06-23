@@ -36,6 +36,10 @@ var (
 	indexChunks string
 )
 
+var (
+	assemblyT string
+)
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // searchCmd represents the search command
@@ -92,6 +96,14 @@ func assemblySearch(searchTool string) {
 	// trim suffixes
 	libraryT := strings.TrimSuffix(library, ".fasta")
 
+	if strings.Contains(assembly, "fna") {
+		assemblyT = strings.TrimSuffix(assembly, ".fna.gz")
+	} else if strings.Contains(assembly, "fasta") {
+		assemblyT = strings.TrimSuffix(assembly, ".fasta.gz")
+	}
+
+	scaffoldT := strings.TrimPrefix(scaffold, assemblyT+"_")
+
 	// TODO: manipulate sequences to identify ORFs & use blastn
 	switch searchTool {
 
@@ -109,11 +121,11 @@ func assemblySearch(searchTool string) {
 		diamondBlastx := []string{
 			searchTool, "blastx",
 			"--db", libraryDir + "/" + libraryT + ".dmnd",
-			"--query", inDir + "/" + assembly,
+			"--query", inDir + "/" + assemblyT + "_" + scaffoldT,
 			"--frameshift", frameshit,
 			"--block-size", blockSize,
 			"--index-chunks", indexChunks,
-			"--out", outDir + "/" + species + ".tsv",
+			"--out", outDir + "/" + species + "_" + scaffoldT + ".tsv",
 		}
 
 		ε = syscall.Exec(κ, diamondBlastx, os.Environ())

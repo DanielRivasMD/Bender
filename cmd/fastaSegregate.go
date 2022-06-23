@@ -81,7 +81,11 @@ func segregateID(readFile string) {
 		sequence := scanFasta.Seq().(*linear.Seq)
 
 		// assign outfile dynamically
-		outFile = outDir + "/" + strings.Replace(readFile, ".fasta", "", -1) + "_" + sequence.ID + ".fasta"
+		if strings.Contains(readFile, "fna") {
+			outFile = outDir + "/" + strings.Replace(readFile, ".fna", "", -1) + "_" + sequence.ID + ".fasta"
+		} else if strings.Contains(readFile, "fasta") {
+			outFile = outDir + "/" + strings.Replace(readFile, ".fasta", "", -1) + "_" + sequence.ID + ".fasta"
+		}
 
 		// write sequence
 		writeFasta(sequence)
