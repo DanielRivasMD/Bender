@@ -86,6 +86,8 @@ func segregateID(readFile string) {
 		// assign outfile dynamically
 		if strings.Contains(readFile, "fna") {
 			outFile = outDir + "/" + strings.Replace(readFile, ".fna", "", -1) + "_" + sequence.ID + ".fasta"
+		} else if strings.Contains(readFile, "faa") {
+			outFile = outDir + "/" + strings.Replace(readFile, ".faa", "", -1) + "_" + sequence.ID + ".fasta"
 		} else if strings.Contains(readFile, "fasta") {
 			outFile = outDir + "/" + strings.Replace(readFile, ".fasta", "", -1) + "_" + sequence.ID + ".fasta"
 		}
