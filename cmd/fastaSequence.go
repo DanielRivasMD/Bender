@@ -76,7 +76,7 @@ Retrieve sequence from assembly from coordinates.
 		}
 
 		// execute logic
-		collectCoordinates(inDir + "/" + assembly)
+		collectCoordinates(assembly)
 
 	},
 }
@@ -96,7 +96,7 @@ func init() {
 func collectCoordinates(readFile string) {
 
 	// open an input file, exit on error
-	contentFile, ε := ioutil.ReadFile(readFile)
+	contentFile, ε := ioutil.ReadFile(inDir + "/" + readFile)
 	if ε != nil {
 		log.Fatal("Error opending input file :", ε)
 	}

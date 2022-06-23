@@ -47,7 +47,7 @@ Segregate scaffolds into individual files.
 	Run: func(cmd *cobra.Command, args []string) {
 
 		// segregate ids
-		segregateID(inDir + "/" + fastaFile)
+		segregateID(strings.Replace(fastaFile, ".gz", "", -1))
 
 	},
 }
@@ -67,7 +67,7 @@ func init() {
 func segregateID(readFile string) {
 
 	// open an input file, exit on error
-	contentFile, ε := ioutil.ReadFile(readFile)
+	contentFile, ε := ioutil.ReadFile(inDir + "/" + readFile)
 	if ε != nil {
 		log.Fatal("Error opending input file :", ε)
 	}
