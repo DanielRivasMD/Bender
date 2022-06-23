@@ -58,6 +58,7 @@ Retrieve sequence from assembly from coordinates.
 
 	Run: func(κ *cobra.Command, args []string) {
 
+		// TODO: verify scaffold is properly used. potential bug
 		// scaffold
 		syncytin.scaffoldIdent = scaffold
 

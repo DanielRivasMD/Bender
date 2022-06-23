@@ -17,6 +17,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 package cmd
 
 import (
+	"fmt"
 	"io/ioutil"
 	"log"
 	"strings"
@@ -76,7 +77,9 @@ func segregateID(readFile string) {
 	scanFasta := fastaScanner(contentFile)
 
 	// iterate through each sequence in a multifasta and examine the ID, description and sequence data
+	fmt.Println("Segregating scaffolds...")
 	for scanFasta.Next() {
+
 		// get the current sequence and type assert to *linear.Seq while this is unnecessary here, it can be useful to have the concrete type
 		sequence := scanFasta.Seq().(*linear.Seq)
 
