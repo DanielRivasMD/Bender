@@ -30,6 +30,8 @@ import (
 var (
 	assembly   string
 	species    string
+	library    string
+	libraryDir string
 	outFile    string
 	syncytin   identified // identified struct
 	scaffold   string

@@ -31,8 +31,6 @@ import (
 
 // declarations
 var (
-	library     string
-	libraryDir  string
 	frameshit   string
 	blockSize   string
 	indexChunks string
