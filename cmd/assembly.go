@@ -32,7 +32,7 @@ var (
 	species    string
 	outFile    string
 	syncytin   identified // identified struct
-	scaffoldID string
+	scaffold   string
 	startCoor  float64
 	endCoor    float64
 	hood       float64
@@ -137,7 +137,7 @@ func init() {
 	assemblyCmd.PersistentFlags().StringVarP(&library, "library", "l", "", "Library to search against")
 	assemblyCmd.PersistentFlags().StringVarP(&libraryDir, "libraryDir", "L", "", "Library directory")
 
-	assemblyCmd.PersistentFlags().StringVarP(&scaffoldID, "scaffold", "S", "", "Scaffold ID")
+	assemblyCmd.PersistentFlags().StringVarP(&scaffold, "scaffold", "S", "", "Scaffold")
 	assemblyCmd.PersistentFlags().Float64VarP(&startCoor, "start", "s", 0, "Start coordinate")
 	assemblyCmd.PersistentFlags().Float64VarP(&endCoor, "end", "e", 0, "End coordinate")
 	assemblyCmd.PersistentFlags().Float64VarP(&hood, "hood", "n", 0, "Neighborhood to look into")

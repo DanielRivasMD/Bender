@@ -59,7 +59,7 @@ Retrieve sequence from assembly from coordinates.
 	Run: func(κ *cobra.Command, args []string) {
 
 		// scaffold
-		syncytin.scaffoldIdent = scaffoldID
+		syncytin.scaffoldIdent = scaffold
 
 		// positions
 		syncytin.positionIdent.minMax(startCoor, endCoor)

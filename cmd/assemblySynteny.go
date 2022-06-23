@@ -67,7 +67,7 @@ Collect syntenic information relative to positions & orientation.
 	Run: func(κ *cobra.Command, args []string) {
 
 		// scaffold
-		syncytin.scaffoldIdent = scaffoldID
+		syncytin.scaffoldIdent = scaffold
 
 		// positions
 		syncytin.positionIdent.minMax(startCoor, endCoor)
