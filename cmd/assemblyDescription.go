@@ -37,7 +37,7 @@ var ()
 
 type Organism struct {
 	Vernacular string
-	Binominal  string
+	Binomial   string
 	FunFact    string
 	Taxonomy   string
 }
@@ -132,9 +132,9 @@ func writeSpeciesFeatures(features Data) {
 
 	// writing
 	_, ε = ϖ.WriteString(
-		features.Organism.Binominal + "," +
+		strings.ReplaceAll(features.Organism.Binomial, ",", "") + "," +
 			strings.ReplaceAll(features.Organism.Vernacular, ",", "") + "," +
-			features.ChromlengthAssembly.Karyotype + "," +
+			strings.ReplaceAll(features.ChromlengthAssembly.Karyotype, ",", "-") + "," +
 			strings.ReplaceAll(features.ChromlengthAssembly.ScaffoldN50, ",", "") + "," +
 			strings.ReplaceAll(features.ChromlengthAssembly.NumberOfScaffolds, ",", "") +
 			"\n")
