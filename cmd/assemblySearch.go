@@ -104,7 +104,6 @@ func assemblySearch(searchTool string) {
 
 	scaffoldT := strings.TrimPrefix(scaffold, assemblyT+"_")
 
-	// TODO: manipulate sequences to identify ORFs & use blastn
 	switch searchTool {
 
 	// diamond

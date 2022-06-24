@@ -97,6 +97,7 @@ Reconstruct binary SRA files to fastq.
 func init() {
 	sraCmd.AddCommand(reconstructCmd)
 
+	// TODO: update flag bindings
 	// flags
 	reconstructCmd.Flags().StringP("file", "f", "", "File containing binary list")
 	reconstructCmd.MarkFlagRequired("file")
