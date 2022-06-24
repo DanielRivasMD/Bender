@@ -18,6 +18,7 @@ package cmd
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"os/exec"
 	"strings"
@@ -96,10 +97,13 @@ func assemblySearch(searchTool string) {
 	// trim suffixes
 	libraryT := strings.TrimSuffix(library, ".fasta")
 
-	if strings.Contains(assembly, "fna") {
+	switch {
+	case strings.Contains(assembly, "fna"):
 		assemblyT = strings.TrimSuffix(assembly, ".fna.gz")
-	} else if strings.Contains(assembly, "fasta") {
+	case strings.Contains(assembly, "fasta"):
 		assemblyT = strings.TrimSuffix(assembly, ".fasta.gz")
+	default:
+		log.Fatal("fasta format not recognized")
 	}
 
 	scaffoldT := strings.TrimPrefix(scaffold, assemblyT+"_")
