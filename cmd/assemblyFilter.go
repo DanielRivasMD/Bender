@@ -129,6 +129,8 @@ func assemblyFilter(readFile string) {
 				assemblyLink + "," +
 				annotLink,
 		)
+	} else {
+		fmt.Println(readFile)
 	}
 
 }
