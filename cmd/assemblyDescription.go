@@ -77,23 +77,41 @@ Collect information and concatenate.
 
 	Run: func(κ *cobra.Command, args []string) {
 
-		// json file
-		content, ε := ioutil.ReadFile(inDir + "/" + species)
-		if ε != nil {
-			log.Fatal("Error when opening file: ", ε)
-		}
-
-		// unmarshall the data into features
-		var features Data
-		ε = json.Unmarshal(content, &features)
-		if ε != nil {
-			log.Fatal("Error during Unmarshal(): ", ε)
-		}
-
-		// write extracted
-		writeSpeciesFeatures(features)
+		// execute logic
+		describeAssembly(species)
 
 	},
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+func init() {
+	assemblyCmd.AddCommand(descriptionCmd)
+
+	// flags
+
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+func describeAssembly(readFile string) {
+
+	// json file
+	contentFile, ε := ioutil.ReadFile(inDir + "/" + readFile)
+	if ε != nil {
+		log.Fatal("Error when opening file: ", ε)
+	}
+
+	// unmarshall the data into features
+	var features Data
+	ε = json.Unmarshal(contentFile, &features)
+	if ε != nil {
+		log.Fatal("Error during Unmarshal(): ", ε)
+	}
+
+	// write extracted
+	writeSpeciesFeatures(features)
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -126,15 +144,6 @@ func writeSpeciesFeatures(features Data) {
 
 	// flush writer
 	ϖ.Flush()
-}
-
-////////////////////////////////////////////////////////////////////////////////////////////////////
-
-func init() {
-	assemblyCmd.AddCommand(descriptionCmd)
-
-	// flags
-
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

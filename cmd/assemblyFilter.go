@@ -69,7 +69,7 @@ Filter assembly list based on the presence of chromosome length assembly & annot
 	Run: func(κ *cobra.Command, args []string) {
 
 		// execute logic
-		assemblyFilter(inDir + "/" + species)
+		assemblyFilter(species)
 
 	},
 }
@@ -88,7 +88,7 @@ func init() {
 func assemblyFilter(readFile string) {
 
 	// open an input file, exit on error
-	inputFile, ε := os.Open(readFile)
+	inputFile, ε := os.Open(inDir + "/" + readFile)
 	if ε != nil {
 		log.Fatal("Error opening input file : ", ε)
 	}
