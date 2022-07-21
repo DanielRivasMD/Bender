@@ -136,3 +136,38 @@ func assemblyFilter(readFile string) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// write assemblies
+func writeAssemblies() {
+
+	// declare io
+	ƒ, ε := os.OpenFile(outDir+"/"+outFile, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0666)
+	if ε != nil {
+		panic(ε)
+	}
+
+	defer ƒ.Close()
+
+	// declare writer
+	ϖ := bufio.NewWriter(ƒ)
+
+	// writing
+	_, ε = ϖ.WriteString(
+
+		strings.Replace(species, ".csv", "", -1) + "," +
+			assemblyID + "," +
+			annotID + "," +
+			readmeLink + "," +
+			assemblyLink + "," +
+			annotLink +
+			"\n")
+	if ε != nil {
+		panic(ε)
+	}
+
+	// flush writer
+	ϖ.Flush()
+
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
