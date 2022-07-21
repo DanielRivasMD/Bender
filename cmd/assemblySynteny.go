@@ -176,6 +176,7 @@ func annotate(species string) {
 	// scanner.Scan() advances to the next token returning false if an error was encountered
 	scanner := bufio.NewScanner(inputFile)
 
+	// iterate by lines
 	for scanner.Scan() {
 
 		// split line records by tab
@@ -307,7 +308,6 @@ func writeSyntenyGenes(outFile, suffixOut string, annotations annotation) {
 
 	// declare io
 	ƒ, ε := os.OpenFile(outFile+"_"+suffixOut+".csv", os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0666)
-
 	if ε != nil {
 		panic(ε)
 	}
@@ -349,13 +349,13 @@ func writeSyntenyGenes(outFile, suffixOut string, annotations annotation) {
 
 	// writing
 	_, ε = ϖ.WriteString(annotations.print())
-
 	if ε != nil {
 		panic(ε)
 	}
 
 	// flush writer
 	ϖ.Flush()
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

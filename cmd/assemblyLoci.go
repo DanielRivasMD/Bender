@@ -104,6 +104,7 @@ func genomicPositionsCollect(readFile string) {
 	// scanner.Scan() advances to the next token returning false if an error was encountered
 	scanner := bufio.NewScanner(inputFile)
 
+	// iterate by lines
 	for scanner.Scan() {
 
 		// tab separated records
@@ -128,7 +129,6 @@ func writeGenomicPositions(records []string) {
 
 	// declare io
 	ƒ, ε := os.OpenFile(outFile, os.O_APPEND|os.O_WRONLY|os.O_CREATE, 0666)
-
 	if ε != nil {
 		panic(ε)
 	}
@@ -153,13 +153,13 @@ func writeGenomicPositions(records []string) {
 			records[10] + "\t" +
 			records[11] +
 			"\n")
-
 	if ε != nil {
 		panic(ε)
 	}
 
 	// flush writer
 	ϖ.Flush()
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

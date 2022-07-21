@@ -92,11 +92,13 @@ func init() {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// search assemblies with external tool
 func assemblySearch(searchTool string) {
 
 	// trim suffixes
 	libraryT := strings.TrimSuffix(library, ".fasta")
 
+	// accommodate different fasta formats
 	switch {
 	case strings.Contains(assembly, "fna"):
 		assemblyT = strings.TrimSuffix(assembly, ".fna.gz")
@@ -106,8 +108,10 @@ func assemblySearch(searchTool string) {
 		log.Fatal("fasta format not recognized")
 	}
 
+	// trim prefix
 	scaffoldT := strings.TrimPrefix(scaffold, assemblyT+"_")
 
+	// use search tool
 	switch searchTool {
 
 	// diamond
@@ -131,11 +135,13 @@ func assemblySearch(searchTool string) {
 			"--out", outDir + "/" + species + "_" + scaffoldT + ".tsv",
 		}
 
+		// execute command
 		ε = syscall.Exec(κ, diamondBlastx, os.Environ())
 		if ε != nil {
 			panic(ε)
 		}
 	}
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////

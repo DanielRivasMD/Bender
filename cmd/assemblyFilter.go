@@ -97,6 +97,7 @@ func assemblyFilter(readFile string) {
 	// scanner.Scan() advances to the next token returning false if an error was encountered
 	scanner := bufio.NewScanner(inputFile)
 
+	// iterate by lines
 	for scanner.Scan() {
 
 		// comma separated records
