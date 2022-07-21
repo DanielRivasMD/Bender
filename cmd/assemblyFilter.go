@@ -121,14 +121,7 @@ func assemblyFilter(readFile string) {
 
 	// if asϟ && anϟ {
 	if asϟ {
-		fmt.Println(
-			strings.Replace(species, ".csv", "", -1) + "," +
-				assemblyID + "," +
-				annotID + "," +
-				readmeLink + "," +
-				assemblyLink + "," +
-				annotLink,
-		)
+		writeAssemblies()
 	} else {
 		fmt.Println(readFile)
 	}
