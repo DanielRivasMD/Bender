@@ -40,9 +40,9 @@ import (
 var (
 	cfgPath     string
 	cfgFile     string
-	verboseBool string
 	inDir       string
 	outDir      string
+	verboseBool bool
 )
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -83,7 +83,7 @@ func init() {
 	rootCmd.PersistentFlags().StringVarP(&cfgPath, "configPath", "C", ".", "Path to config file")
 	rootCmd.PersistentFlags().StringVarP(&inDir, "inDir", "I", ".", "Directory where input files are located")
 	rootCmd.PersistentFlags().StringVarP(&outDir, "outDir", "O", ".", "Output directory. Creates if not exitst")
-	rootCmd.PersistentFlags().StringVarP(&verboseBool, "verbose", "v", "false", "Verbosity switch")
+	rootCmd.PersistentFlags().BoolVarP(&verboseBool, "verbose", "v", false, "Verbosity switch")
 
 }
 
