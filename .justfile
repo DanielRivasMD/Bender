@@ -21,79 +21,65 @@ _default:
 
 ####################################################################################################
 
+# home
+home := "${HOME}"
+remoteHome := "/home/drivas"
+bender := "{{home}}/Factorem/Bender"
+gobin := "{{home}}/.go/bin"
+
+#################################################################################
+
+# pawsey
+pawseyID := "drivas@topaz.pawsey.org.au"
+pawseyBin := "{{remoteHome}}/bin"
+
+# uppmax
+uppmaxID := "drivas@rackham.uppmax.uu.se"
+uppmaxBin := "{{remoteHome}}/bin"
+
+####################################################################################################
+
 # build bender for OSX & store `excalibur`
 osx:
-  #!/bin/bash
-  set -euo pipefail
-
-  # declarations
-  source .just.sh
-
-  echo "Building..."
-  go build -v -o ${bender}/excalibur/bender
+  echo "Building..." && go build -v -o {{bender}}/excalibur/bender
 
 ####################################################################################################
 
 # build bender for linux & store `excalibur`
 linux:
-  #!/bin/bash
-  set -euo pipefail
-
-  # declarations
-  source .just.sh
-
-  echo "Building..."
-  env GOOS=linux GOARCH=amd64 go build -v -o ${bender}/excalibur/bender
+  echo "Building..." && env GOOS=linux GOARCH=amd64 go build -v -o {{bender}}/excalibur/bender
 
 ####################################################################################################
 
 # install bender locally
 install:
-  #!/bin/bash
-  set -euo pipefail
-
-  # declarations
-  source .just.sh
-
-  echo "Installing..."
-  # Bender
-  go install
-  mv -v "${HOME}/.go/bin/Bender" "${HOME}/.go/bin/bender"
+  echo "Installing..." && go install && mv -v {{gobin}}/Bender {{gobin}}/bender
 
 ####################################################################################################
 
 # deliver bender binary & shell scripts Uppmax
-hermesUppmax:
-  #!/bin/bash
-  set -euo pipefail
+hermesUppmax: _deployUppmax _linkUppmax
 
-  # declarations
-  source .just.sh
+# transfer binary
+_deployUppmax:
+  echo "Deploying to Uppmax..." && rsync -azvhP {{bender}}/excalibur/bender {{uppmaxID}}:{{uppmaxBin}}
 
-  echo "Deploying to Uppmax..."
-  rsync -azvhP "${bender}/excalibur/bender" "${uppmaxID}:${uppmaxBin}"
-
-  # link sh scripts
-  echo "Linking remotely..."
-  rsync -azvhPX "${bender}/sh" "${uppmaxID}:${uppmaxBin}/goTools/"
+# link sh scripts
+_linkUppmax:
+  echo "Linking remotely..." && rsync -azvhPX {{bender}}/sh {{uppmaxID}}:{{uppmaxBin}}/goTools/
 
 ####################################################################################################
 
 # deliver bender binary & shell scripts Pawsey
-hermesPawsey:
-  #!/bin/bash
-  set -euo pipefail
+hermesPawsey: _deployPawsey _linkPawsey
 
-  # declarations
-  source .just.sh
+# transfer binary
+_deployPawsey:
+  echo "Deploying to Pawsey..." && rsync -azvhP {{bender}}/excalibur/bender {{pawseyID}}:{{pawseyBin}}
 
-  # transfer binary
-  echo "Deploying to Pawsey..."
-  rsync -azvhP "${bender}/excalibur/bender" "${pawseyID}:${pawseyBin}/"
-
-  # link sh scripts
-  echo "Linking remotely..."
-  rsync -azvhPX "${bender}/sh" "${pawseyID}:${pawseyBin}/goTools/"
+# link sh scripts
+_linkPawsey:
+  echo "Linking remotely..." && rsync -azvhPX {{bender}}/sh {{pawseyID}}:{{pawseyBin}}/goTools/
 
 ####################################################################################################
 # compose protocols
