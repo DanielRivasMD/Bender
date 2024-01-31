@@ -22,20 +22,26 @@ _default:
 ####################################################################################################
 
 # home
-home := "${HOME}"
+home := "/Users/drivas"
 remoteHome := "/home/drivas"
-bender := "{{home}}/Factorem/Bender"
-gobin := "{{home}}/.go/bin"
+bender := home / "Factorem/Bender"
+gobin := home / ".go/bin"
 
 #################################################################################
 
 # pawsey
 pawseyID := "drivas@topaz.pawsey.org.au"
-pawseyBin := "{{remoteHome}}/bin"
+pawseyBin := remoteHome / "bin"
 
 # uppmax
 uppmaxID := "drivas@rackham.uppmax.uu.se"
-uppmaxBin := "{{remoteHome}}/bin"
+uppmaxBin := remoteHome / "bin"
+
+####################################################################################################
+
+# generate & install completion
+@completion-zsh:
+  bender completion zsh > ~/.config/zsh_completion/_bender
 
 ####################################################################################################
 
