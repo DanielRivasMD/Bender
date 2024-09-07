@@ -6,93 +6,60 @@ _default:
 ####################################################################################################
 
 # print justfile
+[group('just')]
 @show:
   bat .justfile --language make
 
 ####################################################################################################
 
 # edit justfile
+[group('just')]
 @edit:
   micro .justfile
 
 ####################################################################################################
-
 # aliases
+####################################################################################################
+
+####################################################################################################
+# import
+####################################################################################################
+
+# config
+import '.just/go.conf'
+
+####################################################################################################
+# jobs
+####################################################################################################
+
+# build for OSX
+[group('go')]
+osx app=goapp:
+  @echo "\n\033[1;33mBuilding\033[0;37m...\n=================================================="
+  go build -v -o excalibur/{{app}}
 
 ####################################################################################################
 
-# home
-home := "/Users/drivas"
-remoteHome := "/home/drivas"
-bender := home / "Factorem/Bender"
-gobin := home / ".go/bin"
-
-#################################################################################
-
-# pawsey
-pawseyID := "drivas@topaz.pawsey.org.au"
-pawseyBin := remoteHome / "bin"
-
-# uppmax
-uppmaxID := "drivas@rackham.uppmax.uu.se"
-uppmaxBin := remoteHome / "bin"
+# build for linux
+[group('go')]
+linux app=goapp:
+  @echo "\n\033[1;33mBuilding\033[0;37m...\n=================================================="
+  env GOOS=linux GOARCH=amd64 go build -v -o excalibur/{{app}}
 
 ####################################################################################################
 
-# generate & install completion
-@completion-zsh:
-  bender completion zsh > ~/.config/zsh_completion/_bender
+# install locally
+[group('go')]
+install app=goapp exe=goexe:
+  @echo "\n\033[1;33mInstalling\033[0;37m...\n=================================================="
+  go install
+  mv -v "${HOME}/go/bin/{{app}}" "${HOME}/go/bin/{{exe}}"
 
 ####################################################################################################
 
-# build bender for OSX & store `excalibur`
-osx:
-  echo "Building..." && go build -v -o {{bender}}/excalibur/bender
-
-####################################################################################################
-
-# build bender for linux & store `excalibur`
-linux:
-  echo "Building..." && env GOOS=linux GOARCH=amd64 go build -v -o {{bender}}/excalibur/bender
-
-####################################################################################################
-
-# install bender locally
-install:
-  echo "Installing..." && go install && mv -v {{gobin}}/Bender {{gobin}}/bender
-
-####################################################################################################
-
-# deliver bender binary & shell scripts Uppmax
-hermesUppmax: _deployUppmax _linkUppmax
-
-# transfer binary
-_deployUppmax:
-  echo "Deploying to Uppmax..." && rsync -azvhP {{bender}}/excalibur/bender {{uppmaxID}}:{{uppmaxBin}}
-
-# link sh scripts
-_linkUppmax:
-  echo "Linking remotely..." && rsync -azvhPX {{bender}}/sh {{uppmaxID}}:{{uppmaxBin}}/goTools/
-
-####################################################################################################
-
-# deliver bender binary & shell scripts Pawsey
-hermesPawsey: _deployPawsey _linkPawsey
-
-# transfer binary
-_deployPawsey:
-  echo "Deploying to Pawsey..." && rsync -azvhP {{bender}}/excalibur/bender {{pawseyID}}:{{pawseyBin}}
-
-# link sh scripts
-_linkPawsey:
-  echo "Linking remotely..." && rsync -azvhPX {{bender}}/sh {{pawseyID}}:{{pawseyBin}}/goTools/
-
-####################################################################################################
-# compose protocols
-####################################################################################################
-
-# build & deploy
-pawsey: linux && hermesPawsey
-uppmax: linux && hermesUppmax
+# watch changes
+[group('go')]
+watch:
+  watchexec --clear --watch cmd -- 'just install'
 
 ####################################################################################################
