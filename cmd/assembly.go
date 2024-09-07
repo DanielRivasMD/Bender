@@ -90,12 +90,12 @@ var assemblyCmd = &cobra.Command{
 
 Handle assembly operations, such as:
 
-database:		build database.
-description:		parse assembly features.
-filter:			filter assembly list.
-loci:			read diamond assembly search output & filter results.
-search:			perform similarity search.
-synteny:		collect syntenic information.
+	` + chalk.Magenta.Color("database") + `:	build database.
+	` + chalk.Magenta.Color("description") + `:	parse assembly features.
+	` + chalk.Magenta.Color("filter") + `:		filter assembly list.
+	` + chalk.Magenta.Color("loci") + `:		read diamond assembly search output & filter results.
+	` + chalk.Magenta.Color("search") + `:		perform similarity search.
+	` + chalk.Magenta.Color("synteny") + `:	collect syntenic information.
 `,
 
 	Example: ``,

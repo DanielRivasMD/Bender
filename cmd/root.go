@@ -155,12 +155,12 @@ func fileExist(ƒ string) bool {
 
 // find home directory
 func findHome() string {
-	Ξ, ε := homedir.Dir()
+	Λ, ε := homedir.Dir()
 	if ε != nil {
 		log.Fatal(ε)
 		os.Exit(1)
 	}
-	return Ξ
+	return Λ
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
