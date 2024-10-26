@@ -314,19 +314,19 @@ func writeSyntenyGenes(outFile, suffixOut string, annotations annotation) {
 
 	defer ƒ.Close()
 
-	// declare writer
-	writer := bufio.NewWriter(ƒ)
+	// declare ϖ
+	ϖ := bufio.NewWriter(ƒ)
 
 	// gene header
 	if headg && suffixOut == "gene" {
 		headg = false
 
-		_, ε = writer.WriteString(header)
+		_, ε = ϖ.WriteString(header)
 		if ε != nil {
 			panic(ε)
 		}
 
-		_, ε = writer.WriteString(syncytin.print())
+		_, ε = ϖ.WriteString(syncytin.print())
 		if ε != nil {
 			panic(ε)
 		}
@@ -336,25 +336,25 @@ func writeSyntenyGenes(outFile, suffixOut string, annotations annotation) {
 	if headr && suffixOut == "repm" {
 		headr = false
 
-		_, ε = writer.WriteString(header)
+		_, ε = ϖ.WriteString(header)
 		if ε != nil {
 			panic(ε)
 		}
 
-		_, ε = writer.WriteString(syncytin.print())
+		_, ε = ϖ.WriteString(syncytin.print())
 		if ε != nil {
 			panic(ε)
 		}
 	}
 
 	// writing
-	_, ε = writer.WriteString(annotations.print())
+	_, ε = ϖ.WriteString(annotations.print())
 	if ε != nil {
 		panic(ε)
 	}
 
 	// flush writer
-	writer.Flush()
+	ϖ.Flush()
 
 }
 

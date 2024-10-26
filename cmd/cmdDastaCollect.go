@@ -129,12 +129,12 @@ func writeID() {
 
 		defer ƒ.Close()
 
-		// declare writer
-		writer := bufio.NewWriter(ƒ)
+		// declare ϖ
+		ϖ := bufio.NewWriter(ƒ)
 
 		// writing
 		for į := 0; į < len(sequenceID); į++ {
-			_, ε = writer.WriteString(
+			_, ε = ϖ.WriteString(
 				sequenceID[į] + "\t" +
 					strings.Replace(sequenceID[į], "HiC_scaffold_", "", -1) + "\t" +
 					chromosomeField + "\n",
@@ -146,7 +146,7 @@ func writeID() {
 		}
 
 		// flush writer
-		writer.Flush()
+		ϖ.Flush()
 	}
 }
 

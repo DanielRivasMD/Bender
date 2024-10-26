@@ -128,11 +128,11 @@ func writeSpeciesFeatures(features Data) {
 
 	defer ƒ.Close()
 
-	// declare writer
-	writer := bufio.NewWriter(ƒ)
+	// declare ϖ
+	ϖ := bufio.NewWriter(ƒ)
 
 	// writing
-	_, ε = writer.WriteString(
+	_, ε = ϖ.WriteString(
 		strings.ReplaceAll(features.Organism.Binomial, ",", "") + "," +
 			strings.ReplaceAll(features.Organism.Vernacular, ",", "") + "," +
 			strings.ReplaceAll(features.ChromlengthAssembly.Karyotype, ",", "-") + "," +
@@ -144,7 +144,7 @@ func writeSpeciesFeatures(features Data) {
 	}
 
 	// flush writer
-	writer.Flush()
+	ϖ.Flush()
 
 }
 

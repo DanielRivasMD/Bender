@@ -143,11 +143,11 @@ func writeAssemblies() {
 
 	defer ƒ.Close()
 
-	// declare writer
-	writer := bufio.NewWriter(ƒ)
+	// declare ϖ
+	ϖ := bufio.NewWriter(ƒ)
 
 	// writing
-	_, ε = writer.WriteString(
+	_, ε = ϖ.WriteString(
 
 		strings.Replace(species, ".csv", "", -1) + "," +
 			assemblyID + "," +
@@ -161,7 +161,7 @@ func writeAssemblies() {
 	}
 
 	// flush writer
-	writer.Flush()
+	ϖ.Flush()
 
 }
 

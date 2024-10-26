@@ -89,11 +89,11 @@ func writeFasta(sequence *linear.Seq) {
 
 	defer ƒ.Close()
 
-	// declare writer
-	writer := fasta.NewWriter(ƒ, sequence.Len())
+	// declare ϖ
+	ϖ := fasta.NewWriter(ƒ, sequence.Len())
 
 	// writing
-	_, ε = writer.Write(sequence)
+	_, ε = ϖ.Write(sequence)
 
 	if ε != nil {
 		panic(ε)
