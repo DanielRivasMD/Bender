@@ -138,18 +138,18 @@ func (syncytin *identified) print() string {
 
 // calculate distance from candidate
 func (candidate *position) distanceCandidate(annotation position) float64 {
-	ω := 0.
+	outDistance := 0.
 	upstream := annotation.endPos - candidate.startPos
 	downstream := annotation.startPos - candidate.endPos
 	minimum := math.Min(math.Abs(upstream), math.Abs(downstream))
 	if math.Abs(upstream) == math.Abs(downstream) {
-		ω = upstream
+		outDistance = upstream
 	} else if minimum == math.Abs(upstream) {
-		ω = upstream
+		outDistance = upstream
 	} else if minimum == math.Abs(downstream) {
-		ω = downstream
+		outDistance = downstream
 	}
-	return ω
+	return outDistance
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -279,13 +279,13 @@ func attributeSegregate(rawAttributes string, attributes *attribute) {
 	arrayAttributes := strings.Split(rawAttributes, ";")
 
 	// loop over attribute string array
-	for ι := 0; ι < len(arrayAttributes); ι++ {
+	for į := 0; į < len(arrayAttributes); į++ {
 
 		η := fields.NumField()
 		// loop over attribute struct fields
-		for ο := 0; ο < η; ο++ {
-			field := fields.Field(ο)
-			attributes.AddAttribute(arrayAttributes[ι], field.Name)
+		for ǫ := 0; ǫ < η; ǫ++ {
+			field := fields.Field(ǫ)
+			attributes.AddAttribute(arrayAttributes[į], field.Name)
 		}
 	}
 }
@@ -295,9 +295,9 @@ func attributeSegregate(rawAttributes string, attributes *attribute) {
 // add collected attribute
 func (attributes *attribute) AddAttribute(ɒ, field string) {
 	if strings.Contains(ɒ, field) {
-		ω := strings.TrimPrefix(ɒ, field+"=")
+		out := strings.TrimPrefix(ɒ, field+"=")
 		final := reflect.ValueOf(attributes).Elem()
-		final.FieldByName(field).Set(reflect.ValueOf(ω))
+		final.FieldByName(field).Set(reflect.ValueOf(out))
 	}
 }
 
@@ -315,18 +315,18 @@ func writeSyntenyGenes(outFile, suffixOut string, annotations annotation) {
 	defer ƒ.Close()
 
 	// declare writer
-	ϖ := bufio.NewWriter(ƒ)
+	writer := bufio.NewWriter(ƒ)
 
 	// gene header
 	if headg && suffixOut == "gene" {
 		headg = false
 
-		_, ε = ϖ.WriteString(header)
+		_, ε = writer.WriteString(header)
 		if ε != nil {
 			panic(ε)
 		}
 
-		_, ε = ϖ.WriteString(syncytin.print())
+		_, ε = writer.WriteString(syncytin.print())
 		if ε != nil {
 			panic(ε)
 		}
@@ -336,25 +336,25 @@ func writeSyntenyGenes(outFile, suffixOut string, annotations annotation) {
 	if headr && suffixOut == "repm" {
 		headr = false
 
-		_, ε = ϖ.WriteString(header)
+		_, ε = writer.WriteString(header)
 		if ε != nil {
 			panic(ε)
 		}
 
-		_, ε = ϖ.WriteString(syncytin.print())
+		_, ε = writer.WriteString(syncytin.print())
 		if ε != nil {
 			panic(ε)
 		}
 	}
 
 	// writing
-	_, ε = ϖ.WriteString(annotations.print())
+	_, ε = writer.WriteString(annotations.print())
 	if ε != nil {
 		panic(ε)
 	}
 
 	// flush writer
-	ϖ.Flush()
+	writer.Flush()
 
 }
 

@@ -57,12 +57,12 @@ Next, create a libray.
 		// flags
 		directory, _ := κ.Flags().GetString("inDir")
 
-		ɣ, _ := κ.Flags().GetString("verbose")
+		γ, _ := κ.Flags().GetString("verbose")
 
 		outDir, _ := κ.Flags().GetString("outDir")
 
 		// execute shell
-		execCmd("repeatModeler.sh", reference, directory, ɣ, outDir)
+		execCmd("repeatModeler.sh", reference, directory, γ, outDir)
 
 	},
 }

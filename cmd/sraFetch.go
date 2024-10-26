@@ -54,7 +54,7 @@ and check the state of the downloads.
 		// flags
 		inDir, _ := κ.Flags().GetString("inDir")
 		outDir, _ := κ.Flags().GetString("outDir")
-		ɣ, _ := κ.Flags().GetString("verbose")
+		γ, _ := κ.Flags().GetString("verbose")
 		ƒ, _ := κ.Flags().GetString("file")
 
 		ƒ = strings.TrimSuffix(ƒ, ".txt")
@@ -70,7 +70,7 @@ and check the state of the downloads.
 
 		// shell call
 		commd := findHome() + "/bin/goTools/sh/fetch.sh"
-		shCmd := exec.Command(commd, inDir, outDir, ɣ, ƒ, maxIt, maxSize, ɣ)
+		shCmd := exec.Command(commd, inDir, outDir, γ, ƒ, maxIt, maxSize, γ)
 
 		// run
 		shCmd.Stdout = &stdout

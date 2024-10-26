@@ -111,10 +111,10 @@ func writeID() {
 	if outFastaID == "" {
 
 		// printing
-		for ι := 0; ι < len(sequenceID); ι++ {
+		for į := 0; į < len(sequenceID); į++ {
 			log.Fatal(
-				sequenceID[ι] + "\t" +
-					strings.Replace(sequenceID[ι], "HiC_scaffold_", "", -1) + "\t" +
+				sequenceID[į] + "\t" +
+					strings.Replace(sequenceID[į], "HiC_scaffold_", "", -1) + "\t" +
 					chromosomeField,
 			)
 		}
@@ -130,13 +130,13 @@ func writeID() {
 		defer ƒ.Close()
 
 		// declare writer
-		ϖ := bufio.NewWriter(ƒ)
+		writer := bufio.NewWriter(ƒ)
 
 		// writing
-		for ι := 0; ι < len(sequenceID); ι++ {
-			_, ε = ϖ.WriteString(
-				sequenceID[ι] + "\t" +
-					strings.Replace(sequenceID[ι], "HiC_scaffold_", "", -1) + "\t" +
+		for į := 0; į < len(sequenceID); į++ {
+			_, ε = writer.WriteString(
+				sequenceID[į] + "\t" +
+					strings.Replace(sequenceID[į], "HiC_scaffold_", "", -1) + "\t" +
 					chromosomeField + "\n",
 			)
 
@@ -146,7 +146,7 @@ func writeID() {
 		}
 
 		// flush writer
-		ϖ.Flush()
+		writer.Flush()
 	}
 }
 

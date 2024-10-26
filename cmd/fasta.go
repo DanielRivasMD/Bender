@@ -52,6 +52,9 @@ sequence:		extract sequences from ` + chalk.Yellow.Color("fasta") + `.
 `,
 
 	Example: ``,
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -87,10 +90,10 @@ func writeFasta(sequence *linear.Seq) {
 	defer ƒ.Close()
 
 	// declare writer
-	ϖ := fasta.NewWriter(ƒ, sequence.Len())
+	writer := fasta.NewWriter(ƒ, sequence.Len())
 
 	// writing
-	_, ε = ϖ.Write(sequence)
+	_, ε = writer.Write(sequence)
 
 	if ε != nil {
 		panic(ε)

@@ -31,19 +31,19 @@ import (
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // declarations
-const rmя = `README`
-const asя = `HiC.fasta.gz`
-const anя = `fasta_v2.functional.gff3.gz`
+const readme = `README`
+const assemblyHiC = `HiC.fasta.gz`
+const annotationGFF3 = `fasta_v2.functional.gff3.gz`
 
 var (
 	// declare regex
-	rmρ = regexp.MustCompile(rmя)
-	asρ = regexp.MustCompile(asя)
-	anρ = regexp.MustCompile(anя)
+	я_readme = regexp.MustCompile(readme)
+	я_assembly = regexp.MustCompile(assemblyHiC)
+	я_annotation = regexp.MustCompile(annotationGFF3)
 
 	// declare switches
-	asϟ bool
-	anϟ bool
+	ϙ_assembly bool
+	ϙ_annotation bool
 
 	// declare placeholders
 	readmeLink   string
@@ -86,10 +86,10 @@ func init() {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // filter assemblies
-func assemblyFilter(readFile string) {
+func assemblyFilter(ƒ string) {
 
 	// open an input file, exit on error
-	inputFile, ε := os.Open(inDir + "/" + readFile)
+	inputFile, ε := os.Open(inDir + "/" + ƒ)
 	if ε != nil {
 		log.Fatal("Error opening input file : ", ε)
 	}
@@ -105,16 +105,16 @@ func assemblyFilter(readFile string) {
 
 		// match records
 		switch {
-		case rmρ.MatchString(records[0]):
+		case я_readme.MatchString(records[0]):
 			readmeLink = records[1]
 
-		case asρ.MatchString(records[0]):
-			asϟ = true
+		case я_assembly.MatchString(records[0]):
+			ϙ_assembly = true
 			assemblyID = records[0]
 			assemblyLink = records[1]
 
-		case anρ.MatchString(records[0]):
-			anϟ = true
+		case я_annotation.MatchString(records[0]):
+			ϙ_annotation = true
 			annotID = records[0]
 			annotLink = records[1]
 		}
@@ -122,10 +122,10 @@ func assemblyFilter(readFile string) {
 	}
 
 	// if asϟ && anϟ {
-	if asϟ {
+	if ϙ_assembly {
 		writeAssemblies()
 	} else {
-		fmt.Println(readFile)
+		fmt.Println(ƒ)
 	}
 
 }
@@ -144,10 +144,10 @@ func writeAssemblies() {
 	defer ƒ.Close()
 
 	// declare writer
-	ϖ := bufio.NewWriter(ƒ)
+	writer := bufio.NewWriter(ƒ)
 
 	// writing
-	_, ε = ϖ.WriteString(
+	_, ε = writer.WriteString(
 
 		strings.Replace(species, ".csv", "", -1) + "," +
 			assemblyID + "," +
@@ -161,7 +161,7 @@ func writeAssemblies() {
 	}
 
 	// flush writer
-	ϖ.Flush()
+	writer.Flush()
 
 }
 

@@ -55,12 +55,12 @@ Additionally, ` + chalk.Green.Color("Bender") + ` perform quality control preali
 
 		directory, _ := κ.Flags().GetString("inDir")
 
-		ɣ, _ := κ.Flags().GetString("verbose")
+		ξ, _ := κ.Flags().GetString("verbose")
 
 		outDir, _ := κ.Flags().GetString("outDir")
 
 		// execute shell
-		execCmd("bwa.sh", ƒ, directory, ɣ, outDir)
+		execCmd("bwa.sh", ƒ, directory, ξ, outDir)
 
 	},
 }

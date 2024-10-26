@@ -53,7 +53,7 @@ Reconstruct binary SRA files to fastq.
 		// flags
 		inDir, _ := κ.Flags().GetString("inDir")
 		outDir, _ := κ.Flags().GetString("outDir")
-		ɣ, _ := κ.Flags().GetString("verbose")
+		γ, _ := κ.Flags().GetString("verbose")
 		ƒ, _ := κ.Flags().GetString("file")
 
 		splitFiles, _ := κ.Flags().GetString("split-files")
@@ -67,7 +67,7 @@ Reconstruct binary SRA files to fastq.
 
 		// shell call
 		commd := findHome() + "/bin/goTools/sh/SRAreconstruct.sh"
-		shCmd := exec.Command(commd, inDir, outDir, ɣ, ƒ, splitFiles)
+		shCmd := exec.Command(commd, inDir, outDir, γ, ƒ, splitFiles)
 
 		// run
 		shCmd.Stdout = &stdout

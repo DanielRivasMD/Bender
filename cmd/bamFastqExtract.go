@@ -53,12 +53,12 @@ Dissect BAM files and retrieve FASTQ files.
 
 		directory, _ := κ.Flags().GetString("inDir")
 
-		ɣ, _ := κ.Flags().GetString("verbose")
+		γ, _ := κ.Flags().GetString("verbose")
 
 		outDir, _ := κ.Flags().GetString("outDir")
 
 		// execute shell
-		execCmd("bamFastqExtract.sh", ƒ, directory, ɣ, outDir)
+		execCmd("bamFastqExtract.sh", ƒ, directory, γ, outDir)
 
 	},
 }

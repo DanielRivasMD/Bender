@@ -102,14 +102,14 @@ func Execute() {
 func initializeConfig(κ *cobra.Command, configPath string, configName string) error {
 
 	// initialize viper
-	ʌ := viper.New()
+	ω := viper.New()
 
 	// collect config path & file from persistent flags
-	ʌ.AddConfigPath(configPath)
-	ʌ.SetConfigName(configName)
+	ω.AddConfigPath(configPath)
+	ω.SetConfigName(configName)
 
 	// read the config file
-	ε := ʌ.ReadInConfig()
+	ε := ω.ReadInConfig()
 	if ε != nil {
 		// okay if there isn't a config file
 		_, ϙ := ε.(viper.ConfigFileNotFoundError)
@@ -120,7 +120,7 @@ func initializeConfig(κ *cobra.Command, configPath string, configName string) e
 	}
 
 	// bind flags to viper
-	bindFlags(κ, ʌ)
+	bindFlags(κ, ω)
 
 	return nil
 }
@@ -128,13 +128,13 @@ func initializeConfig(κ *cobra.Command, configPath string, configName string) e
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // bind each cobra flag to its associated viper configuration
-func bindFlags(κ *cobra.Command, ʌ *viper.Viper) {
+func bindFlags(κ *cobra.Command, ω *viper.Viper) {
 
 	κ.Flags().VisitAll(func(σ *pflag.Flag) {
 
 		// apply the viper config value to the flag when the flag is not set and viper has a value
-		if !σ.Changed && ʌ.IsSet(σ.Name) {
-			ν := ʌ.Get(σ.Name)
+		if !σ.Changed && ω.IsSet(σ.Name) {
+			ν := ω.Get(σ.Name)
 			κ.Flags().Set(σ.Name, fmt.Sprintf("%v", ν))
 		}
 	})
@@ -166,7 +166,7 @@ func findHome() string {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // execute shell command
-func execCmd(script, ƒ, directory, ɣ, outDir string) {
+func execCmd(script, ƒ, directory, γ, outDir string) {
 
 	// lineBreaks
 	lineBreaks()
@@ -177,7 +177,7 @@ func execCmd(script, ƒ, directory, ɣ, outDir string) {
 
 	// shell call
 	commd := findHome() + "/bin/goTools/sh/" + script
-	shCmd := exec.Command(commd, ƒ, directory, ɣ, outDir)
+	shCmd := exec.Command(commd, ƒ, directory, γ, outDir)
 
 	// run
 	shCmd.Stdout = &stdout

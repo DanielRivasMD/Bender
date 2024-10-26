@@ -136,10 +136,10 @@ func writeGenomicPositions(records []string) {
 	defer ƒ.Close()
 
 	// declare writer
-	ϖ := bufio.NewWriter(ƒ)
+	writer := bufio.NewWriter(ƒ)
 
 	// writing
-	_, ε = ϖ.WriteString(
+	_, ε = writer.WriteString(
 		records[0] + "\t" +
 			records[1] + "\t" +
 			records[2] + "\t" +
@@ -158,7 +158,7 @@ func writeGenomicPositions(records []string) {
 	}
 
 	// flush writer
-	ϖ.Flush()
+	writer.Flush()
 
 }
 
