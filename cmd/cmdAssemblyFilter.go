@@ -37,12 +37,12 @@ const annotationGFF3 = `fasta_v2.functional.gff3.gz`
 
 var (
 	// declare regex
-	я_readme = regexp.MustCompile(readme)
-	я_assembly = regexp.MustCompile(assemblyHiC)
+	я_readme     = regexp.MustCompile(readme)
+	я_assembly   = regexp.MustCompile(assemblyHiC)
 	я_annotation = regexp.MustCompile(annotationGFF3)
 
 	// declare switches
-	ϙ_assembly bool
+	ϙ_assembly   bool
 	ϙ_annotation bool
 
 	// declare placeholders
