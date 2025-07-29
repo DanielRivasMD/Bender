@@ -1,0 +1,14 @@
+
+==================================================
+cmd/cmdBwa.go
+  line 34     TODO   update bwa cmd
+cmd/cmdFastaConvert.go
+  line 42     TODO   finish logic
+cmd/cmdFastaSequence.go
+  line 61     TODO   verify scaffold is properly used. potential bug
+cmd/cmdSraReconstruct.go
+  line 100    TODO   update flag bindings
+  line 106    TODO   toggle?
+paper/paper.md
+  line 34     TODO   acknowledge not author contributors
+==================================================
