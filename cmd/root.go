@@ -16,6 +16,8 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 package cmd
 
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
 import (
 	"bytes"
 	"fmt"
@@ -36,7 +38,6 @@ import (
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// declarations
 var (
 	cfgPath     string
 	cfgFile     string
@@ -77,8 +78,6 @@ with built-in and accessible documentation.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 func init() {
-
-	// persistent flags
 	rootCmd.PersistentFlags().StringVarP(&cfgFile, "configFile", "c", "", "Config file")
 	rootCmd.PersistentFlags().StringVarP(&cfgPath, "configPath", "C", ".", "Path to config file")
 	rootCmd.PersistentFlags().StringVarP(&inDir, "inDir", "I", ".", "Directory where input files are located")
